@@ -21,7 +21,39 @@ data/
     placeholder test run — these prove the pipeline works end-to-end, but
     they are NOT real AQI data. Delete and regenerate with real data before
     your demo.
+backend/
+  FastAPI service that imports agents/*.py unmodified and exposes them as
+  REST endpoints for the frontend. See "Local development" below.
+dashboard-react/
+  The AirOS product UI (6 pages: Command Center, City Map, Attribution,
+  Forecast, Scenario Lab, AI Intelligence Report), built against backend/.
 ```
+
+## Local development (frontend + backend)
+
+Two processes, run from the repo root in separate terminals:
+
+```bash
+# Terminal 1 — backend (FastAPI)
+python -m venv .venv
+./.venv/Scripts/activate        # or `source .venv/bin/activate` on macOS/Linux
+pip install -r backend/requirements.txt
+uvicorn backend.main:app --reload --port 8000
+
+# Terminal 2 — frontend (Vite)
+cd dashboard-react
+npm install
+npm run dev
+```
+
+The frontend calls the backend at `VITE_API_BASE_URL` (defaults to
+`http://localhost:8000`, see `dashboard-react/.env.example`). Every
+`/api/*` response includes a `data_source` field —`"live_pipeline"` if it
+ran attribution/forecast fresh against `data/aqi_stations_*.json`,
+`"cached_run"` if it fell back to the last computed `data/*.json` (true
+today, since that file doesn't exist until you run `ingestion/fetch_waqi.py`
+— see below), or `"synthetic"` for the registry. `/api/simulate` is the one
+endpoint that's always a live computation.
 
 ## Setup (run this first, on your own machine — this sandbox can't reach
 ## external APIs)
