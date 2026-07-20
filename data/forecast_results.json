@@ -1,0 +1,86 @@
+[
+  {
+    "station": "Wazirpur",
+    "lat": 28.6996,
+    "lon": 77.1636,
+    "current_aqi": 340,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 350.5,
+      "persistence_baseline": 340,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 3.0,
+        "humidity_adjustment": 7.5
+      },
+      "confidence": 0.76
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 350.5,
+      "persistence_baseline": 340,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 3.0,
+        "humidity_adjustment": 7.5
+      },
+      "confidence": 0.3
+    }
+  },
+  {
+    "station": "Mundka",
+    "lat": 28.6819,
+    "lon": 77.0388,
+    "current_aqi": 298,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 308.5,
+      "persistence_baseline": 298,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 3.0,
+        "humidity_adjustment": 7.5
+      },
+      "confidence": 0.76
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 308.5,
+      "persistence_baseline": 298,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 3.0,
+        "humidity_adjustment": 7.5
+      },
+      "confidence": 0.3
+    }
+  },
+  {
+    "station": "RK Puram",
+    "lat": 28.5651,
+    "lon": 77.177,
+    "current_aqi": 210,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 220.5,
+      "persistence_baseline": 210,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 3.0,
+        "humidity_adjustment": 7.5
+      },
+      "confidence": 0.76
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 220.5,
+      "persistence_baseline": 210,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 3.0,
+        "humidity_adjustment": 7.5
+      },
+      "confidence": 0.3
+    }
+  }
+]

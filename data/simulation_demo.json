@@ -1,0 +1,79 @@
+[
+  {
+    "current_aqi": 340,
+    "projected_aqi": 301.2,
+    "improvement_pct": 11.4,
+    "breakdown": [
+      {
+        "source": "construction_site",
+        "share_of_aqi": 0.23,
+        "reduction_applied": "50%",
+        "aqi_points_saved": 38.8
+      }
+    ],
+    "scenario": {
+      "reductions": {
+        "construction_site": 50,
+        "diesel_generator_cluster": 0.0
+      },
+      "rain": false
+    }
+  },
+  {
+    "current_aqi": 340,
+    "projected_aqi": 340.0,
+    "improvement_pct": 0.0,
+    "breakdown": [],
+    "scenario": {
+      "reductions": {
+        "construction_site": 0,
+        "diesel_generator_cluster": 15.0
+      },
+      "rain": false
+    }
+  },
+  {
+    "current_aqi": 340,
+    "projected_aqi": 238.0,
+    "improvement_pct": 30.0,
+    "breakdown": [
+      {
+        "source": "rain",
+        "aqi_points_saved": 102.0,
+        "note": "assumed coefficient, cite real study if available"
+      }
+    ],
+    "scenario": {
+      "reductions": {
+        "construction_site": 0,
+        "diesel_generator_cluster": 0.0
+      },
+      "rain": true
+    }
+  },
+  {
+    "current_aqi": 340,
+    "projected_aqi": 199.2,
+    "improvement_pct": 41.4,
+    "breakdown": [
+      {
+        "source": "construction_site",
+        "share_of_aqi": 0.23,
+        "reduction_applied": "50%",
+        "aqi_points_saved": 38.8
+      },
+      {
+        "source": "rain",
+        "aqi_points_saved": 102.0,
+        "note": "assumed coefficient, cite real study if available"
+      }
+    ],
+    "scenario": {
+      "reductions": {
+        "construction_site": 50,
+        "diesel_generator_cluster": 15.0
+      },
+      "rain": true
+    }
+  }
+]
