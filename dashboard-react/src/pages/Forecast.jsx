@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Radar, Info } from "lucide-react";
@@ -9,19 +9,24 @@ import QueryState from "../components/ui/QueryState";
 import DataSourceBadge from "../components/ui/DataSourceBadge";
 import StationPicker from "../components/ui/StationPicker";
 import { SkeletonCard } from "../components/ui/Skeleton";
-import Card from "../components/ui/Card";
+import EmptyState from "../components/ui/EmptyState";
 import Footer from "../components/layout/Footer";
 
 import ForecastChart from "../components/forecast/ForecastChart";
 import ForecastComponents from "../components/forecast/ForecastComponents";
 import CityForecastTable from "../components/forecast/CityForecastTable";
+import CurrentWeatherPanel from "../components/forecast/CurrentWeatherPanel";
+import WeatherEffectsList from "../components/forecast/WeatherEffectsList";
+import HistoricalTrendChart from "../components/forecast/HistoricalTrendChart";
 
-import { useForecast } from "../lib/hooks/useApi";
+import { useForecast, useWeatherCurrent, useStationHistory } from "../lib/hooks/useApi";
 import { fadeUp } from "../lib/motion";
 
 export default function Forecast() {
   const forecastQuery = useForecast();
+  const weatherQuery = useWeatherCurrent();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [historyHours, setHistoryHours] = useState(24);
 
   const forecasts = useMemo(() => forecastQuery.data?.data ?? [], [forecastQuery.data]);
   const pickerStations = useMemo(
@@ -38,12 +43,17 @@ export default function Forecast() {
     setStationName(match ? match.station : forecasts[0].station);
   }, [forecasts, stationName, requestedStation]);
 
-  function handleSelect(name) {
-    setStationName(name);
-    setSearchParams(name ? { station: name } : {}, { replace: true });
-  }
+  const handleSelect = useCallback(
+    (name) => {
+      setStationName(name);
+      setSearchParams(name ? { station: name } : {}, { replace: true });
+    },
+    [setSearchParams]
+  );
 
   const selected = forecasts.find((f) => f.station === stationName) ?? null;
+  const selectedWeather = (weatherQuery.data?.data ?? []).find((w) => w.station_name === stationName) ?? null;
+  const stationHistoryQuery = useStationHistory(stationName, historyHours);
   const isEmpty = forecastQuery.data?.data_source === "empty";
 
   return (
@@ -59,8 +69,9 @@ export default function Forecast() {
               <Radar size={17} className="text-panel-accent" strokeWidth={1.6} />
             </div>
             <p className="text-[17px] md:text-[19px] leading-[1.55] text-[#33363A]">
-              24h and 72h AQI projections adjusted for wind, humidity and recent trend on top of a persistence
-              baseline — shown against what would happen if nothing about the weather changed at all.
+              24h and 72h AQI projections adjusted for wind, humidity, rainfall, temperature and recent trend on
+              top of a persistence baseline — shown against what would happen if nothing about the weather
+              changed at all.
             </p>
           </div>
           <div className="flex items-center gap-2 mt-6 flex-wrap">
@@ -86,13 +97,10 @@ export default function Forecast() {
             </div>
           }
           empty={
-            <Card padding="p-9" hover={false} className="mt-10 text-center">
-              <div className="font-display text-[22px] text-ink">No forecast data yet</div>
-              <p className="text-[14px] text-muted-2 mt-2 max-w-[480px] mx-auto">
-                Run ingestion and the forecast agent to populate this page — see the README's local development
-                section.
-              </p>
-            </Card>
+            <EmptyState
+              title="No forecast data yet"
+              description="Run ingestion and the forecast agent to populate this page — see the README's local development section."
+            />
           }
         >
           <div className="mt-10">
@@ -105,7 +113,17 @@ export default function Forecast() {
                 {selected && (
                   <>
                     <ForecastChart station={selected} forecast24={selected.forecast_24h} forecast72={selected.forecast_72h} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <CurrentWeatherPanel weather={selectedWeather} isLoading={weatherQuery.isLoading} />
+                      <WeatherEffectsList effects={selected.forecast_24h?.weather_effects} />
+                    </div>
                     <ForecastComponents station={selected} />
+                    <HistoricalTrendChart
+                      history={stationHistoryQuery.data?.data}
+                      isLoading={stationHistoryQuery.isLoading}
+                      hours={historyHours}
+                      onChangeHours={setHistoryHours}
+                    />
                   </>
                 )}
               </div>

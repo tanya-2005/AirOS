@@ -2,10 +2,13 @@ import { TrendingUp, TrendingDown, Minus, ArrowRight, FlaskConical } from "lucid
 import Card from "../ui/Card";
 import ConfidenceBar from "../ui/ConfidenceBar";
 import LinkButton from "../ui/LinkButton";
+import RiskBadge from "../ui/RiskBadge";
+import TrendIndicator from "../ui/TrendIndicator";
 import { Skeleton } from "../ui/Skeleton";
 import AQIGauge from "../charts/AQIGauge";
 import { categoryFor } from "../../lib/aqi";
 import { sourceMeta } from "../../lib/sources";
+import { riskLevel } from "../../lib/decision";
 
 function ForecastCell({ label, horizon, currentAqi }) {
   if (!horizon) {
@@ -37,7 +40,7 @@ function ForecastCell({ label, horizon, currentAqi }) {
   );
 }
 
-export default function StationDetailPanel({ station, forecast, isLoadingForecast }) {
+export default function StationDetailPanel({ station, forecast, isLoadingForecast, trendDelta }) {
   if (!station) {
     return (
       <Card padding="p-7" hover={false}>
@@ -65,6 +68,16 @@ export default function StationDetailPanel({ station, forecast, isLoadingForecas
         >
           {cat.label}
         </span>
+      </div>
+
+      <div className="flex items-center justify-center gap-2.5 mt-3">
+        <RiskBadge level={riskLevel(station.aqi)} />
+        {trendDelta !== undefined && (
+          <span className="flex items-center gap-1.5 text-[12px] text-muted-3">
+            since last snapshot
+            <TrendIndicator delta={trendDelta} threshold={1} />
+          </span>
+        )}
       </div>
 
       <div className="flex justify-center py-4">

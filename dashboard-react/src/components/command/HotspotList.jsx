@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Card from "../ui/Card";
 import { categoryFor } from "../../lib/aqi";
@@ -5,7 +6,7 @@ import { sourceMeta } from "../../lib/sources";
 import { cn } from "../../lib/utils/cn";
 import { staggerContainer, fadeUp } from "../../lib/motion";
 
-function HotspotRow({ station, active, onClick }) {
+const HotspotRow = memo(function HotspotRow({ station, active, onSelect }) {
   const cat = categoryFor(station.aqi);
   const top = station.attribution?.[0];
   const meta = top ? sourceMeta(top.source_type) : null;
@@ -13,7 +14,8 @@ function HotspotRow({ station, active, onClick }) {
   return (
     <motion.button
       variants={fadeUp}
-      onClick={onClick}
+      onClick={() => onSelect(station.station)}
+      aria-pressed={active}
       className={cn(
         "w-full flex items-center gap-4 px-5 py-4 text-left border-b border-border-divider last:border-b-0",
         "transition-colors duration-150 cursor-pointer",
@@ -39,19 +41,14 @@ function HotspotRow({ station, active, onClick }) {
       </div>
     </motion.button>
   );
-}
+});
 
 export default function HotspotList({ stations, selected, onSelect }) {
   return (
     <Card padding="p-0" hover={false} className="overflow-hidden">
       <motion.div initial="hidden" animate="show" variants={staggerContainer}>
         {stations.map((s) => (
-          <HotspotRow
-            key={s.station}
-            station={s}
-            active={s.station === selected}
-            onClick={() => onSelect(s.station)}
-          />
+          <HotspotRow key={s.station} station={s} active={s.station === selected} onSelect={onSelect} />
         ))}
       </motion.div>
     </Card>

@@ -1,0 +1,242 @@
+[
+  {
+    "lat": 28.5648,
+    "lon": 77.1744,
+    "uid": 2556,
+    "aqi": "146",
+    "station": {
+      "name": "R.K. Puram, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.566827,
+    "lon": 77.251418,
+    "uid": 10112,
+    "aqi": "152",
+    "station": {
+      "name": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.576909,
+    "lon": 77.075898,
+    "uid": 10119,
+    "aqi": "163",
+    "station": {
+      "name": "National Institute of Malaria Research, Sector 8, Dwarka, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.700505,
+    "lon": 77.165603,
+    "uid": 10114,
+    "aqi": "197",
+    "station": {
+      "name": "Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.672114,
+    "lon": 77.313832,
+    "uid": 10118,
+    "aqi": "126",
+    "station": {
+      "name": "ITI Shahdra, Jhilmil Industrial Area, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.710066,
+    "lon": 77.24622,
+    "uid": 10121,
+    "aqi": "174",
+    "station": {
+      "name": "Sonia Vihar Water Treatment Plant DJB, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.68241,
+    "lon": 77.030469,
+    "uid": 10708,
+    "aqi": "147",
+    "station": {
+      "name": "Mundka, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.820629,
+    "lon": 77.101099,
+    "uid": 10706,
+    "aqi": "149",
+    "station": {
+      "name": "Narela, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.531314,
+    "lon": 77.270686,
+    "uid": 10116,
+    "aqi": "114",
+    "station": {
+      "name": "DITE Okhla, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.6341,
+    "lon": 77.2005,
+    "uid": 2554,
+    "aqi": "105",
+    "station": {
+      "name": "Mandir Marg, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.582846,
+    "lon": 77.234366,
+    "uid": 10705,
+    "aqi": "124",
+    "station": {
+      "name": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.733016,
+    "lon": 77.17197,
+    "uid": 10113,
+    "aqi": "116",
+    "station": {
+      "name": "ITI Jahangirpuri, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.499727,
+    "lon": 77.267095,
+    "uid": 10110,
+    "aqi": "95",
+    "station": {
+      "name": "Dr. Karni Singh Shooting Range, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.528344,
+    "lon": 77.189304,
+    "uid": 10707,
+    "aqi": "153",
+    "station": {
+      "name": "Sri Auribindo Marg, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.636997,
+    "lon": 77.172248,
+    "uid": 10124,
+    "aqi": "137",
+    "station": {
+      "name": "Pusa, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.6683,
+    "lon": 77.1167,
+    "uid": 2555,
+    "aqi": "132",
+    "station": {
+      "name": "Punjabi Bagh, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.732743,
+    "lon": 77.118788,
+    "uid": 10117,
+    "aqi": "150",
+    "station": {
+      "name": "Shaheed Sukhdev College of Business Studies, Rohini, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.815691,
+    "lon": 77.152491,
+    "uid": 11266,
+    "aqi": "160",
+    "station": {
+      "name": "Alipur, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.7757959,
+    "lon": 77.0462514,
+    "uid": 11267,
+    "aqi": "-",
+    "station": {
+      "name": "Pooth Khurd, Bawana, Delhi, Delhi, India",
+      "time": "2026-07-19T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.572714,
+    "lon": 76.933433,
+    "uid": 10120,
+    "aqi": "82",
+    "station": {
+      "name": "Bramprakash Ayurvedic Hospital, Najafgarh, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.6508,
+    "lon": 77.3152,
+    "uid": 2553,
+    "aqi": "168",
+    "station": {
+      "name": "Anand Vihar, Delhi, Delhi, India",
+      "time": "2026-07-20T16:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.612498,
+    "lon": 77.237388,
+    "uid": 10111,
+    "aqi": "87",
+    "station": {
+      "name": "Major Dhyan Chand National Stadium, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.620171,
+    "lon": 77.287705,
+    "uid": 10704,
+    "aqi": "137",
+    "station": {
+      "name": "Mother Dairy Plant, Parparganj, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  },
+  {
+    "lat": 28.69572,
+    "lon": 77.181295,
+    "uid": 10115,
+    "aqi": "157",
+    "station": {
+      "name": "Satyawati College, Delhi, Delhi, India",
+      "time": "2026-07-20T17:30:00+09:00"
+    }
+  }
+]

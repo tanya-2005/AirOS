@@ -1,86 +1,930 @@
 [
   {
-    "station": "Wazirpur",
-    "lat": 28.6996,
-    "lon": 77.1636,
-    "current_aqi": 340,
+    "station": "Punjabi Bagh, Delhi, Delhi, India",
+    "lat": 28.6683,
+    "lon": 77.1167,
+    "current_aqi": 144,
     "forecast_24h": {
       "horizon_hours": 24,
-      "predicted_aqi": 350.5,
-      "persistence_baseline": 340,
+      "predicted_aqi": 157.8,
+      "persistence_baseline": 144,
       "components": {
         "trend_adjustment": 0.0,
-        "wind_adjustment": 3.0,
-        "humidity_adjustment": 7.5
+        "wind_adjustment": 8.4,
+        "humidity_adjustment": 5.4,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
       },
-      "confidence": 0.76
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.4 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +5 AQI (keeps particulates suspended)"
+      ]
     },
     "forecast_72h": {
       "horizon_hours": 72,
-      "predicted_aqi": 350.5,
-      "persistence_baseline": 340,
+      "predicted_aqi": 157.8,
+      "persistence_baseline": 144,
       "components": {
         "trend_adjustment": 0.0,
-        "wind_adjustment": 3.0,
-        "humidity_adjustment": 7.5
+        "wind_adjustment": 8.4,
+        "humidity_adjustment": 5.4,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
       },
-      "confidence": 0.3
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.4 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +5 AQI (keeps particulates suspended)"
+      ]
     }
   },
   {
-    "station": "Mundka",
-    "lat": 28.6819,
-    "lon": 77.0388,
-    "current_aqi": 298,
+    "station": "Mandir Marg, Delhi, Delhi, India",
+    "lat": 28.6341,
+    "lon": 77.2005,
+    "current_aqi": 77,
     "forecast_24h": {
       "horizon_hours": 24,
-      "predicted_aqi": 308.5,
-      "persistence_baseline": 298,
+      "predicted_aqi": 93.0,
+      "persistence_baseline": 77,
       "components": {
         "trend_adjustment": 0.0,
-        "wind_adjustment": 3.0,
-        "humidity_adjustment": 7.5
+        "wind_adjustment": 9.75,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
       },
-      "confidence": 0.76
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.5 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
     },
     "forecast_72h": {
       "horizon_hours": 72,
-      "predicted_aqi": 308.5,
-      "persistence_baseline": 298,
+      "predicted_aqi": 93.0,
+      "persistence_baseline": 77,
       "components": {
         "trend_adjustment": 0.0,
-        "wind_adjustment": 3.0,
-        "humidity_adjustment": 7.5
+        "wind_adjustment": 9.75,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
       },
-      "confidence": 0.3
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.5 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
     }
   },
   {
-    "station": "RK Puram",
-    "lat": 28.5651,
-    "lon": 77.177,
-    "current_aqi": 210,
+    "station": "Mother Dairy Plant, Parparganj, Delhi, Delhi, India",
+    "lat": 28.620171,
+    "lon": 77.287705,
+    "current_aqi": 89,
     "forecast_24h": {
       "horizon_hours": 24,
-      "predicted_aqi": 220.5,
-      "persistence_baseline": 210,
+      "predicted_aqi": 106.6,
+      "persistence_baseline": 89,
       "components": {
         "trend_adjustment": 0.0,
-        "wind_adjustment": 3.0,
-        "humidity_adjustment": 7.5
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
       },
-      "confidence": 0.76
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
     },
     "forecast_72h": {
       "horizon_hours": 72,
-      "predicted_aqi": 220.5,
-      "persistence_baseline": 210,
+      "predicted_aqi": 106.6,
+      "persistence_baseline": 89,
       "components": {
         "trend_adjustment": 0.0,
-        "wind_adjustment": 3.0,
-        "humidity_adjustment": 7.5
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
       },
-      "confidence": 0.3
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "National Institute of Malaria Research, Sector 8, Dwarka, Delhi, Delhi, India",
+    "lat": 28.576909,
+    "lon": 77.075898,
+    "current_aqi": 107,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 119.8,
+      "persistence_baseline": 107,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 7.95,
+        "humidity_adjustment": 4.8,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.7 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +5 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 119.8,
+      "persistence_baseline": 107,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 7.95,
+        "humidity_adjustment": 4.8,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.7 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +5 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Narela, Delhi, Delhi, India",
+    "lat": 28.820629,
+    "lon": 77.101099,
+    "current_aqi": 132,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 152.8,
+      "persistence_baseline": 132,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 12.15,
+        "humidity_adjustment": 9.0,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (1.9 km/h) traps pollutants, adding +12 AQI",
+        "Humidity contributes +9 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 152.8,
+      "persistence_baseline": 132,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 12.15,
+        "humidity_adjustment": 9.0,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (1.9 km/h) traps pollutants, adding +12 AQI",
+        "Humidity contributes +9 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Anand Vihar, Delhi, Delhi, India",
+    "lat": 28.6508,
+    "lon": 77.3152,
+    "current_aqi": 132,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 149.6,
+      "persistence_baseline": 132,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 149.6,
+      "persistence_baseline": 132,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+    "lat": 28.582846,
+    "lon": 77.234366,
+    "current_aqi": 89,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 105.0,
+      "persistence_baseline": 89,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.05,
+        "humidity_adjustment": 6.0,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.3 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 105.0,
+      "persistence_baseline": 89,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.05,
+        "humidity_adjustment": 6.0,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.3 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "R.K. Puram, Delhi, Delhi, India",
+    "lat": 28.5648,
+    "lon": 77.1744,
+    "current_aqi": 99,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 115.0,
+      "persistence_baseline": 99,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.05,
+        "humidity_adjustment": 6.0,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.3 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 115.0,
+      "persistence_baseline": 99,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.05,
+        "humidity_adjustment": 6.0,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.3 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Major Dhyan Chand National Stadium, Delhi, Delhi, India",
+    "lat": 28.612498,
+    "lon": 77.237388,
+    "current_aqi": 72,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 89.6,
+      "persistence_baseline": 72,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 89.6,
+      "persistence_baseline": 72,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Satyawati College, Delhi, Delhi, India",
+    "lat": 28.69572,
+    "lon": 77.181295,
+    "current_aqi": 139,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 155.1,
+      "persistence_baseline": 139,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 155.1,
+      "persistence_baseline": 139,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    }
+  },
+  {
+    "station": "ITI Shahdra, Jhilmil Industrial Area, Delhi, Delhi, India",
+    "lat": 28.672114,
+    "lon": 77.313832,
+    "current_aqi": 80,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 97.6,
+      "persistence_baseline": 80,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 97.6,
+      "persistence_baseline": 80,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+    "lat": 28.700505,
+    "lon": 77.165603,
+    "current_aqi": 171,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 187.1,
+      "persistence_baseline": 171,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 187.1,
+      "persistence_baseline": 171,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    }
+  },
+  {
+    "station": "Shaheed Sukhdev College of Business Studies, Rohini, Delhi, Delhi, India",
+    "lat": 28.732743,
+    "lon": 77.118788,
+    "current_aqi": 119,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 135.1,
+      "persistence_baseline": 119,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 135.1,
+      "persistence_baseline": 119,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    }
+  },
+  {
+    "station": "Dr. Karni Singh Shooting Range, Delhi, Delhi, India",
+    "lat": 28.499727,
+    "lon": 77.267095,
+    "current_aqi": 78,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 93.2,
+      "persistence_baseline": 78,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.15,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.9 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 93.2,
+      "persistence_baseline": 78,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.15,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.9 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Sri Auribindo Marg, Delhi, Delhi, India",
+    "lat": 28.528344,
+    "lon": 77.189304,
+    "current_aqi": 109,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 122.3,
+      "persistence_baseline": 109,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.25,
+        "humidity_adjustment": 5.1,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.5 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +5 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 122.3,
+      "persistence_baseline": 109,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.25,
+        "humidity_adjustment": 5.1,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.5 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +5 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Pusa, Delhi, Delhi, India",
+    "lat": 28.636997,
+    "lon": 77.172248,
+    "current_aqi": 110,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 126.0,
+      "persistence_baseline": 110,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.75,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.5 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 126.0,
+      "persistence_baseline": 110,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.75,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.5 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "ITI Jahangirpuri, Delhi, Delhi, India",
+    "lat": 28.733016,
+    "lon": 77.17197,
+    "current_aqi": 107,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 123.0,
+      "persistence_baseline": 107,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 123.0,
+      "persistence_baseline": 107,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 8.85,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.6,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.1 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)",
+        "Rain (0.2mm) reduces PM, removing 1 AQI"
+      ]
+    }
+  },
+  {
+    "station": "Sonia Vihar Water Treatment Plant DJB, Delhi, Delhi, India",
+    "lat": 28.710066,
+    "lon": 77.24622,
+    "current_aqi": 163,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 179.8,
+      "persistence_baseline": 163,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.9,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.4 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 179.8,
+      "persistence_baseline": 163,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.9,
+        "humidity_adjustment": 6.9,
+        "rain_adjustment": 0.0,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.4 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Mundka, Delhi, Delhi, India",
+    "lat": 28.68241,
+    "lon": 77.030469,
+    "current_aqi": 124,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 139.3,
+      "persistence_baseline": 124,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 7.8,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (4.8 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 139.3,
+      "persistence_baseline": 124,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 7.8,
+        "humidity_adjustment": 7.8,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (4.8 km/h) traps pollutants, adding +8 AQI",
+        "Humidity contributes +8 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Alipur, Delhi, Delhi, India",
+    "lat": 28.815691,
+    "lon": 77.152491,
+    "current_aqi": 117,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 135.7,
+      "persistence_baseline": 117,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.35,
+        "humidity_adjustment": 8.7,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.1 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +9 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 135.7,
+      "persistence_baseline": 117,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.35,
+        "humidity_adjustment": 8.7,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.1 km/h) traps pollutants, adding +10 AQI",
+        "Humidity contributes +9 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "Bramprakash Ayurvedic Hospital, Najafgarh, Delhi, Delhi, India",
+    "lat": 28.572714,
+    "lon": 76.933433,
+    "current_aqi": 76,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 89.7,
+      "persistence_baseline": 76,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.45,
+        "humidity_adjustment": 4.5,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.7 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +4 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 89.7,
+      "persistence_baseline": 76,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.45,
+        "humidity_adjustment": 4.5,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.7 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +4 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "DITE Okhla, Delhi, Delhi, India",
+    "lat": 28.531314,
+    "lon": 77.270686,
+    "current_aqi": 95,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 110.2,
+      "persistence_baseline": 95,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.15,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (3.9 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 110.2,
+      "persistence_baseline": 95,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 9.15,
+        "humidity_adjustment": 6.3,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (3.9 km/h) traps pollutants, adding +9 AQI",
+        "Humidity contributes +6 AQI (keeps particulates suspended)"
+      ]
+    }
+  },
+  {
+    "station": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+    "lat": 28.566827,
+    "lon": 77.251418,
+    "current_aqi": 102,
+    "forecast_24h": {
+      "horizon_hours": 24,
+      "predicted_aqi": 119.6,
+      "persistence_baseline": 102,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 7.2,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.76,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
+    },
+    "forecast_72h": {
+      "horizon_hours": 72,
+      "predicted_aqi": 119.6,
+      "persistence_baseline": 102,
+      "components": {
+        "trend_adjustment": 0.0,
+        "wind_adjustment": 10.65,
+        "humidity_adjustment": 7.2,
+        "rain_adjustment": -0.3,
+        "temp_adjustment": 0.0
+      },
+      "confidence": 0.3,
+      "weather_effects": [
+        "Low wind (2.9 km/h) traps pollutants, adding +11 AQI",
+        "Humidity contributes +7 AQI (keeps particulates suspended)"
+      ]
     }
   }
 ]

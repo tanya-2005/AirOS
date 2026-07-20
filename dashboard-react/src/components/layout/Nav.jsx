@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import { NavLink as RouterNavLink, Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, Bell, Menu, X } from "lucide-react";
 import Avatar from "../ui/Avatar";
@@ -27,12 +27,12 @@ export default function Nav() {
   return (
     <header className="print:hidden sticky top-0 z-50 bg-bg/85 backdrop-blur-md backdrop-saturate-150 border-b border-border-nav">
       <div className="max-w-content mx-auto px-5 md:px-10 h-[72px] flex items-center gap-7">
-        <a href="/" className="flex items-center gap-[11px] shrink-0">
+        <Link to="/" className="flex items-center gap-[11px] shrink-0">
           <div className="w-[30px] h-[30px] rounded-[9px] bg-ink flex items-center justify-center">
             <div className="w-[9px] h-[9px] rounded-full bg-success-soft shadow-[0_0_0_3px_rgba(76,175,125,.28)]" />
           </div>
           <span className="font-display text-[22px] tracking-[-.01em] text-ink">AirOS</span>
-        </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-1 ml-2">
           {LINKS.map((link) => (
@@ -47,6 +47,7 @@ export default function Nav() {
         <label className="hidden md:flex items-center gap-2 bg-search border border-border-nav rounded-[10px] px-3 py-2 w-[200px] transition-[border-color,background,box-shadow] duration-200 focus-within:border-accent focus-within:bg-white focus-within:shadow-[0_0_0_4px_rgba(31,122,133,.10)]">
           <Search size={16} className="text-muted-4 shrink-0" />
           <input
+            aria-label="Search stations"
             placeholder="Search stations…"
             className="text-[13.5px] text-ink w-full border-none bg-transparent outline-none placeholder:text-muted-4"
           />

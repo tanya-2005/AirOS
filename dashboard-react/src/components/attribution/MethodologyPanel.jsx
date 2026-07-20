@@ -9,6 +9,7 @@ const RADIUS_KM = 3.0;
 const SOURCE_WEIGHTS = {
   industrial_stack: 1.6,
   waste_burning_zone: 1.3,
+  traffic_corridor: 1.4,
   construction_site: 1.0,
   diesel_generator_cluster: 0.9,
 };
@@ -30,7 +31,7 @@ export default function MethodologyPanel() {
         share, not a certainty. Closer and currently-active sources count for more; sources beyond {RADIUS_KM}km aren't
         considered at all.
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-6">
         {Object.entries(SOURCE_WEIGHTS).map(([type, weight]) => {
           const meta = sourceMeta(type);
           const Icon = meta.Icon;

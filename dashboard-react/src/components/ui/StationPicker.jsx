@@ -18,6 +18,7 @@ export default function StationPicker({ stations, selected, onSelect, label = "S
           <button
             key={s.station}
             onClick={() => onSelect(s.station)}
+            aria-pressed={active}
             className={cn(
               "flex items-center gap-2 px-3.5 py-2 rounded-full border text-[13px] transition-colors duration-150 cursor-pointer",
               active ? "border-ink bg-ink text-white" : "border-border bg-white text-muted-1 hover:border-border-hover"

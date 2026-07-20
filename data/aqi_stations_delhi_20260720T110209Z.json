@@ -1,0 +1,167 @@
+{
+  "city": "delhi",
+  "fetched_at": "20260720T110209Z",
+  "stations": [
+    {
+      "uid": 10119,
+      "station_name": "National Institute of Malaria Research, Sector 8, Dwarka, Delhi, Delhi, India",
+      "lat": 28.576909,
+      "lon": 77.075898,
+      "aqi": 107
+    },
+    {
+      "uid": 10113,
+      "station_name": "ITI Jahangirpuri, Delhi, Delhi, India",
+      "lat": 28.733016,
+      "lon": 77.17197,
+      "aqi": 107
+    },
+    {
+      "uid": 10118,
+      "station_name": "ITI Shahdra, Jhilmil Industrial Area, Delhi, Delhi, India",
+      "lat": 28.672114,
+      "lon": 77.313832,
+      "aqi": 80
+    },
+    {
+      "uid": 10706,
+      "station_name": "Narela, Delhi, Delhi, India",
+      "lat": 28.820629,
+      "lon": 77.101099,
+      "aqi": 132
+    },
+    {
+      "uid": 10704,
+      "station_name": "Mother Dairy Plant, Parparganj, Delhi, Delhi, India",
+      "lat": 28.620171,
+      "lon": 77.287705,
+      "aqi": 89
+    },
+    {
+      "uid": 2554,
+      "station_name": "Mandir Marg, Delhi, Delhi, India",
+      "lat": 28.6341,
+      "lon": 77.2005,
+      "aqi": 77
+    },
+    {
+      "uid": 10124,
+      "station_name": "Pusa, Delhi, Delhi, India",
+      "lat": 28.636997,
+      "lon": 77.172248,
+      "aqi": 110
+    },
+    {
+      "uid": 10708,
+      "station_name": "Mundka, Delhi, Delhi, India",
+      "lat": 28.68241,
+      "lon": 77.030469,
+      "aqi": 124
+    },
+    {
+      "uid": 10707,
+      "station_name": "Sri Auribindo Marg, Delhi, Delhi, India",
+      "lat": 28.528344,
+      "lon": 77.189304,
+      "aqi": 109
+    },
+    {
+      "uid": 10112,
+      "station_name": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+      "lat": 28.566827,
+      "lon": 77.251418,
+      "aqi": 102
+    },
+    {
+      "uid": 10117,
+      "station_name": "Shaheed Sukhdev College of Business Studies, Rohini, Delhi, Delhi, India",
+      "lat": 28.732743,
+      "lon": 77.118788,
+      "aqi": 119
+    },
+    {
+      "uid": 2553,
+      "station_name": "Anand Vihar, Delhi, Delhi, India",
+      "lat": 28.6508,
+      "lon": 77.3152,
+      "aqi": 132
+    },
+    {
+      "uid": 10116,
+      "station_name": "DITE Okhla, Delhi, Delhi, India",
+      "lat": 28.531314,
+      "lon": 77.270686,
+      "aqi": 95
+    },
+    {
+      "uid": 2556,
+      "station_name": "R.K. Puram, Delhi, Delhi, India",
+      "lat": 28.5648,
+      "lon": 77.1744,
+      "aqi": 99
+    },
+    {
+      "uid": 10111,
+      "station_name": "Major Dhyan Chand National Stadium, Delhi, Delhi, India",
+      "lat": 28.612498,
+      "lon": 77.237388,
+      "aqi": 72
+    },
+    {
+      "uid": 10705,
+      "station_name": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+      "lat": 28.582846,
+      "lon": 77.234366,
+      "aqi": 89
+    },
+    {
+      "uid": 10115,
+      "station_name": "Satyawati College, Delhi, Delhi, India",
+      "lat": 28.69572,
+      "lon": 77.181295,
+      "aqi": 139
+    },
+    {
+      "uid": 10121,
+      "station_name": "Sonia Vihar Water Treatment Plant DJB, Delhi, Delhi, India",
+      "lat": 28.710066,
+      "lon": 77.24622,
+      "aqi": 163
+    },
+    {
+      "uid": 2555,
+      "station_name": "Punjabi Bagh, Delhi, Delhi, India",
+      "lat": 28.6683,
+      "lon": 77.1167,
+      "aqi": 144
+    },
+    {
+      "uid": 10110,
+      "station_name": "Dr. Karni Singh Shooting Range, Delhi, Delhi, India",
+      "lat": 28.499727,
+      "lon": 77.267095,
+      "aqi": 78
+    },
+    {
+      "uid": 11266,
+      "station_name": "Alipur, Delhi, Delhi, India",
+      "lat": 28.815691,
+      "lon": 77.152491,
+      "aqi": 117
+    },
+    {
+      "uid": 10120,
+      "station_name": "Bramprakash Ayurvedic Hospital, Najafgarh, Delhi, Delhi, India",
+      "lat": 28.572714,
+      "lon": 76.933433,
+      "aqi": 76
+    },
+    {
+      "uid": 10114,
+      "station_name": "Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+      "lat": 28.700505,
+      "lon": 77.165603,
+      "aqi": 171
+    }
+  ]
+}

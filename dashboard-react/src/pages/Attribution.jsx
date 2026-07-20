@@ -9,7 +9,7 @@ import QueryState from "../components/ui/QueryState";
 import DataSourceBadge from "../components/ui/DataSourceBadge";
 import StationPicker from "../components/ui/StationPicker";
 import { SkeletonCard } from "../components/ui/Skeleton";
-import Card from "../components/ui/Card";
+import EmptyState from "../components/ui/EmptyState";
 import Footer from "../components/layout/Footer";
 
 import AttributionBreakdown from "../components/attribution/AttributionBreakdown";
@@ -84,13 +84,10 @@ export default function Attribution() {
             </div>
           }
           empty={
-            <Card padding="p-9" hover={false} className="mt-10 text-center">
-              <div className="font-display text-[22px] text-ink">No attribution data yet</div>
-              <p className="text-[14px] text-muted-2 mt-2 max-w-[480px] mx-auto">
-                Run ingestion and the attribution agent to populate this page — see the README's local
-                development section.
-              </p>
-            </Card>
+            <EmptyState
+              title="No attribution data yet"
+              description="Run ingestion and the attribution agent to populate this page — see the README's local development section."
+            />
           }
         >
           <div className="mt-10">

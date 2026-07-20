@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { ShieldAlert } from "lucide-react";
 import Card from "../ui/Card";
@@ -6,7 +7,7 @@ import LinkButton from "../ui/LinkButton";
 import { sourceMeta, PERMIT_TONE } from "../../lib/sources";
 import { staggerContainer, fadeUp } from "../../lib/motion";
 
-function ActionRow({ item, last }) {
+const ActionRow = memo(function ActionRow({ item, last }) {
   const meta = sourceMeta(item.source_type);
   const permitTone = PERMIT_TONE[item.permit_status] || "muted";
   const Icon = meta.Icon;
@@ -37,7 +38,7 @@ function ActionRow({ item, last }) {
       </div>
     </motion.div>
   );
-}
+});
 
 export default function PriorityActions({ items, limit = 5 }) {
   const top = items.slice(0, limit);

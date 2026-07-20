@@ -22,15 +22,24 @@ import os
 import sys
 
 AGENTS_DIR = os.path.join(os.path.dirname(__file__), "..", "agents")
+INGESTION_DIR = os.path.join(os.path.dirname(__file__), "..", "ingestion")
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 
 if AGENTS_DIR not in sys.path:
     sys.path.insert(0, os.path.abspath(AGENTS_DIR))
+if INGESTION_DIR not in sys.path:
+    sys.path.insert(0, os.path.abspath(INGESTION_DIR))
 
 import attribution_agent  # noqa: E402
 import forecast_agent  # noqa: E402
 import enforcement_agent  # noqa: E402
 import simulation_agent  # noqa: E402
+import history_store  # noqa: E402 — same JSONL history module ingestion/*.py append to
+
+# Every get_* function below is Delhi-specific today, same as get_registry()
+# already was before this milestone (registry_demo_delhi.json). Add a --city
+# argument here and thread it through if/when a second city is ingested.
+CITY = "delhi"
 
 
 def _load_json(path):
@@ -55,15 +64,45 @@ def _cached_path(name):
 
 
 def get_registry():
-    return _load_json(_cached_path("registry_demo_delhi.json"))["records"]
+    """
+    Returns (records, data_source). Milestone 3: prefers the real
+    OpenStreetMap-backed registry (ingestion/fetch_osm_registry.py) if it's
+    been fetched — data_source "live_pipeline" — else falls back to the
+    original all-synthetic demo registry — data_source "synthetic",
+    unchanged from before this milestone. Same "backend automatically picks
+    up newer real data" pattern as every other get_* function here.
+    """
+    real_path = _cached_path("registry_delhi.json")
+    if os.path.exists(real_path):
+        return _load_json(real_path)["records"], "live_pipeline"
+    return _load_json(_cached_path("registry_demo_delhi.json"))["records"], "synthetic"
+
+
+def get_roads():
+    """Returns (geojson, data_source) — major roads for the Map page's roads layer (Milestone 3)."""
+    path = _cached_path("roads_delhi.json")
+    if os.path.exists(path):
+        return _load_json(path), "live_pipeline"
+    return {"type": "FeatureCollection", "features": []}, "empty"
+
+
+def _weather_by_station():
+    weather_data = _load_latest("weather_*.json")
+    if not weather_data:
+        return {}
+    return {w["station_name"]: w for w in weather_data.get("stations", [])}
 
 
 def get_attribution():
     """Returns (results, data_source) — data_source is 'live_pipeline' or 'cached_run'."""
     aqi_data = _load_latest("aqi_stations_*.json")
     if aqi_data is not None:
-        registry = get_registry()
-        results = [attribution_agent.attribute_station(s, registry) for s in aqi_data["stations"]]
+        registry, _ = get_registry()
+        weather_by_station = _weather_by_station()
+        results = [
+            attribution_agent.attribute_station(s, registry, weather=weather_by_station.get(s["station_name"]))
+            for s in aqi_data["stations"]
+        ]
         results.sort(key=lambda r: -r["aqi"])
         return results, "live_pipeline"
 
@@ -75,14 +114,17 @@ def get_attribution():
 
 def get_forecast():
     aqi_data = _load_latest("aqi_stations_*.json")
-    weather_data = _load_latest("weather_*.json")
     if aqi_data is not None:
-        hourly = weather_data.get("hourly") if weather_data else None
+        # Milestone 2: weather is one record per station (matched by
+        # station_name), not a single city-wide hourly forecast array.
+        weather_by_station = _weather_by_station()
+
         results = []
         for s in aqi_data["stations"]:
             recent = [s["aqi"]]
-            f24 = forecast_agent.forecast_station(s["aqi"], recent, hourly, horizon_hours=24)
-            f72 = forecast_agent.forecast_station(s["aqi"], recent, hourly, horizon_hours=72)
+            current_weather = weather_by_station.get(s["station_name"])
+            f24 = forecast_agent.forecast_station(s["aqi"], recent, current_weather, horizon_hours=24)
+            f72 = forecast_agent.forecast_station(s["aqi"], recent, current_weather, horizon_hours=72)
             results.append(
                 {
                     "station": s["station_name"],
@@ -101,10 +143,62 @@ def get_forecast():
     return [], "empty"
 
 
+def get_weather_current():
+    """Returns (stations, data_source) — the latest per-station weather snapshot."""
+    data = _load_latest("weather_*.json")
+    if data is not None:
+        return data.get("stations", []), "live_pipeline"
+    return [], "empty"
+
+
+def get_weather_history(hours=24):
+    """Returns (entries, data_source) — weather history entries in the requested window."""
+    entries = history_store.read("weather", CITY, hours=hours)
+    return entries, ("live_pipeline" if entries else "empty")
+
+
+def get_station_history(station_name, hours=24):
+    """
+    Returns (series, data_source) — one {"fetched_at", "aqi"} point per
+    ingestion run that included this station, oldest first, from the AQI
+    history log. [] (data_source "empty") if the station has never
+    appeared in a logged ingestion run yet — this accumulates over time as
+    fetch_waqi.py (or the scheduler) keeps running, it isn't backfilled.
+    """
+    entries = history_store.read("aqi", CITY, hours=hours)
+    series = []
+    for entry in entries:
+        for rec in entry["records"]:
+            if rec["station_name"] == station_name:
+                series.append({"fetched_at": entry["fetched_at"], "aqi": rec["aqi"]})
+                break
+    return series, ("live_pipeline" if series else "empty")
+
+
+def get_city_history(hours=24):
+    """
+    Returns (series, data_source) — one {"fetched_at", "avg_aqi", "station_count"}
+    point per ingestion run in the window, averaging across whatever
+    stations that run reported.
+    """
+    entries = history_store.read("aqi", CITY, hours=hours)
+    series = []
+    for entry in entries:
+        readings = [rec["aqi"] for rec in entry["records"]]
+        if not readings:
+            continue
+        series.append({
+            "fetched_at": entry["fetched_at"],
+            "avg_aqi": round(sum(readings) / len(readings), 1),
+            "station_count": len(readings),
+        })
+    return series, ("live_pipeline" if series else "empty")
+
+
 def get_enforcement():
     attribution, attr_source = get_attribution()
     if attribution and attr_source == "live_pipeline":
-        registry = get_registry()
+        registry, _ = get_registry()
         recs = enforcement_agent.build_recommendations(attribution, registry)
         return recs, "live_pipeline"
 

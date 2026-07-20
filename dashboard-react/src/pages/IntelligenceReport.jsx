@@ -8,7 +8,7 @@ import QueryState from "../components/ui/QueryState";
 import DataSourceBadge from "../components/ui/DataSourceBadge";
 import Button from "../components/ui/Button";
 import { SkeletonCard } from "../components/ui/Skeleton";
-import Card from "../components/ui/Card";
+import EmptyState from "../components/ui/EmptyState";
 import Footer from "../components/layout/Footer";
 
 import ExecutiveSummary from "../components/report/ExecutiveSummary";
@@ -86,12 +86,10 @@ export default function IntelligenceReport() {
           isEmpty={isEmpty}
           loading={<div className="mt-10"><SkeletonCard lines={8} /></div>}
           empty={
-            <Card padding="p-9" hover={false} className="mt-10 text-center">
-              <div className="font-display text-[22px] text-ink">Nothing to report yet</div>
-              <p className="text-[14px] text-muted-2 mt-2 max-w-[480px] mx-auto">
-                This briefing synthesizes live pipeline output — run ingestion and the agent scripts first.
-              </p>
-            </Card>
+            <EmptyState
+              title="Nothing to report yet"
+              description="This briefing synthesizes live pipeline output — run ingestion and the agent scripts first."
+            />
           }
         >
           <section className="mt-10">

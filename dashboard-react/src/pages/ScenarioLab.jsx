@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { RotateCcw, Sparkles, ShieldCheck } from "lucide-react";
 
 import SectionHeading from "../components/ui/SectionHeading";
-import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import LiveDot from "../components/ui/LiveDot";
 import QueryState from "../components/ui/QueryState";
@@ -12,43 +11,60 @@ import { SkeletonCard } from "../components/ui/Skeleton";
 import StationPicker from "../components/ui/StationPicker";
 import Footer from "../components/layout/Footer";
 
-import LeverRow from "../components/scenario/LeverRow";
+import PolicyCard from "../components/scenario/PolicyCard";
 import PredictionPanel from "../components/scenario/PredictionPanel";
 import BeforeAfterCard from "../components/scenario/BeforeAfterCard";
 import CityResponseMap from "../components/scenario/CityResponseMap";
-import BenefitsStrip from "../components/scenario/BenefitsStrip";
+import ImpactAssessment from "../components/scenario/ImpactAssessment";
 import TradeoffsPanel from "../components/scenario/TradeoffsPanel";
+import EvidenceGraph from "../components/scenario/EvidenceGraph";
 import AiPickPanel from "../components/scenario/AiPickPanel";
 import CompareScenarios from "../components/scenario/CompareScenarios";
 
-import { useAttribution, useSimulate } from "../lib/hooks/useApi";
-import { useDebouncedValue } from "../lib/hooks/useDebouncedValue";
-import { fadeUp } from "../lib/motion";
 import {
-  LEVER_ORDER,
-  LEVER_DEFAULTS,
-  RECOMMENDED_LEVERS,
-  FULL_SHUTDOWN_LEVERS,
-  mapLeversToReductions,
-  computeTradeoffs,
-  estimateConfidence,
+  useAttribution,
+  useForecast,
+  useEnforcement,
+  useWeatherCurrent,
+  useRegistry,
+  useSimulate,
+  usePolicyPreviews,
+} from "../lib/hooks/useApi";
+import { useDebouncedValue } from "../lib/hooks/useDebouncedValue";
+import { fadeUp, staggerContainer } from "../lib/motion";
+import {
+  POLICIES,
+  combinePolicies,
+  policyDifficulty,
+  policyConfidence,
+  combinedTradeoffs,
   estimateTimeToImprove,
-  estimateCo2SavedTonnes,
-} from "../lib/scenario";
+  estimatePM25,
+  estimatePM10,
+} from "../lib/policies";
+
+const RECOMMENDED_POLICY_IDS = ["stop_waste_burning", "close_industrial"];
 
 export default function ScenarioLab() {
   const attributionQuery = useAttribution();
+  const forecastQuery = useForecast();
+  const enforcementQuery = useEnforcement();
+  const weatherQuery = useWeatherCurrent();
+  const registryQuery = useRegistry();
+
   const stations = useMemo(() => attributionQuery.data?.data ?? [], [attributionQuery.data]);
+  const registry = useMemo(() => registryQuery.data?.data ?? [], [registryQuery.data]);
   const [searchParams] = useSearchParams();
   const requestedStation = searchParams.get("station");
 
   const [stationName, setStationName] = useState(null);
-  const [levers, setLevers] = useState(LEVER_DEFAULTS);
+  const [enabledPolicyIds, setEnabledPolicyIds] = useState([]);
   const [slots, setSlots] = useState({ A: null, B: null, C: null });
-  const debouncedLevers = useDebouncedValue(levers, 300);
+  const debouncedPolicyIds = useDebouncedValue(enabledPolicyIds, 250);
 
   const simulateMutation = useSimulate();
   const recommendMutation = useSimulate();
+  const policyPreviews = usePolicyPreviews(stationName, POLICIES);
 
   // Default to the station requested via ?station= (cross-page link), falling
   // back to the worst (highest-AQI) station once real data arrives.
@@ -60,13 +76,15 @@ export default function ScenarioLab() {
 
   useEffect(() => {
     if (!stationName) return;
-    simulateMutation.mutate({ station: stationName, reductions: mapLeversToReductions(debouncedLevers) });
+    const { reductions, rain } = combinePolicies(debouncedPolicyIds);
+    simulateMutation.mutate({ station: stationName, reductions, rain });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stationName, debouncedLevers]);
+  }, [stationName, debouncedPolicyIds]);
 
   useEffect(() => {
     if (!stationName) return;
-    recommendMutation.mutate({ station: stationName, reductions: mapLeversToReductions(RECOMMENDED_LEVERS) });
+    const { reductions, rain } = combinePolicies(RECOMMENDED_POLICY_IDS);
+    recommendMutation.mutate({ station: stationName, reductions, rain });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stationName]);
 
@@ -76,27 +94,26 @@ export default function ScenarioLab() {
   const reductionPct = simulateMutation.data?.improvement_pct ?? 0;
   const aqiReduced = baselineAqi != null && predictedAqi != null ? Math.max(0, baselineAqi - predictedAqi) : 0;
 
-  const tradeoffs = useMemo(() => computeTradeoffs(levers), [levers]);
-  const confidence = useMemo(() => estimateConfidence(levers, reductionPct), [levers, reductionPct]);
+  const tradeoffs = useMemo(() => combinedTradeoffs(enabledPolicyIds, registry), [enabledPolicyIds, registry]);
+  const confidence = useMemo(() => policyConfidence(enabledPolicyIds.length, reductionPct), [enabledPolicyIds, reductionPct]);
   const timeToImprove = estimateTimeToImprove(aqiReduced);
-  const co2Saved = useMemo(() => estimateCo2SavedTonnes(levers), [levers]);
 
   const recPredicted = recommendMutation.data?.projected_aqi ?? null;
   const recPrevented = baselineAqi != null && recPredicted != null ? baselineAqi - recPredicted : null;
   const recConfidence =
-    recommendMutation.data != null ? estimateConfidence(RECOMMENDED_LEVERS, recommendMutation.data.improvement_pct) : null;
+    recommendMutation.data != null ? policyConfidence(RECOMMENDED_POLICY_IDS.length, recommendMutation.data.improvement_pct) : null;
   const costVsFullPct = useMemo(() => {
-    const recCost = computeTradeoffs(RECOMMENDED_LEVERS).costCr;
-    const fullCost = computeTradeoffs(FULL_SHUTDOWN_LEVERS).costCr;
+    const recCost = combinedTradeoffs(RECOMMENDED_POLICY_IDS, registry).costCr;
+    const fullCost = combinedTradeoffs(POLICIES.map((p) => p.id), registry).costCr;
     return fullCost ? Math.round((1 - recCost / fullCost) * 100) : 0;
+  }, [registry]);
+
+  const togglePolicy = useCallback((id) => {
+    setEnabledPolicyIds((prev) => (prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]));
   }, []);
 
-  function handleLeverChange(key, value) {
-    setLevers((prev) => ({ ...prev, [key]: value }));
-  }
-
   function handleApplyRecommended() {
-    setLevers(RECOMMENDED_LEVERS);
+    setEnabledPolicyIds(RECOMMENDED_POLICY_IDS);
   }
 
   function handleSaveSlot(id) {
@@ -112,6 +129,10 @@ export default function ScenarioLab() {
     }));
   }
 
+  const selectedEnforcement = enforcementQuery.data?.data?.find((e) => e.station === stationName) ?? null;
+  const selectedWeather = stationName ? weatherQuery.data?.data?.find((w) => w.station_name === stationName) : null;
+  const enabledPolicies = enabledPolicyIds.map((id) => POLICIES.find((p) => p.id === id)).filter(Boolean);
+
   return (
     <>
       <main className="max-w-content mx-auto px-5 md:px-10 pb-28 flex-1 w-full">
@@ -126,9 +147,9 @@ export default function ScenarioLab() {
               <ShieldCheck size={17} className="text-panel-accent" strokeWidth={1.6} />
             </div>
             <p className="text-[17px] md:text-[19px] leading-[1.55] text-[#33363A]">
-              Simulate interventions before implementation and understand their predicted impact on air quality.
-              Adjust the levers below — the AI re-forecasts the station in real time, with confidence and
-              trade-offs for every choice.
+              Enable one or more policies below to simulate their combined effect before implementation. Each
+              card's reduction is a real, live re-forecast from the simulation agent — enable several at once to
+              see how they stack.
             </p>
           </div>
 
@@ -154,23 +175,35 @@ export default function ScenarioLab() {
           {/* Workspace */}
           <section className="mt-10">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 items-start">
-              {/* Left — intervention controls */}
+              {/* Left — policy cards */}
               <div>
-                <SectionHeading eyebrow="02 · INTERVENTION CONTROLS" title="Adjust the levers" className="mb-[18px]" />
-                <Card padding="px-7 py-2" hover={false}>
-                  {LEVER_ORDER.map((key, i) => (
-                    <LeverRow
-                      key={key}
-                      leverKey={key}
-                      value={levers[key]}
-                      onChange={handleLeverChange}
-                      last={i === LEVER_ORDER.length - 1}
-                    />
+                <SectionHeading eyebrow="02 · POLICY CARDS" title="Choose interventions" className="mb-[18px]" />
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  variants={staggerContainer}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                >
+                  {POLICIES.map((policy, i) => (
+                    <motion.div key={policy.id} variants={fadeUp}>
+                      <PolicyCard
+                        policy={policy}
+                        enabled={enabledPolicyIds.includes(policy.id)}
+                        onToggle={togglePolicy}
+                        previewReduction={
+                          policyPreviews[i]?.data
+                            ? Math.round((currentStation?.aqi ?? 0) - policyPreviews[i].data.projected_aqi)
+                            : null
+                        }
+                        isPreviewLoading={policyPreviews[i]?.isLoading}
+                        difficulty={policyDifficulty(policy, registry)}
+                      />
+                    </motion.div>
                   ))}
-                </Card>
+                </motion.div>
                 <div className="flex gap-2.5 mt-4">
-                  <Button variant="ghost" size="md" icon={<RotateCcw size={14} />} onClick={() => setLevers(LEVER_DEFAULTS)}>
-                    Reset to current
+                  <Button variant="ghost" size="md" icon={<RotateCcw size={14} />} onClick={() => setEnabledPolicyIds([])}>
+                    Reset — do nothing
                   </Button>
                   <Button variant="primary" size="md" icon={<Sparkles size={15} className="text-panel-accent" />} onClick={handleApplyRecommended}>
                     Apply AI recommendation
@@ -182,8 +215,8 @@ export default function ScenarioLab() {
               <div className="lg:sticky lg:top-[88px] flex flex-col gap-4">
                 <PredictionPanel
                   aqi={predictedAqi}
-                  pm25={predictedAqi != null ? Math.round(predictedAqi * 0.58) : null}
-                  pm10={predictedAqi != null ? Math.round(predictedAqi * 1.12) : null}
+                  pm25={predictedAqi != null ? estimatePM25(predictedAqi) : null}
+                  pm10={predictedAqi != null ? estimatePM10(predictedAqi) : null}
                   confidence={confidence}
                   timeToImprove={aqiReduced > 0 ? timeToImprove : null}
                   isPending={simulateMutation.isPending}
@@ -194,7 +227,7 @@ export default function ScenarioLab() {
             </div>
           </section>
 
-          <BenefitsStrip aqiReduced={aqiReduced} co2SavedTonnes={co2Saved} />
+          <ImpactAssessment baselineAqi={baselineAqi} predictedAqi={predictedAqi} aqiReduced={aqiReduced} />
 
           <TradeoffsPanel
             costCr={tradeoffs.costCr}
@@ -206,6 +239,19 @@ export default function ScenarioLab() {
             hasReduction={aqiReduced > 0}
           />
 
+          <section className="mt-16">
+            <EvidenceGraph
+              station={currentStation}
+              weather={selectedWeather}
+              forecast={forecastQuery.data?.data?.find((f) => f.station === stationName)}
+              enforcementItem={selectedEnforcement}
+              enabledPolicies={enabledPolicies}
+              baselineAqi={baselineAqi}
+              predictedAqi={predictedAqi}
+              improvementPct={reductionPct}
+            />
+          </section>
+
           <AiPickPanel
             predictedAqi={recPredicted}
             prevented={recPrevented}
@@ -215,7 +261,7 @@ export default function ScenarioLab() {
             onApply={handleApplyRecommended}
           />
 
-          <CompareScenarios slots={slots} onSave={handleSaveSlot} />
+          <CompareScenarios slots={slots} onSave={handleSaveSlot} currentAqi={baselineAqi} />
         </QueryState>
       </main>
       <Footer

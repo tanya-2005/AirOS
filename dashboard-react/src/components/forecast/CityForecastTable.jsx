@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import Card from "../ui/Card";
@@ -5,7 +6,7 @@ import { categoryFor } from "../../lib/aqi";
 import { staggerContainer, fadeUp } from "../../lib/motion";
 import { cn } from "../../lib/utils/cn";
 
-function Row({ f, active, onClick, last }) {
+const Row = memo(function Row({ f, active, onSelect, last }) {
   const delta = f.forecast_24h.predicted_aqi - f.current_aqi;
   const worse = delta > 2;
   const better = delta < -2;
@@ -16,7 +17,8 @@ function Row({ f, active, onClick, last }) {
   return (
     <motion.button
       variants={fadeUp}
-      onClick={onClick}
+      onClick={() => onSelect(f.station)}
+      aria-pressed={active}
       className={cn(
         "w-full flex items-center gap-4 px-5 py-3.5 text-left transition-colors duration-150 cursor-pointer",
         !last && "border-b border-border-divider",
@@ -32,7 +34,7 @@ function Row({ f, active, onClick, last }) {
       </span>
     </motion.button>
   );
-}
+});
 
 /** All stations ranked by projected 24h change — worsening first — so the biggest emerging risk surfaces at the top. */
 export default function CityForecastTable({ forecasts, selected, onSelect }) {
@@ -49,7 +51,7 @@ export default function CityForecastTable({ forecasts, selected, onSelect }) {
       </div>
       <motion.div initial="hidden" animate="show" variants={staggerContainer}>
         {sorted.map((f, i) => (
-          <Row key={f.station} f={f} active={f.station === selected} onClick={() => onSelect(f.station)} last={i === sorted.length - 1} />
+          <Row key={f.station} f={f} active={f.station === selected} onSelect={onSelect} last={i === sorted.length - 1} />
         ))}
       </motion.div>
     </Card>

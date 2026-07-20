@@ -1,272 +1,380 @@
 [
   {
-    "priority_score": 0.607,
-    "station": "Wazirpur",
-    "current_aqi": 340,
-    "source_id": "REG-0037",
-    "source_name": "Waste Burning Zone #37",
+    "priority_score": 0.12,
+    "station": "Sri Auribindo Marg, Delhi, Delhi, India",
+    "current_aqi": 109,
+    "source_id": "REG-0036",
+    "source_name": "Diesel Generator Cluster #36",
     "source_type": "waste_burning_zone",
     "permit_status": "unregistered",
-    "distance_km": 1.0,
+    "distance_km": 1.04,
     "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.506,
-    "expected_aqi_improvement_pct": 30.4,
-    "projected_aqi_if_actioned": 236.8,
+    "attribution_confidence": 1.0,
+    "expected_aqi_improvement_pct": 60.0,
+    "projected_aqi_if_actioned": 43.6,
     "evidence": {
-      "last_inspection_days_ago": 81,
+      "last_inspection_days_ago": 377,
       "active": true
     }
   },
   {
-    "priority_score": 0.607,
-    "station": "Wazirpur",
-    "current_aqi": 340,
-    "source_id": "REG-0044",
-    "source_name": "Waste Burning Zone #44",
-    "source_type": "waste_burning_zone",
-    "permit_status": "expired",
-    "distance_km": 1.23,
-    "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.506,
-    "expected_aqi_improvement_pct": 30.4,
-    "projected_aqi_if_actioned": 236.8,
-    "evidence": {
-      "last_inspection_days_ago": 60,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.607,
-    "station": "Wazirpur",
-    "current_aqi": 340,
-    "source_id": "REG-0049",
-    "source_name": "Waste Burning Zone #49",
-    "source_type": "waste_burning_zone",
-    "permit_status": "expired",
-    "distance_km": 0.71,
-    "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.506,
-    "expected_aqi_improvement_pct": 30.4,
-    "projected_aqi_if_actioned": 236.8,
-    "evidence": {
-      "last_inspection_days_ago": 187,
-      "active": false
-    }
-  },
-  {
-    "priority_score": 0.344,
-    "station": "RK Puram",
-    "current_aqi": 210,
-    "source_id": "REG-0043",
-    "source_name": "Waste Burning Zone #43",
-    "source_type": "waste_burning_zone",
-    "permit_status": "expired",
-    "distance_km": 0.49,
-    "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.41,
-    "expected_aqi_improvement_pct": 24.6,
-    "projected_aqi_if_actioned": 158.3,
-    "evidence": {
-      "last_inspection_days_ago": 314,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.344,
-    "station": "RK Puram",
-    "current_aqi": 210,
-    "source_id": "REG-0014",
-    "source_name": "Waste Burning Zone #14",
-    "source_type": "waste_burning_zone",
-    "permit_status": "expired",
-    "distance_km": 0.57,
-    "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.41,
-    "expected_aqi_improvement_pct": 24.6,
-    "projected_aqi_if_actioned": 158.3,
-    "evidence": {
-      "last_inspection_days_ago": 113,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.344,
-    "station": "RK Puram",
-    "current_aqi": 210,
-    "source_id": "REG-0059",
-    "source_name": "Waste Burning Zone #59",
-    "source_type": "waste_burning_zone",
-    "permit_status": "unregistered",
-    "distance_km": 0.89,
-    "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.41,
-    "expected_aqi_improvement_pct": 24.6,
-    "projected_aqi_if_actioned": 158.3,
-    "evidence": {
-      "last_inspection_days_ago": 161,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.319,
-    "station": "Wazirpur",
-    "current_aqi": 340,
+    "priority_score": 0.12,
+    "station": "Sri Auribindo Marg, Delhi, Delhi, India",
+    "current_aqi": 109,
     "source_id": "REG-0027",
     "source_name": "Industrial Stack #27",
-    "source_type": "industrial_stack",
+    "source_type": "waste_burning_zone",
     "permit_status": "unregistered",
     "distance_km": 1.33,
-    "action": "Inspect emission-control compliance",
-    "attribution_confidence": 0.266,
-    "expected_aqi_improvement_pct": 6.7,
-    "projected_aqi_if_actioned": 317.4,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 1.0,
+    "expected_aqi_improvement_pct": 60.0,
+    "projected_aqi_if_actioned": 43.6,
     "evidence": {
       "last_inspection_days_ago": 122,
       "active": true
     }
   },
   {
-    "priority_score": 0.274,
-    "station": "Wazirpur",
-    "current_aqi": 340,
+    "priority_score": 0.12,
+    "station": "Sri Auribindo Marg, Delhi, Delhi, India",
+    "current_aqi": 109,
+    "source_id": "REG-0007",
+    "source_name": "Industrial Stack #7",
+    "source_type": "waste_burning_zone",
+    "permit_status": "expired",
+    "distance_km": 1.45,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 1.0,
+    "expected_aqi_improvement_pct": 60.0,
+    "projected_aqi_if_actioned": 43.6,
+    "evidence": {
+      "last_inspection_days_ago": 41,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.12,
+    "station": "Sri Auribindo Marg, Delhi, Delhi, India",
+    "current_aqi": 109,
+    "source_id": "REG-0006",
+    "source_name": "Construction Site #6",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 1.5,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 1.0,
+    "expected_aqi_improvement_pct": 60.0,
+    "projected_aqi_if_actioned": 43.6,
+    "evidence": {
+      "last_inspection_days_ago": 317,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.116,
+    "station": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+    "current_aqi": 102,
+    "source_id": "REG-0024",
+    "source_name": "Industrial Stack #24",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 0.2,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.966,
+    "expected_aqi_improvement_pct": 58.0,
+    "projected_aqi_if_actioned": 42.9,
+    "evidence": {
+      "last_inspection_days_ago": 160,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.116,
+    "station": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+    "current_aqi": 102,
+    "source_id": "REG-0023",
+    "source_name": "Industrial Stack #23",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 0.26,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.966,
+    "expected_aqi_improvement_pct": 58.0,
+    "projected_aqi_if_actioned": 42.9,
+    "evidence": {
+      "last_inspection_days_ago": 311,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.116,
+    "station": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+    "current_aqi": 102,
+    "source_id": "REG-0020",
+    "source_name": "Waste Burning Zone #20",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 0.9,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.966,
+    "expected_aqi_improvement_pct": 58.0,
+    "projected_aqi_if_actioned": 42.9,
+    "evidence": {
+      "last_inspection_days_ago": 1,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.116,
+    "station": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+    "current_aqi": 102,
+    "source_id": "REG-0021",
+    "source_name": "Diesel Generator Cluster #21",
+    "source_type": "waste_burning_zone",
+    "permit_status": "expired",
+    "distance_km": 1.22,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.966,
+    "expected_aqi_improvement_pct": 58.0,
+    "projected_aqi_if_actioned": 42.9,
+    "evidence": {
+      "last_inspection_days_ago": 123,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.116,
+    "station": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+    "current_aqi": 102,
+    "source_id": "REG-0028",
+    "source_name": "Diesel Generator Cluster #28",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 1.85,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.966,
+    "expected_aqi_improvement_pct": 58.0,
+    "projected_aqi_if_actioned": 42.9,
+    "evidence": {
+      "last_inspection_days_ago": 296,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.091,
+    "station": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+    "current_aqi": 89,
+    "source_id": "REG-0021",
+    "source_name": "Diesel Generator Cluster #21",
+    "source_type": "waste_burning_zone",
+    "permit_status": "expired",
+    "distance_km": 1.22,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.759,
+    "expected_aqi_improvement_pct": 45.5,
+    "projected_aqi_if_actioned": 48.5,
+    "evidence": {
+      "last_inspection_days_ago": 123,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.091,
+    "station": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+    "current_aqi": 89,
+    "source_id": "REG-0020",
+    "source_name": "Waste Burning Zone #20",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 1.55,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.759,
+    "expected_aqi_improvement_pct": 45.5,
+    "projected_aqi_if_actioned": 48.5,
+    "evidence": {
+      "last_inspection_days_ago": 1,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.091,
+    "station": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+    "current_aqi": 89,
+    "source_id": "REG-0024",
+    "source_name": "Industrial Stack #24",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 2.24,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.759,
+    "expected_aqi_improvement_pct": 45.5,
+    "projected_aqi_if_actioned": 48.5,
+    "evidence": {
+      "last_inspection_days_ago": 160,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.091,
+    "station": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+    "current_aqi": 89,
+    "source_id": "REG-0023",
+    "source_name": "Industrial Stack #23",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 2.56,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.759,
+    "expected_aqi_improvement_pct": 45.5,
+    "projected_aqi_if_actioned": 48.5,
+    "evidence": {
+      "last_inspection_days_ago": 311,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.08,
+    "station": "Sri Auribindo Marg, Delhi, Delhi, India",
+    "current_aqi": 109,
+    "source_id": "REG-0025",
+    "source_name": "Waste Burning Zone #25",
+    "source_type": "waste_burning_zone",
+    "permit_status": "valid",
+    "distance_km": 1.23,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 1.0,
+    "expected_aqi_improvement_pct": 60.0,
+    "projected_aqi_if_actioned": 43.6,
+    "evidence": {
+      "last_inspection_days_ago": 33,
+      "active": false
+    }
+  },
+  {
+    "priority_score": 0.068,
+    "station": "R.K. Puram, Delhi, Delhi, India",
+    "current_aqi": 99,
+    "source_id": "REG-0015",
+    "source_name": "Diesel Generator Cluster #15",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 0.81,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.564,
+    "expected_aqi_improvement_pct": 33.8,
+    "projected_aqi_if_actioned": 65.5,
+    "evidence": {
+      "last_inspection_days_ago": 82,
+      "active": false
+    }
+  },
+  {
+    "priority_score": 0.068,
+    "station": "R.K. Puram, Delhi, Delhi, India",
+    "current_aqi": 99,
+    "source_id": "REG-0037",
+    "source_name": "Waste Burning Zone #37",
+    "source_type": "waste_burning_zone",
+    "permit_status": "unregistered",
+    "distance_km": 1.09,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.564,
+    "expected_aqi_improvement_pct": 33.8,
+    "projected_aqi_if_actioned": 65.5,
+    "evidence": {
+      "last_inspection_days_ago": 81,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.068,
+    "station": "R.K. Puram, Delhi, Delhi, India",
+    "current_aqi": 99,
+    "source_id": "REG-0040",
+    "source_name": "Waste Burning Zone #40",
+    "source_type": "waste_burning_zone",
+    "permit_status": "expired",
+    "distance_km": 1.21,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.564,
+    "expected_aqi_improvement_pct": 33.8,
+    "projected_aqi_if_actioned": 65.5,
+    "evidence": {
+      "last_inspection_days_ago": 68,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.068,
+    "station": "R.K. Puram, Delhi, Delhi, India",
+    "current_aqi": 99,
+    "source_id": "REG-0016",
+    "source_name": "Construction Site #16",
+    "source_type": "waste_burning_zone",
+    "permit_status": "expired",
+    "distance_km": 1.32,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.564,
+    "expected_aqi_improvement_pct": 33.8,
+    "projected_aqi_if_actioned": 65.5,
+    "evidence": {
+      "last_inspection_days_ago": 284,
+      "active": true
+    }
+  },
+  {
+    "priority_score": 0.068,
+    "station": "R.K. Puram, Delhi, Delhi, India",
+    "current_aqi": 99,
     "source_id": "REG-0017",
     "source_name": "Construction Site #17",
-    "source_type": "construction_site",
+    "source_type": "waste_burning_zone",
     "permit_status": "unregistered",
-    "distance_km": 0.41,
-    "action": "Enforce dust-control / water sprinkling order",
-    "attribution_confidence": 0.228,
-    "expected_aqi_improvement_pct": 9.1,
-    "projected_aqi_if_actioned": 309.0,
+    "distance_km": 1.37,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.564,
+    "expected_aqi_improvement_pct": 33.8,
+    "projected_aqi_if_actioned": 65.5,
     "evidence": {
       "last_inspection_days_ago": 175,
       "active": true
     }
   },
   {
-    "priority_score": 0.257,
-    "station": "Mundka",
-    "current_aqi": 298,
-    "source_id": "REG-0018",
-    "source_name": "Waste Burning Zone #18",
+    "priority_score": 0.051,
+    "station": "DITE Okhla, Delhi, Delhi, India",
+    "current_aqi": 95,
+    "source_id": "REG-0010",
+    "source_name": "Industrial Stack #10",
     "source_type": "waste_burning_zone",
     "permit_status": "unregistered",
-    "distance_km": 0.17,
+    "distance_km": 0.92,
     "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.306,
-    "expected_aqi_improvement_pct": 18.4,
-    "projected_aqi_if_actioned": 243.3,
+    "attribution_confidence": 0.422,
+    "expected_aqi_improvement_pct": 25.3,
+    "projected_aqi_if_actioned": 70.9,
     "evidence": {
-      "last_inspection_days_ago": 135,
+      "last_inspection_days_ago": 353,
       "active": true
     }
   },
   {
-    "priority_score": 0.257,
-    "station": "Mundka",
-    "current_aqi": 298,
-    "source_id": "REG-0060",
-    "source_name": "Waste Burning Zone #60",
+    "priority_score": 0.019,
+    "station": "Major Dhyan Chand National Stadium, Delhi, Delhi, India",
+    "current_aqi": 72,
+    "source_id": "REG-0001",
+    "source_name": "Construction Site #1",
     "source_type": "waste_burning_zone",
-    "permit_status": "unregistered",
-    "distance_km": 0.33,
-    "action": "Deploy enforcement patrol to stop burning",
-    "attribution_confidence": 0.306,
-    "expected_aqi_improvement_pct": 18.4,
-    "projected_aqi_if_actioned": 243.3,
-    "evidence": {
-      "last_inspection_days_ago": 152,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.157,
-    "station": "Mundka",
-    "current_aqi": 298,
-    "source_id": "REG-0031",
-    "source_name": "Construction Site #31",
-    "source_type": "construction_site",
-    "permit_status": "valid",
-    "distance_km": 0.38,
-    "action": "Enforce dust-control / water sprinkling order",
-    "attribution_confidence": 0.28,
-    "expected_aqi_improvement_pct": 11.2,
-    "projected_aqi_if_actioned": 264.6,
-    "evidence": {
-      "last_inspection_days_ago": 99,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.134,
-    "station": "Mundka",
-    "current_aqi": 298,
-    "source_id": "REG-0045",
-    "source_name": "Industrial Stack #45",
-    "source_type": "industrial_stack",
-    "permit_status": "valid",
-    "distance_km": 0.55,
-    "action": "Inspect emission-control compliance",
-    "attribution_confidence": 0.239,
-    "expected_aqi_improvement_pct": 6.0,
-    "projected_aqi_if_actioned": 280.2,
-    "evidence": {
-      "last_inspection_days_ago": 352,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.097,
-    "station": "Mundka",
-    "current_aqi": 298,
-    "source_id": "REG-0005",
-    "source_name": "Diesel Generator Cluster #5",
-    "source_type": "diesel_generator_cluster",
     "permit_status": "valid",
     "distance_km": 1.12,
-    "action": "Enforce diesel generator restrictions / power backup audit",
-    "attribution_confidence": 0.174,
-    "expected_aqi_improvement_pct": 3.5,
-    "projected_aqi_if_actioned": 287.6,
+    "action": "Deploy enforcement patrol to stop burning",
+    "attribution_confidence": 0.239,
+    "expected_aqi_improvement_pct": 14.3,
+    "projected_aqi_if_actioned": 61.7,
     "evidence": {
-      "last_inspection_days_ago": 374,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.086,
-    "station": "RK Puram",
-    "current_aqi": 210,
-    "source_id": "REG-0034",
-    "source_name": "Industrial Stack #34",
-    "source_type": "industrial_stack",
-    "permit_status": "valid",
-    "distance_km": 0.21,
-    "action": "Inspect emission-control compliance",
-    "attribution_confidence": 0.154,
-    "expected_aqi_improvement_pct": 3.9,
-    "projected_aqi_if_actioned": 201.9,
-    "evidence": {
-      "last_inspection_days_ago": 85,
-      "active": true
-    }
-  },
-  {
-    "priority_score": 0.053,
-    "station": "RK Puram",
-    "current_aqi": 210,
-    "source_id": "REG-0008",
-    "source_name": "Construction Site #8",
-    "source_type": "construction_site",
-    "permit_status": "valid",
-    "distance_km": 0.28,
-    "action": "Enforce dust-control / water sprinkling order",
-    "attribution_confidence": 0.094,
-    "expected_aqi_improvement_pct": 3.8,
-    "projected_aqi_if_actioned": 202.1,
-    "evidence": {
-      "last_inspection_days_ago": 190,
-      "active": true
+      "last_inspection_days_ago": 347,
+      "active": false
     }
   }
 ]

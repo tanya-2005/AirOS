@@ -13,5 +13,5 @@ def read_attribution():
 
 @router.get("/registry", response_model=Envelope)
 def read_registry():
-    data = pipeline.get_registry()
-    return Envelope(data=data, data_source="synthetic", count=len(data))
+    data, source = pipeline.get_registry()
+    return Envelope(data=data, data_source=source, count=len(data))

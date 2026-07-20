@@ -1,0 +1,259 @@
+{
+  "city": "delhi",
+  "fetched_at": "20260720T110302Z",
+  "stations": [
+    {
+      "station_name": "DITE Okhla, Delhi, Delhi, India",
+      "lat": 28.531314,
+      "lon": 77.270686,
+      "temperature": 32.3,
+      "humidity": 71,
+      "wind_speed": 3.9,
+      "wind_direction": 332,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Jawaharlal Nehru Stadium, Delhi, Delhi, India",
+      "lat": 28.582846,
+      "lon": 77.234366,
+      "temperature": 32.5,
+      "humidity": 70,
+      "wind_speed": 3.3,
+      "wind_direction": 331,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "ITI Jahangirpuri, Delhi, Delhi, India",
+      "lat": 28.733016,
+      "lon": 77.17197,
+      "temperature": 31.6,
+      "humidity": 76,
+      "wind_speed": 4.1,
+      "wind_direction": 337,
+      "precipitation": 0.2,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "ITI Shahdra, Jhilmil Industrial Area, Delhi, Delhi, India",
+      "lat": 28.672114,
+      "lon": 77.313832,
+      "temperature": 32.2,
+      "humidity": 73,
+      "wind_speed": 2.9,
+      "wind_direction": 22,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Narela, Delhi, Delhi, India",
+      "lat": 28.820629,
+      "lon": 77.101099,
+      "temperature": 31.0,
+      "humidity": 80,
+      "wind_speed": 1.9,
+      "wind_direction": 73,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Alipur, Delhi, Delhi, India",
+      "lat": 28.815691,
+      "lon": 77.152491,
+      "temperature": 31.2,
+      "humidity": 79,
+      "wind_speed": 3.1,
+      "wind_direction": 339,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "R.K. Puram, Delhi, Delhi, India",
+      "lat": 28.5648,
+      "lon": 77.1744,
+      "temperature": 32.5,
+      "humidity": 70,
+      "wind_speed": 3.3,
+      "wind_direction": 331,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "National Institute of Malaria Research, Sector 8, Dwarka, Delhi, Delhi, India",
+      "lat": 28.576909,
+      "lon": 77.075898,
+      "temperature": 32.8,
+      "humidity": 66,
+      "wind_speed": 4.7,
+      "wind_direction": 313,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+      "lat": 28.700505,
+      "lon": 77.165603,
+      "temperature": 31.6,
+      "humidity": 76,
+      "wind_speed": 4.1,
+      "wind_direction": 337,
+      "precipitation": 0.2,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Mundka, Delhi, Delhi, India",
+      "lat": 28.68241,
+      "lon": 77.030469,
+      "temperature": 31.5,
+      "humidity": 76,
+      "wind_speed": 4.8,
+      "wind_direction": 338,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Punjabi Bagh, Delhi, Delhi, India",
+      "lat": 28.6683,
+      "lon": 77.1167,
+      "temperature": 32.7,
+      "humidity": 68,
+      "wind_speed": 4.4,
+      "wind_direction": 328,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Dr. Karni Singh Shooting Range, Delhi, Delhi, India",
+      "lat": 28.499727,
+      "lon": 77.267095,
+      "temperature": 32.3,
+      "humidity": 71,
+      "wind_speed": 3.9,
+      "wind_direction": 332,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Sri Auribindo Marg, Delhi, Delhi, India",
+      "lat": 28.528344,
+      "lon": 77.189304,
+      "temperature": 32.5,
+      "humidity": 67,
+      "wind_speed": 4.5,
+      "wind_direction": 320,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Major Dhyan Chand National Stadium, Delhi, Delhi, India",
+      "lat": 28.612498,
+      "lon": 77.237388,
+      "temperature": 32.2,
+      "humidity": 73,
+      "wind_speed": 2.9,
+      "wind_direction": 22,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "PGDAV College, Sriniwaspuri, Delhi, Delhi, India",
+      "lat": 28.566827,
+      "lon": 77.251418,
+      "temperature": 32.1,
+      "humidity": 74,
+      "wind_speed": 2.9,
+      "wind_direction": 353,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Mother Dairy Plant, Parparganj, Delhi, Delhi, India",
+      "lat": 28.620171,
+      "lon": 77.287705,
+      "temperature": 32.2,
+      "humidity": 73,
+      "wind_speed": 2.9,
+      "wind_direction": 22,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Sonia Vihar Water Treatment Plant DJB, Delhi, Delhi, India",
+      "lat": 28.710066,
+      "lon": 77.24622,
+      "temperature": 32.1,
+      "humidity": 73,
+      "wind_speed": 3.4,
+      "wind_direction": 16,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Bramprakash Ayurvedic Hospital, Najafgarh, Delhi, Delhi, India",
+      "lat": 28.572714,
+      "lon": 76.933433,
+      "temperature": 32.9,
+      "humidity": 65,
+      "wind_speed": 3.7,
+      "wind_direction": 313,
+      "precipitation": 0.1,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Anand Vihar, Delhi, Delhi, India",
+      "lat": 28.6508,
+      "lon": 77.3152,
+      "temperature": 32.2,
+      "humidity": 73,
+      "wind_speed": 2.9,
+      "wind_direction": 22,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Mandir Marg, Delhi, Delhi, India",
+      "lat": 28.6341,
+      "lon": 77.2005,
+      "temperature": 32.6,
+      "humidity": 71,
+      "wind_speed": 3.5,
+      "wind_direction": 339,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Pusa, Delhi, Delhi, India",
+      "lat": 28.636997,
+      "lon": 77.172248,
+      "temperature": 32.6,
+      "humidity": 71,
+      "wind_speed": 3.5,
+      "wind_direction": 339,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Satyawati College, Delhi, Delhi, India",
+      "lat": 28.69572,
+      "lon": 77.181295,
+      "temperature": 31.6,
+      "humidity": 76,
+      "wind_speed": 4.1,
+      "wind_direction": 337,
+      "precipitation": 0.2,
+      "observed_at": "2026-07-20T16:30"
+    },
+    {
+      "station_name": "Shaheed Sukhdev College of Business Studies, Rohini, Delhi, Delhi, India",
+      "lat": 28.732743,
+      "lon": 77.118788,
+      "temperature": 31.6,
+      "humidity": 76,
+      "wind_speed": 4.1,
+      "wind_direction": 337,
+      "precipitation": 0.2,
+      "observed_at": "2026-07-20T16:30"
+    }
+  ]
+}

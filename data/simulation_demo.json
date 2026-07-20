@@ -1,14 +1,14 @@
 [
   {
-    "current_aqi": 340,
-    "projected_aqi": 301.2,
-    "improvement_pct": 11.4,
+    "current_aqi": 171,
+    "projected_aqi": 140.6,
+    "improvement_pct": 17.8,
     "breakdown": [
       {
         "source": "construction_site",
-        "share_of_aqi": 0.23,
+        "share_of_aqi": 0.36,
         "reduction_applied": "50%",
-        "aqi_points_saved": 38.8
+        "aqi_points_saved": 30.4
       }
     ],
     "scenario": {
@@ -20,8 +20,8 @@
     }
   },
   {
-    "current_aqi": 340,
-    "projected_aqi": 340.0,
+    "current_aqi": 171,
+    "projected_aqi": 171.0,
     "improvement_pct": 0.0,
     "breakdown": [],
     "scenario": {
@@ -33,13 +33,13 @@
     }
   },
   {
-    "current_aqi": 340,
-    "projected_aqi": 238.0,
+    "current_aqi": 171,
+    "projected_aqi": 119.7,
     "improvement_pct": 30.0,
     "breakdown": [
       {
         "source": "rain",
-        "aqi_points_saved": 102.0,
+        "aqi_points_saved": 51.3,
         "note": "assumed coefficient, cite real study if available"
       }
     ],
@@ -52,19 +52,19 @@
     }
   },
   {
-    "current_aqi": 340,
-    "projected_aqi": 199.2,
-    "improvement_pct": 41.4,
+    "current_aqi": 171,
+    "projected_aqi": 89.3,
+    "improvement_pct": 47.8,
     "breakdown": [
       {
         "source": "construction_site",
-        "share_of_aqi": 0.23,
+        "share_of_aqi": 0.36,
         "reduction_applied": "50%",
-        "aqi_points_saved": 38.8
+        "aqi_points_saved": 30.4
       },
       {
         "source": "rain",
-        "aqi_points_saved": 102.0,
+        "aqi_points_saved": 51.3,
         "note": "assumed coefficient, cite real study if available"
       }
     ],

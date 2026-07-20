@@ -26,6 +26,8 @@ import urllib.error
 
 from dotenv import load_dotenv
 
+import history_store
+
 # Explicit path rather than a bare load_dotenv() — this script is documented
 # to be run either from the repo root or from inside ingestion/ (see README),
 # and an implicit search would only reliably find .env from the latter.
@@ -66,25 +68,29 @@ CITY_BOUNDS = {
 }
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--city", choices=CITY_BOUNDS.keys(), default="delhi")
-    ap.add_argument("--bounds", help="lat1,lon1,lat2,lon2 override")
-    ap.add_argument("--detail", action="store_true",
-                     help="also fetch per-pollutant breakdown for each station (slower, more API calls)")
-    args = ap.parse_args()
+def run_ingestion(city="delhi", bounds=None, detail=False, token=None):
+    """
+    Core ingestion logic, separated from argparse so it's directly callable
+    with plain Python arguments — used by main() below and by
+    ingestion/scheduler.py, which needs to trigger a fetch every 15 minutes
+    without shelling out to a subprocess.
 
-    token = os.environ.get("WAQI_TOKEN")
+    Returns (out_path, records, skipped) — out_path is None if nothing
+    usable was fetched (bad/missing token, every station unreadable, etc.),
+    in which case the caller decides how to handle that (main() exits
+    non-zero; the scheduler logs it and waits for the next cycle).
+    """
+    token = token or os.environ.get("WAQI_TOKEN")
     if not token:
         print("ERROR: WAQI_TOKEN not set. Add it to the repo-root .env file "
               "(see .env.example) — get a free token at "
               "https://aqicn.org/data-platform/token/", file=sys.stderr)
-        sys.exit(1)
+        return None, [], 0
 
-    if args.bounds:
-        lat1, lon1, lat2, lon2 = map(float, args.bounds.split(","))
+    if bounds:
+        lat1, lon1, lat2, lon2 = bounds
     else:
-        lat1, lon1, lat2, lon2 = CITY_BOUNDS[args.city]
+        lat1, lon1, lat2, lon2 = CITY_BOUNDS[city]
 
     stations = fetch_bounds(lat1, lon1, lat2, lon2, token)
     print(f"Found {len(stations)} stations in bounding box.")
@@ -118,13 +124,13 @@ def main():
             "lon": s["lon"],
             "aqi": aqi_value,
         }
-        if args.detail:
-            detail = fetch_station_detail(s["uid"], token)
-            if detail:
-                iaqi = detail.get("iaqi", {})
+        if detail:
+            station_detail = fetch_station_detail(s["uid"], token)
+            if station_detail:
+                iaqi = station_detail.get("iaqi", {})
                 rec["pollutants"] = {k: v.get("v") for k, v in iaqi.items()}
-                rec["dominant_pollutant"] = detail.get("dominentpol")
-                rec["time"] = detail.get("time", {}).get("iso")
+                rec["dominant_pollutant"] = station_detail.get("dominentpol")
+                rec["time"] = station_detail.get("time", {}).get("iso")
         records.append(rec)
 
     if skipped:
@@ -132,18 +138,38 @@ def main():
 
     if not records:
         print("ERROR: no stations with a usable reading — nothing written to data/.", file=sys.stderr)
-        sys.exit(1)
+        return None, [], skipped
 
-    ts = datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+    now = datetime.datetime.now(datetime.timezone.utc)
+    ts = now.strftime("%Y%m%dT%H%M%SZ")
     out_dir = os.path.join(os.path.dirname(__file__), "..", "data")
     os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, f"aqi_stations_{args.city}_{ts}.json")
+    out_path = os.path.join(out_dir, f"aqi_stations_{city}_{ts}.json")
     with open(out_path, "w") as f:
-        json.dump({"city": args.city, "fetched_at": ts, "stations": records}, f, indent=2)
+        json.dump({"city": city, "fetched_at": ts, "stations": records}, f, indent=2)
+
+    history_store.append("aqi", city, history_store.now_iso(), records)
 
     print(f"Wrote {len(records)} station records to {out_path}")
     print("The backend picks this up automatically on the next request — "
           "no restart needed (see backend/pipeline.py:_load_latest).")
+
+    return out_path, records, skipped
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--city", choices=CITY_BOUNDS.keys(), default="delhi")
+    ap.add_argument("--bounds", help="lat1,lon1,lat2,lon2 override")
+    ap.add_argument("--detail", action="store_true",
+                     help="also fetch per-pollutant breakdown for each station (slower, more API calls)")
+    args = ap.parse_args()
+
+    bounds = tuple(map(float, args.bounds.split(","))) if args.bounds else None
+    out_path, records, skipped = run_ingestion(city=args.city, bounds=bounds, detail=args.detail)
+
+    if out_path is None:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

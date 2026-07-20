@@ -1,15 +1,15 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Card from "../ui/Card";
 import Badge from "../ui/Badge";
 import SearchInput from "../ui/SearchInput";
 import { cn } from "../../lib/utils/cn";
-import { sourceMeta, PERMIT_TONE, SOURCE_META } from "../../lib/sources";
+import { sourceMeta, PERMIT_TONE, SOURCE_META, RECORD_SOURCE_LABEL } from "../../lib/sources";
 import { staggerContainer, fadeUp } from "../../lib/motion";
 
 const TYPE_FILTERS = ["all", ...Object.keys(SOURCE_META)];
 
-function RegistryRow({ record, last }) {
+const RegistryRow = memo(function RegistryRow({ record, last }) {
   const meta = sourceMeta(record.source_type);
   const Icon = meta.Icon;
 
@@ -27,7 +27,7 @@ function RegistryRow({ record, last }) {
       <div className="flex-1 min-w-0">
         <div className="text-[13.5px] font-medium text-ink truncate">{record.registered_name}</div>
         <div className="text-[11.5px] text-muted-3 font-mono mt-0.5">
-          {record.id} · {record.ward}
+          {record.id} · {record.ward} · {RECORD_SOURCE_LABEL[record.source] || RECORD_SOURCE_LABEL.synthetic}
         </div>
       </div>
       <span className={cn("w-[7px] h-[7px] rounded-full shrink-0", record.active ? "bg-success" : "bg-muted-5")} />
@@ -35,11 +35,11 @@ function RegistryRow({ record, last }) {
         {record.permit_status}
       </Badge>
       <span className="text-[11.5px] text-muted-4 font-mono shrink-0 hidden sm:inline w-[92px] text-right">
-        {record.last_inspection_days_ago}d ago
+        {record.last_inspection_days_ago != null ? `${record.last_inspection_days_ago}d ago` : "no data"}
       </span>
     </motion.div>
   );
-}
+});
 
 export default function RegistryBrowser({ records }) {
   const [query, setQuery] = useState("");
@@ -66,6 +66,7 @@ export default function RegistryBrowser({ records }) {
             <button
               key={t}
               onClick={() => setTypeFilter(t)}
+              aria-pressed={typeFilter === t}
               className={cn(
                 "px-2.5 py-1.5 rounded-full text-[11.5px] font-mono uppercase tracking-wide border transition-colors duration-150 cursor-pointer",
                 typeFilter === t ? "bg-ink text-white border-ink" : "bg-white text-muted-2 border-border hover:border-border-hover"

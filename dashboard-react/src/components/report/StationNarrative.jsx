@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import Card from "../ui/Card";
 import { categoryFor } from "../../lib/aqi";
 import { stationNarrative } from "../../lib/report";
 import { fadeUp } from "../../lib/motion";
 
-export default function StationNarrative({ station, forecast, enforcementForStation }) {
+function StationNarrative({ station, forecast, enforcementForStation }) {
   const cat = categoryFor(station.aqi);
   const text = stationNarrative(station, forecast, enforcementForStation);
 
@@ -27,3 +28,5 @@ export default function StationNarrative({ station, forecast, enforcementForStat
     </motion.div>
   );
 }
+
+export default memo(StationNarrative);

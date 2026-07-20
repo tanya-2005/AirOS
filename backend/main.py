@@ -5,7 +5,7 @@ Run from the repo root: uvicorn backend.main:app --reload --port 8000
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import attribution, forecast, enforcement, simulation
+from .routers import attribution, forecast, enforcement, simulation, weather, history, geo
 
 app = FastAPI(
     title="AirOS API",
@@ -31,6 +31,9 @@ app.include_router(attribution.router)
 app.include_router(forecast.router)
 app.include_router(enforcement.router)
 app.include_router(simulation.router)
+app.include_router(weather.router)
+app.include_router(history.router)
+app.include_router(geo.router)
 
 
 @app.get("/api/health")

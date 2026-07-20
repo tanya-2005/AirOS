@@ -40,6 +40,7 @@ export default function ForecastComponents({ station }) {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
+              aria-pressed={tab === t.id}
               className={cn(
                 "px-3 py-1.5 rounded-full text-[12px] font-mono transition-colors duration-150 cursor-pointer",
                 tab === t.id ? "bg-ink text-white" : "text-muted-2 hover:text-ink"

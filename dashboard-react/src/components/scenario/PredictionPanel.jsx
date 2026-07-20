@@ -17,7 +17,7 @@ export default function PredictionPanel({ aqi, pm25, pm10, confidence, timeToImp
   const cat = darkPanelCategoryFor(aqi ?? 0);
 
   return (
-    <Card dark padding="p-[26px]" hover={false}>
+    <Card dark padding="p-7" hover={false}>
       <div className="flex items-center justify-between">
         <span className="font-mono text-[10.5px] tracking-[.1em] text-panel-muted">LIVE PREDICTION</span>
         <span className="flex items-center gap-1.5 font-mono text-[10px] text-panel-accent">
