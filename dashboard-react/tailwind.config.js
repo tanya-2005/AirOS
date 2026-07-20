@@ -4,27 +4,109 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "#12161b",
-        panel: "#1a2028",
-        panelAlt: "#212933",
-        borderc: "#2b333d",
-        ink: "#e7e2d6",
-        inkMuted: "#8993a1",
-        haze: "#c98a4f",
-        clean: "#5aa89a",
+        // Base surfaces
+        bg: "#FBFAF8",
+        surface: "#FFFFFF",
+        search: "#F4F1EC",
+
+        // Ink / text ramp
+        ink: "#141618",
+        muted: {
+          1: "#6B6F75",
+          2: "#7B8087",
+          3: "#8A8F96",
+          4: "#9AA0A6",
+          5: "#B5B2AB",
+        },
+
+        // Borders
+        border: {
+          DEFAULT: "#E9E7E2",
+          hover: "#DBD8D2",
+          nav: "#ECEAE4",
+          divider: "#F1EFEA",
+        },
+
+        // Primary accent (teal)
+        accent: {
+          DEFAULT: "#1F7A85",
+          hover: "#125A63",
+          tint: "#EAF3F3",
+        },
+        selection: "#D6EBEC",
+
+        // Dark panel (hero / prediction cards)
+        panel: {
+          DEFAULT: "#141618",
+          nested: "#1C2023",
+          muted: "#8A959A",
+          muted2: "#6E7679",
+          accent: "#7FD0D6",
+        },
+
+        // Status
+        success: { DEFAULT: "#2E7D52", soft: "#4CAF7D", bg: "#E8F1EA" },
+        warning: { DEFAULT: "#9A7217", soft: "#E0A83B", bg: "#FBF3E1" },
+        danger: { DEFAULT: "#B7502C", soft: "#D4663B", bg: "#FBEDE8" },
+        hazard: { DEFAULT: "#9A2F41", soft: "#B23B4E", bg: "#F6E6E8" },
+        neutralchip: { bg1: "#F0EEE9", text1: "#6E7679", text1alt: "#44474B", bg2: "#EDF0EF", text2: "#5E7B80" },
+
+        // AQI category ramp (CPCB bands, restyled to new palette)
         aqi: {
-          good: "#6fae66",
-          satisfactory: "#9ab86a",
-          moderate: "#d9a441",
-          poor: "#c9793f",
-          verypoor: "#c1543f",
-          severe: "#8b3a3a",
+          good: "#2E7D52",
+          satisfactory: "#4CAF7D",
+          moderate: "#9A7217",
+          poor: "#B7502C",
+          verypoor: "#D4663B",
+          severe: "#9A2F41",
         },
       },
       fontFamily: {
-        display: ["IBM Plex Sans Condensed", "sans-serif"],
-        body: ["IBM Plex Sans", "sans-serif"],
+        display: ["Newsreader", "serif"],
+        body: [
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
         mono: ["IBM Plex Mono", "monospace"],
+      },
+      maxWidth: {
+        content: "1320px",
+      },
+      borderRadius: {
+        card: "20px",
+        cardsm: "18px",
+        control: "11px",
+        chip: "9px",
+      },
+      boxShadow: {
+        lift: "0 14px 40px -22px rgba(20,22,24,.24)",
+        panel: "0 18px 44px -28px rgba(20,22,24,.5)",
+      },
+      keyframes: {
+        fadeUp: {
+          from: { opacity: 0, transform: "translateY(10px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        livedot: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.35 },
+        },
+        shimmer: {
+          "100%": { transform: "translateX(100%)" },
+        },
+      },
+      animation: {
+        fadeUp: "fadeUp .6s both",
+        livedot: "livedot 2.2s ease-in-out infinite",
+        livedotFast: "livedot 1.6s ease-in-out infinite",
+        shimmer: "shimmer 1.6s infinite",
+      },
+      transitionTimingFunction: {
+        lift: "cubic-bezier(.22,.61,.36,1)",
       },
     },
   },
