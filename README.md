@@ -38,7 +38,7 @@ Two processes, run from the repo root in separate terminals:
 python -m venv .venv
 ./.venv/Scripts/activate        # or `source .venv/bin/activate` on macOS/Linux
 pip install -r backend/requirements.txt
-uvicorn backend.main:app --reload --port 8000
+python -m uvicorn backend.main:app --reload --port 8001
 
 # Terminal 2 — frontend (Vite)
 cd dashboard-react
@@ -46,8 +46,26 @@ npm install
 npm run dev
 ```
 
+> **Module path is `backend.main:app`, not `app.main:app`.** There is no
+> `app/` package in this repo — the FastAPI instance lives at
+> `backend/main.py`, and `backend/__init__.py` is what makes `backend` an
+> importable package. Two things have to both be true for this to resolve:
+> 1. You run the command **from the repo root** (the directory containing
+>    `agents/`, `backend/`, `dashboard-react/`) — not from inside `backend/`.
+>    If you `cd backend` first, use `uvicorn main:app` instead (no `backend.` prefix).
+> 2. The module path matches the actual folder name: `backend.main:app`.
+>
+> Using `app.main:app` (or running from inside `backend/` with the
+> `backend.` prefix still on) raises `ModuleNotFoundError: No module named 'app'`
+> — there's nothing named `app` anywhere in this project.
+
+The frontend already points at the right place — `dashboard-react/.env.example`
+sets `VITE_API_BASE_URL=http://localhost:8001`, matching the port above. If
+you run the backend on a different port, update that value (or set
+`VITE_API_BASE_URL` in a local `.env.local`) to match.
+
 The frontend calls the backend at `VITE_API_BASE_URL` (defaults to
-`http://localhost:8000`, see `dashboard-react/.env.example`). Every
+`http://localhost:8001`, see `dashboard-react/.env.example`). Every
 `/api/*` response includes a `data_source` field —`"live_pipeline"` if it
 ran attribution/forecast fresh against `data/aqi_stations_*.json`,
 `"cached_run"` if it fell back to the last computed `data/*.json` (true
@@ -62,7 +80,10 @@ endpoint that's always a live computation.
 # 1. Get a free WAQI token (10 seconds, no approval wait):
 #    https://aqicn.org/data-platform/token/
 cp .env.example .env    # then edit .env and set WAQI_TOKEN
-export WAQI_TOKEN=your_token_here   # or `source .env` / set it however your shell prefers
+pip install -r ingestion/requirements.txt   # python-dotenv, one-time
+
+# No `export` needed — fetch_waqi.py loads .env automatically via
+# python-dotenv. (fetch_weather.py doesn't need a key at all.)
 
 # 2. Pull real data
 cd ingestion
@@ -91,8 +112,9 @@ station. Run step 2 above on a repeating schedule well before you need real
 forecasts:
 
 ```bash
-# cron (Linux/macOS) — every 30 min
-*/30 * * * * cd /path/to/aqi-project-final && WAQI_TOKEN=xxx ./.venv/bin/python3 ingestion/fetch_waqi.py --city delhi --detail
+# cron (Linux/macOS) — every 30 min. No WAQI_TOKEN=... needed here — it's
+# read from .env automatically, same as running the script by hand.
+*/30 * * * * cd /path/to/aqi-project-final && ./.venv/bin/python3 ingestion/fetch_waqi.py --city delhi --detail
 
 # Windows Task Scheduler — Action: Start a program
 #   Program: C:\path\to\.venv\Scripts\python.exe

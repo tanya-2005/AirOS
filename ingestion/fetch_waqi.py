@@ -3,7 +3,9 @@ Fetches real-time AQI station data for a city from the WAQI (World Air Quality
 Index) API — covers CPCB/CAAQMS stations across Indian cities.
 
 Get a free token in ~10 seconds at: https://aqicn.org/data-platform/token/
-Then: export WAQI_TOKEN=your_token_here
+Then set WAQI_TOKEN=your_token_here in the repo-root .env file (see
+.env.example) — it's loaded automatically via python-dotenv below, no manual
+`export` needed.
 
 Usage:
     python fetch_waqi.py --city delhi
@@ -21,6 +23,13 @@ import argparse
 import datetime
 import urllib.request
 import urllib.error
+
+from dotenv import load_dotenv
+
+# Explicit path rather than a bare load_dotenv() — this script is documented
+# to be run either from the repo root or from inside ingestion/ (see README),
+# and an implicit search would only reliably find .env from the latter.
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 WAQI_BASE = "https://api.waqi.info"
 
@@ -67,7 +76,8 @@ def main():
 
     token = os.environ.get("WAQI_TOKEN")
     if not token:
-        print("ERROR: set WAQI_TOKEN env var. Get a free token at "
+        print("ERROR: WAQI_TOKEN not set. Add it to the repo-root .env file "
+              "(see .env.example) — get a free token at "
               "https://aqicn.org/data-platform/token/", file=sys.stderr)
         sys.exit(1)
 
@@ -80,13 +90,33 @@ def main():
     print(f"Found {len(stations)} stations in bounding box.")
 
     records = []
+    skipped = 0
     for s in stations:
+        # WAQI's /map/bounds/ always returns aqi as a STRING, even for
+        # stations with a perfectly good reading (e.g. "146") — it is never
+        # a native JSON number. The only case that's genuinely unusable is
+        # the literal placeholder "-" for an offline/stale sensor, or (rare)
+        # a value that doesn't parse as a number at all. Everything else
+        # needs converting to int before attribution_agent/forecast_agent
+        # can do arithmetic on it — they'd crash on a raw string.
+        raw_aqi = s.get("aqi")
+        if raw_aqi == "-":
+            skipped += 1
+            continue
+        try:
+            aqi_value = int(raw_aqi)
+        except (TypeError, ValueError):
+            try:
+                aqi_value = int(float(raw_aqi))
+            except (TypeError, ValueError):
+                skipped += 1
+                continue
         rec = {
             "uid": s["uid"],
             "station_name": s["station"]["name"],
             "lat": s["lat"],
             "lon": s["lon"],
-            "aqi": s["aqi"],
+            "aqi": aqi_value,
         }
         if args.detail:
             detail = fetch_station_detail(s["uid"], token)
@@ -97,6 +127,13 @@ def main():
                 rec["time"] = detail.get("time", {}).get("iso")
         records.append(rec)
 
+    if skipped:
+        print(f"Skipped {skipped} station(s) with no usable reading (aqi='-' or unparseable).")
+
+    if not records:
+        print("ERROR: no stations with a usable reading — nothing written to data/.", file=sys.stderr)
+        sys.exit(1)
+
     ts = datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
     out_dir = os.path.join(os.path.dirname(__file__), "..", "data")
     os.makedirs(out_dir, exist_ok=True)
@@ -105,6 +142,8 @@ def main():
         json.dump({"city": args.city, "fetched_at": ts, "stations": records}, f, indent=2)
 
     print(f"Wrote {len(records)} station records to {out_path}")
+    print("The backend picks this up automatically on the next request — "
+          "no restart needed (see backend/pipeline.py:_load_latest).")
 
 
 if __name__ == "__main__":

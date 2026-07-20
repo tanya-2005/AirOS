@@ -2,7 +2,7 @@
 // Every page's data hook goes through here so there is exactly one place
 // that knows the base URL, timeout, and error shape.
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8001";
 
 export class ApiError extends Error {
   constructor(message, status, payload) {

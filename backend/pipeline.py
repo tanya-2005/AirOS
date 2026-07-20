@@ -39,10 +39,15 @@ def _load_json(path):
 
 
 def _load_latest(pattern):
-    files = sorted(glob.glob(os.path.join(DATA_DIR, pattern)))
+    """Picks the most recently *written* matching file, not just the one that
+    sorts last alphabetically — filename sort silently breaks the moment two
+    different cities' files coexist (e.g. "aqi_stations_delhi_..." always
+    sorts before "aqi_stations_mumbai_..." regardless of fetch order)."""
+    files = glob.glob(os.path.join(DATA_DIR, pattern))
     if not files:
         return None
-    return _load_json(files[-1])
+    newest = max(files, key=os.path.getmtime)
+    return _load_json(newest)
 
 
 def _cached_path(name):
