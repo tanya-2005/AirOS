@@ -22,6 +22,17 @@ export function categoryFor(aqi) {
   );
 }
 
+// Coarser 4-bucket badge used on dark panels (Scenario Lab prediction card,
+// AI's Pick) where the full 6-band CPCB scale would be too fine-grained for
+// a single pill. categoryFor()/CPCB_CATEGORIES above remain the
+// government-standard scale used everywhere else (gauge, tables, legends).
+export function darkPanelCategoryFor(aqi) {
+  if (aqi <= 100) return { label: "Good", bg: "#22312A", fg: "#8FD3AE" };
+  if (aqi <= 150) return { label: "Moderate", bg: "#33301E", fg: "#E6C878" };
+  if (aqi <= 200) return { label: "Unhealthy", bg: "#3A2A22", fg: "#F0A184" };
+  return { label: "Hazardous", bg: "#3A2027", fg: "#EE8697" };
+}
+
 const RAIN_AQI_REDUCTION_PCT = 0.3; // assumed coefficient — not sourced, see simulation_agent.py docstring
 
 /**
