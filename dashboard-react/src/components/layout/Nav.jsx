@@ -25,7 +25,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-bg/85 backdrop-blur-md backdrop-saturate-150 border-b border-border-nav">
+    <header className="print:hidden sticky top-0 z-50 bg-bg/85 backdrop-blur-md backdrop-saturate-150 border-b border-border-nav">
       <div className="max-w-content mx-auto px-5 md:px-10 h-[72px] flex items-center gap-7">
         <a href="/" className="flex items-center gap-[11px] shrink-0">
           <div className="w-[30px] h-[30px] rounded-[9px] bg-ink flex items-center justify-center">
