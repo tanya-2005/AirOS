@@ -61,7 +61,8 @@ endpoint that's always a live computation.
 ```bash
 # 1. Get a free WAQI token (10 seconds, no approval wait):
 #    https://aqicn.org/data-platform/token/
-export WAQI_TOKEN=your_token_here
+cp .env.example .env    # then edit .env and set WAQI_TOKEN
+export WAQI_TOKEN=your_token_here   # or `source .env` / set it however your shell prefers
 
 # 2. Pull real data
 cd ingestion
@@ -76,14 +77,40 @@ python3 enforcement_agent.py
 python3 simulation_agent.py
 ```
 
-Each script prints a summary and writes full JSON to `data/`.
+Each script prints a summary and writes full JSON to `data/`. Once
+`data/aqi_stations_*.json` exists, every `backend/` endpoint switches from
+`data_source: "cached_run"` to `"live_pipeline"` automatically — no code
+changes needed, the frontend picks it up on next fetch.
+
+### Scheduling ingestion (needed for real forecasts, not just real attribution)
+
+`forecast_agent.py`'s trend component needs *several* readings over time —
+running `fetch_waqi.py` once only gives it one point, which is why
+`forecast_results.json` today shows `trend_adjustment: 0.0` for every
+station. Run step 2 above on a repeating schedule well before you need real
+forecasts:
+
+```bash
+# cron (Linux/macOS) — every 30 min
+*/30 * * * * cd /path/to/aqi-project-final && WAQI_TOKEN=xxx ./.venv/bin/python3 ingestion/fetch_waqi.py --city delhi --detail
+
+# Windows Task Scheduler — Action: Start a program
+#   Program: C:\path\to\.venv\Scripts\python.exe
+#   Arguments: ingestion\fetch_waqi.py --city delhi --detail
+#   Trigger: repeat every 30 minutes
+```
+
+`agents/forecast_agent.py`'s `main()` still only reads the *latest* file for
+`recent_readings` (a known limitation, see below) — logging history alone
+isn't enough yet; extending it to read back N ingestion runs is a small,
+self-contained change if you have time.
 
 ## Known limitations to fix or disclose honestly to judges
 
 - `forecast_agent.py`'s `recent_readings` is currently seeded with just the
-  latest value — you need to run `fetch_waqi.py` on a schedule (cron, or just
-  manually every hour during the hackathon) and accumulate history for the
-  trend component to mean anything. Do this early — it needs lead time.
+  latest value — you need to run `fetch_waqi.py` on a schedule (see
+  "Scheduling ingestion" above) and accumulate history for the trend
+  component to mean anything. Do this early — it needs lead time.
 - `generate_registry_demo.py` output is synthetic. Say so on your slide.
   If you have an hour to spare, seed 10-20 real entries from Delhi's DPCC
   consent-to-operate lists for credibility.
