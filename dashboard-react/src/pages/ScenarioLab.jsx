@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { RotateCcw, Sparkles, ShieldCheck } from "lucide-react";
 
@@ -8,6 +9,7 @@ import Button from "../components/ui/Button";
 import LiveDot from "../components/ui/LiveDot";
 import QueryState from "../components/ui/QueryState";
 import { SkeletonCard } from "../components/ui/Skeleton";
+import StationPicker from "../components/ui/StationPicker";
 import Footer from "../components/layout/Footer";
 
 import LeverRow from "../components/scenario/LeverRow";
@@ -22,7 +24,6 @@ import CompareScenarios from "../components/scenario/CompareScenarios";
 import { useAttribution, useSimulate } from "../lib/hooks/useApi";
 import { useDebouncedValue } from "../lib/hooks/useDebouncedValue";
 import { fadeUp } from "../lib/motion";
-import { categoryFor } from "../lib/aqi";
 import {
   LEVER_ORDER,
   LEVER_DEFAULTS,
@@ -38,6 +39,8 @@ import {
 export default function ScenarioLab() {
   const attributionQuery = useAttribution();
   const stations = attributionQuery.data?.data ?? [];
+  const [searchParams] = useSearchParams();
+  const requestedStation = searchParams.get("station");
 
   const [stationName, setStationName] = useState(null);
   const [levers, setLevers] = useState(LEVER_DEFAULTS);
@@ -47,10 +50,13 @@ export default function ScenarioLab() {
   const simulateMutation = useSimulate();
   const recommendMutation = useSimulate();
 
-  // Default to the worst (highest-AQI) station once real data arrives.
+  // Default to the station requested via ?station= (cross-page link), falling
+  // back to the worst (highest-AQI) station once real data arrives.
   useEffect(() => {
-    if (!stationName && stations.length) setStationName(stations[0].station);
-  }, [stations, stationName]);
+    if (stationName || !stations.length) return;
+    const match = requestedStation && stations.find((s) => s.station === requestedStation);
+    setStationName(match ? match.station : stations[0].station);
+  }, [stations, stationName, requestedStation]);
 
   useEffect(() => {
     if (!stationName) return;
@@ -127,25 +133,8 @@ export default function ScenarioLab() {
           </div>
 
           {stations.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2 mt-7">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-muted-4 mr-1">Station</span>
-              {stations.map((s) => {
-                const active = s.station === stationName;
-                const cat = categoryFor(s.aqi);
-                return (
-                  <button
-                    key={s.station}
-                    onClick={() => setStationName(s.station)}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-full border text-[13px] transition-colors duration-150 ${
-                      active ? "border-ink bg-ink text-white" : "border-border bg-white text-muted-1 hover:border-border-hover"
-                    }`}
-                  >
-                    <span className="w-[7px] h-[7px] rounded-full" style={{ background: active ? "#7FD0D6" : cat.color }} />
-                    {s.station}
-                    <span className="font-mono opacity-70">{s.aqi}</span>
-                  </button>
-                );
-              })}
+            <div className="mt-7">
+              <StationPicker stations={stations} selected={stationName} onSelect={setStationName} />
             </div>
           )}
         </motion.section>
