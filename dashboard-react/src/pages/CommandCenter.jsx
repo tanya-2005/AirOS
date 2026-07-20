@@ -30,8 +30,8 @@ export default function CommandCenter() {
     return [...raw].sort((a, b) => b.aqi - a.aqi);
   }, [attributionQuery.data]);
 
-  const forecasts = forecastQuery.data?.data ?? [];
-  const enforcement = enforcementQuery.data?.data ?? [];
+  const forecasts = useMemo(() => forecastQuery.data?.data ?? [], [forecastQuery.data]);
+  const enforcement = useMemo(() => enforcementQuery.data?.data ?? [], [enforcementQuery.data]);
 
   const [selected, setSelected] = useState(null);
   useEffect(() => {

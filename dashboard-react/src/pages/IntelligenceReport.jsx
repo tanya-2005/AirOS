@@ -28,8 +28,8 @@ export default function IntelligenceReport() {
     const raw = attributionQuery.data?.data ?? [];
     return [...raw].sort((a, b) => b.aqi - a.aqi);
   }, [attributionQuery.data]);
-  const forecasts = forecastQuery.data?.data ?? [];
-  const enforcement = enforcementQuery.data?.data ?? [];
+  const forecasts = useMemo(() => forecastQuery.data?.data ?? [], [forecastQuery.data]);
+  const enforcement = useMemo(() => enforcementQuery.data?.data ?? [], [enforcementQuery.data]);
 
   const summary = useMemo(() => citySummary(stations, forecasts, enforcement), [stations, forecasts, enforcement]);
   const forecastByStation = useMemo(() => new Map(forecasts.map((f) => [f.station, f])), [forecasts]);

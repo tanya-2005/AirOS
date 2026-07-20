@@ -38,7 +38,7 @@ import {
 
 export default function ScenarioLab() {
   const attributionQuery = useAttribution();
-  const stations = attributionQuery.data?.data ?? [];
+  const stations = useMemo(() => attributionQuery.data?.data ?? [], [attributionQuery.data]);
   const [searchParams] = useSearchParams();
   const requestedStation = searchParams.get("station");
 

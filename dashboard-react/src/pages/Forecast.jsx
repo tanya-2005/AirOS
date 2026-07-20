@@ -23,7 +23,7 @@ export default function Forecast() {
   const forecastQuery = useForecast();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const forecasts = forecastQuery.data?.data ?? [];
+  const forecasts = useMemo(() => forecastQuery.data?.data ?? [], [forecastQuery.data]);
   const pickerStations = useMemo(
     () => forecasts.map((f) => ({ station: f.station, aqi: f.current_aqi })),
     [forecasts]

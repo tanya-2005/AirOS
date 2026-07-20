@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
@@ -20,9 +21,19 @@ export default function AiPickPanel({ predictedAqi, prevented, confidence, costV
       <SectionHeading eyebrow="08 · THE AI'S PICK" title="Recommended combination" />
       <Card dark hover={false} padding="p-9" className="mt-6 grid md:grid-cols-2 gap-11">
         <div>
-          <div className="flex items-center gap-2.5">
-            <Sparkles size={18} className="text-panel-accent" strokeWidth={1.6} />
-            <span className="font-mono text-[11px] tracking-[.08em] text-panel-muted">OPTIMAL BALANCE</span>
+          <div className="flex items-center justify-between gap-2.5">
+            <div className="flex items-center gap-2.5">
+              <Sparkles size={18} className="text-panel-accent" strokeWidth={1.6} />
+              <span className="font-mono text-[11px] tracking-[.08em] text-panel-muted">OPTIMAL BALANCE</span>
+            </div>
+            <span className="flex items-center gap-1.5 font-mono text-[10px] text-panel-accent">
+              <motion.span
+                animate={{ opacity: isPending ? [1, 0.35, 1] : 1 }}
+                transition={{ duration: 1.2, repeat: isPending ? Infinity : 0 }}
+                className="w-1.5 h-1.5 rounded-full bg-panel-accent"
+              />
+              {isPending ? "RECOMPUTING" : "SYNCED"}
+            </span>
           </div>
           <h3 className="font-display text-[28px] leading-[1.2] mt-4 text-white">
             Target the two highest-leverage sources, not everything at once.

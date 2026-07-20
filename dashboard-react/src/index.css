@@ -77,3 +77,21 @@ input[type='range'].lever::-moz-range-thumb {
     scroll-behavior: auto !important;
   }
 }
+
+/* Consistent keyboard-focus ring app-wide — buttons/cards/inputs otherwise
+   have no visible focus state since they're built from bare divs/buttons. */
+:focus-visible {
+  outline: 2px solid #1f7a85;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  .rounded-card,
+  .rounded-cardsm {
+    box-shadow: none !important;
+  }
+}
