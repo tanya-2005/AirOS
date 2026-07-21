@@ -132,6 +132,44 @@ def forecast_station(current_aqi, recent_readings, current_weather, horizon_hour
     horizon_penalty = max(0.3, 1 - horizon_hours / 100)
     confidence = round(data_completeness * horizon_penalty, 2)
 
+    # confidence_factors: the same explainability treatment as weather_effects
+    # below, but for WHY the confidence number is what it is — generated
+    # directly from data_completeness/horizon_penalty/trend sample size, the
+    # exact numbers the confidence formula above just used, so this can never
+    # say something the math doesn't back up (AI Validation & Performance
+    # milestone's "Factors Increasing/Reducing Confidence").
+    confidence_factors = []
+    if recent_readings and len(recent_readings) >= 3:
+        confidence_factors.append({
+            "direction": "increases",
+            "text": f"{len(recent_readings)} recent readings available for trend estimation",
+        })
+    elif len(recent_readings) <= 1:
+        confidence_factors.append({
+            "direction": "reduces",
+            "text": "Only a single AQI reading available — trend adjustment falls back to zero until more ingestion runs accumulate",
+        })
+    if current_weather:
+        confidence_factors.append({
+            "direction": "increases",
+            "text": "Live weather data (wind/humidity/rain/temperature) available for this station",
+        })
+    else:
+        confidence_factors.append({
+            "direction": "reduces",
+            "text": "No live weather data for this station — forecast relies on persistence + trend only",
+        })
+    if horizon_hours > 24:
+        confidence_factors.append({
+            "direction": "reduces",
+            "text": f"{horizon_hours}h horizon — longer-range forecasts compound uncertainty",
+        })
+    else:
+        confidence_factors.append({
+            "direction": "increases",
+            "text": f"{horizon_hours}h horizon is short-range, where persistence + trend are most reliable",
+        })
+
     weather_effects = []
     if wind_adj > 2:
         weather_effects.append(f"Low wind ({wind:.1f} km/h) traps pollutants, adding {wind_adj:+.0f} AQI")
@@ -161,7 +199,10 @@ def forecast_station(current_aqi, recent_readings, current_weather, horizon_hour
             "temp_adjustment": round(temp_adj, 2),
         },
         "confidence": confidence,
+        "confidence_factors": confidence_factors,
         "weather_effects": weather_effects,
+        "data_completeness": data_completeness,
+        "horizon_penalty": round(horizon_penalty, 2),
     }
 
 

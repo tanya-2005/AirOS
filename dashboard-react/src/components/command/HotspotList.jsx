@@ -1,6 +1,7 @@
-import { memo } from "react";
+import { memo, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Card from "../ui/Card";
+import SearchInput from "../ui/SearchInput";
 import { categoryFor } from "../../lib/aqi";
 import { sourceMeta } from "../../lib/sources";
 import { cn } from "../../lib/utils/cn";
@@ -43,14 +44,34 @@ const HotspotRow = memo(function HotspotRow({ station, active, onSelect }) {
   );
 });
 
+/** Capped to the map panel's own height and internally scrollable with a name filter — 20+ stations in one city (Delhi) would otherwise stretch this sidebar column far past the map beside it, forcing a long page scroll to see a map that's already fully visible. */
 export default function HotspotList({ stations, selected, onSelect }) {
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return stations;
+    return stations.filter((s) => s.station.toLowerCase().includes(q));
+  }, [stations, query]);
+
   return (
-    <Card padding="p-0" hover={false} className="overflow-hidden">
-      <motion.div initial="hidden" animate="show" variants={staggerContainer}>
-        {stations.map((s) => (
-          <HotspotRow key={s.station} station={s} active={s.station === selected} onSelect={onSelect} />
-        ))}
-      </motion.div>
+    <Card padding="p-0" hover={false} className="overflow-hidden flex flex-col max-h-[620px] lg:max-h-[760px]">
+      {stations.length > 6 && (
+        <div className="px-4 py-3 border-b border-border-divider shrink-0">
+          <SearchInput placeholder="Filter stations…" value={query} onChange={(e) => setQuery(e.target.value)} />
+        </div>
+      )}
+      <div className="overflow-y-auto">
+        {filtered.length === 0 ? (
+          <div className="px-5 py-8 text-center text-[13px] text-muted-3">No station matches "{query}".</div>
+        ) : (
+          <motion.div initial="hidden" animate="show" variants={staggerContainer}>
+            {filtered.map((s) => (
+              <HotspotRow key={s.station} station={s} active={s.station === selected} onSelect={onSelect} />
+            ))}
+          </motion.div>
+        )}
+      </div>
     </Card>
   );
 }

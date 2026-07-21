@@ -15,10 +15,18 @@ function Row({ label, children }) {
   );
 }
 
-export default function AiPickPanel({ predictedAqi, prevented, confidence, costVsFullPct, isPending, onApply }) {
+export default function AiPickPanel({ predictedAqi, prevented, confidence, costVsFullPct, isPending, onApply, recommendedPolicies = [] }) {
+  const names = recommendedPolicies.map((p) => p.label);
+  const namesText =
+    names.length === 0
+      ? "the two highest-leverage sources"
+      : names.length === 1
+        ? names[0]
+        : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+
   return (
     <section className="mt-16">
-      <SectionHeading eyebrow="08 · THE AI'S PICK" title="Recommended combination" />
+      <SectionHeading eyebrow="THE AI'S PICK" title="Recommended combination" />
       <Card dark hover={false} padding="p-9" className="mt-6 grid md:grid-cols-2 gap-11">
         <div>
           <div className="flex items-center justify-between gap-2.5">
@@ -36,14 +44,12 @@ export default function AiPickPanel({ predictedAqi, prevented, confidence, costV
             </span>
           </div>
           <h3 className="font-display text-[28px] leading-[1.2] mt-4 text-white">
-            Target the two highest-leverage sources, not everything at once.
+            Target the highest-leverage sources, not everything at once.
           </h3>
           <p className="text-[15.5px] leading-[1.55] text-[#9AA5AA] mt-4">
-            The model recommends <strong className="text-white font-medium">suspending most construction</strong>{" "}
-            and <strong className="text-white font-medium">enforcing waste-burning bans</strong>, paired with a{" "}
-            <strong className="text-white font-medium">partial heavy-vehicle restriction</strong>. Together they
+            The model recommends <strong className="text-white font-medium">{namesText}</strong>. Together they
             capture most of the achievable reduction at a fraction of the cost of shutting everything down —
-            because construction and waste burning are this station's real drivers right now.
+            because these are this station's real drivers right now, not a blanket restriction.
           </p>
           <Button variant="dark" size="md" className="mt-[22px]" onClick={onApply}>
             Apply this combination

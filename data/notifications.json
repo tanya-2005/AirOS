@@ -1,0 +1,152 @@
+[
+  {
+    "id": "NOTIF-00001",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India (INC-delhi-institute-of-tool--0001)",
+    "link": "/incidents/INC-delhi-institute-of-tool--0001",
+    "created_at": "2026-07-20T18:50:45Z",
+    "read": true
+  },
+  {
+    "id": "NOTIF-00002",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India (INC-iti-jahangirpuri-delhi-d-0002)",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0002",
+    "created_at": "2026-07-20T18:50:45Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00003",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India (INC-delhi-institute-of-tool--0001)",
+    "link": "/incidents/INC-delhi-institute-of-tool--0001",
+    "created_at": "2026-07-20T19:19:21Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00004",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India (INC-iti-jahangirpuri-delhi-d-0002)",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0002",
+    "created_at": "2026-07-20T19:19:21Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00005",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938) (INC-mumbai-us-consulate-indi-0001)",
+    "link": "/incidents/INC-mumbai-us-consulate-indi-0001",
+    "created_at": "2026-07-20T19:19:46Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00006",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Poor air quality at Shivajinagar, Pune, Pune, India (INC-shivajinagar-pune-pune-i-0001)",
+    "link": "/incidents/INC-shivajinagar-pune-pune-i-0001",
+    "created_at": "2026-07-20T19:19:47Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00007",
+    "user_id": "usr-001",
+    "type": "high_severity",
+    "title": "High Severity Incident",
+    "message": "Poor air quality at Shivajinagar, Pune, Pune, India \u2014 High severity. Most affected group: People with Asthma/COPD.",
+    "link": "/incidents/INC-shivajinagar-pune-pune-i-0001",
+    "created_at": "2026-07-20T19:19:47Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00008",
+    "user_id": "usr-002",
+    "type": "incident_assigned",
+    "title": "New Incident Assigned",
+    "message": "You've been assigned INC-delhi-institute-of-tool--0001: Moderate air quality at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+    "link": "/incidents/INC-delhi-institute-of-tool--0001",
+    "created_at": "2026-07-20T19:26:07Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00009",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India (INC-delhi-institute-of-tool--0002)",
+    "link": "/incidents/INC-delhi-institute-of-tool--0002",
+    "created_at": "2026-07-20T19:26:07Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00010",
+    "user_id": "usr-002",
+    "type": "incident_assigned",
+    "title": "New Incident Assigned",
+    "message": "You've been assigned INC-iti-jahangirpuri-delhi-d-0002: Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0002",
+    "created_at": "2026-07-21T12:11:17Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00011",
+    "user_id": "usr-001",
+    "type": "incident_resolved",
+    "title": "Incident Resolved",
+    "message": "INC-iti-jahangirpuri-delhi-d-0002 at ITI Jahangirpuri, Delhi, Delhi, India has been resolved",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0002",
+    "created_at": "2026-07-21T15:48:29Z",
+    "read": true
+  },
+  {
+    "id": "NOTIF-00012",
+    "user_id": "usr-002",
+    "type": "incident_resolved",
+    "title": "Incident Resolved",
+    "message": "INC-iti-jahangirpuri-delhi-d-0002 at ITI Jahangirpuri, Delhi, Delhi, India has been resolved",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0002",
+    "created_at": "2026-07-21T15:48:29Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00013",
+    "user_id": "usr-001",
+    "type": "new_incident",
+    "title": "New Incident",
+    "message": "Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India (INC-iti-jahangirpuri-delhi-d-0003)",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0003",
+    "created_at": "2026-07-21T15:48:29Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00014",
+    "user_id": "usr-004",
+    "type": "incident_assigned",
+    "title": "New Incident Assigned",
+    "message": "You've been assigned INC-iti-jahangirpuri-delhi-d-0003: Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India",
+    "link": "/incidents/INC-iti-jahangirpuri-delhi-d-0003",
+    "created_at": "2026-07-21T16:33:21Z",
+    "read": false
+  },
+  {
+    "id": "NOTIF-00015",
+    "user_id": "usr-002",
+    "type": "incident_assigned",
+    "title": "New Incident Assigned",
+    "message": "You've been assigned INC-delhi-institute-of-tool--0001: Moderate air quality at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+    "link": "/incidents/INC-delhi-institute-of-tool--0001",
+    "created_at": "2026-07-21T16:35:45Z",
+    "read": false
+  }
+]

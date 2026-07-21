@@ -1,18 +1,48 @@
 import { useState } from "react";
-import { NavLink as RouterNavLink, Link } from "react-router-dom";
+import { NavLink as RouterNavLink, Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, Bell, Menu, X } from "lucide-react";
-import Avatar from "../ui/Avatar";
+import { Search, Menu, X } from "lucide-react";
+import NotificationCenter from "../notifications/NotificationCenter";
+import UserMenu from "./UserMenu";
+import CitySelector from "./CitySelector";
+import NavGroup from "./NavGroup";
+import { useAuth } from "../../lib/auth/useAuth";
 import { cn } from "../../lib/utils/cn";
 
-const LINKS = [
-  { to: "/", label: "Command Center" },
-  { to: "/map", label: "Map" },
-  { to: "/attribution", label: "Sources" },
-  { to: "/forecast", label: "Forecast" },
-  { to: "/report", label: "Report" },
-  { to: "/simulate", label: "Simulate" },
+// Grouped by what an officer is trying to DO, not by software category —
+// "Monitoring / Operations / Analysis" read as engineering module names;
+// these read as the actual SIH chain (detect -> understand -> respond ->
+// protect -> decide -> report -> trust) an officer walks through on a real
+// pollution event, start to finish.
+const NAV_GROUPS = [
+  {
+    label: "Detect & Understand",
+    links: [
+      { to: "/mission-control", label: "Command Centre" },
+      { to: "/city-operations", label: "City Operations" },
+      { to: "/map", label: "Map" },
+      { to: "/forecast", label: "Prediction Engine" },
+      { to: "/attribution", label: "Attribution" },
+      { to: "/compare", label: "Compare Cities" },
+    ],
+  },
+  {
+    label: "Respond & Protect",
+    links: [
+      { to: "/incidents", label: "Response Coordination" },
+      { to: "/advisory", label: "Public Protection" },
+    ],
+  },
+  {
+    label: "Decide & Report",
+    links: [
+      { to: "/simulate", label: "Decision Support" },
+      { to: "/report", label: "Executive Briefing" },
+      { to: "/validation", label: "Trust & Reliability" },
+    ],
+  },
 ];
+const OFFICER_LINK = { to: "/officer", label: "My Workspace" };
 
 function linkClass({ isActive }) {
   return cn(
@@ -23,22 +53,34 @@ function linkClass({ isActive }) {
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const { hasRole } = useAuth();
+  const location = useLocation();
+  const isOfficer = hasRole("Pollution Control Officer");
+
+  const groups = isOfficer
+    ? NAV_GROUPS.map((g) => (g.label === "Respond & Protect" ? { ...g, links: [...g.links, OFFICER_LINK] } : g))
+    : NAV_GROUPS;
 
   return (
     <header className="print:hidden sticky top-0 z-50 bg-bg/85 backdrop-blur-md backdrop-saturate-150 border-b border-border-nav">
       <div className="max-w-content mx-auto px-5 md:px-10 h-[72px] flex items-center gap-7">
-        <Link to="/" className="flex items-center gap-[11px] shrink-0">
+        <Link to="/mission-control" className="flex items-center gap-[11px] shrink-0">
           <div className="w-[30px] h-[30px] rounded-[9px] bg-ink flex items-center justify-center">
             <div className="w-[9px] h-[9px] rounded-full bg-success-soft shadow-[0_0_0_3px_rgba(76,175,125,.28)]" />
           </div>
           <span className="font-display text-[22px] tracking-[-.01em] text-ink">AirOS</span>
         </Link>
 
+        <CitySelector />
+
         <nav className="hidden lg:flex items-center gap-1 ml-2">
-          {LINKS.map((link) => (
-            <RouterNavLink key={link.to} to={link.to} end={link.to === "/"} className={linkClass}>
-              {link.label}
-            </RouterNavLink>
+          {groups.map((g) => (
+            <NavGroup
+              key={g.label}
+              label={g.label}
+              links={g.links}
+              isActiveGroup={g.links.some((l) => location.pathname.startsWith(l.to))}
+            />
           ))}
         </nav>
 
@@ -53,17 +95,8 @@ export default function Nav() {
           />
         </label>
 
-        <button
-          aria-label="Notifications"
-          className="relative w-[38px] h-[38px] rounded-[10px] hidden sm:flex items-center justify-center cursor-pointer hover:bg-[#F1EEE9] transition-colors duration-150"
-        >
-          <Bell size={19} className="text-[#44474B]" strokeWidth={1.7} />
-          <span className="absolute top-[7px] right-[8px] w-[7px] h-[7px] rounded-full bg-danger border-[1.5px] border-bg" />
-        </button>
-
-        <div className="hidden sm:block">
-          <Avatar initials="OP" />
-        </div>
+        <NotificationCenter />
+        <UserMenu />
 
         <button
           aria-label={open ? "Close menu" : "Open menu"}
@@ -83,17 +116,24 @@ export default function Nav() {
             transition={{ duration: 0.22, ease: [0.22, 0.61, 0.36, 1] }}
             className="lg:hidden overflow-hidden border-t border-border-nav bg-bg"
           >
-            <div className="px-5 py-3 flex flex-col gap-1">
-              {LINKS.map((link) => (
-                <RouterNavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.to === "/"}
-                  onClick={() => setOpen(false)}
-                  className={linkClass}
-                >
-                  {link.label}
-                </RouterNavLink>
+            <div className="px-5 py-3 flex flex-col gap-4">
+              {groups.map((g) => (
+                <div key={g.label}>
+                  <div className="font-mono text-[10.5px] tracking-[.08em] text-muted-4 uppercase px-3 mb-1">{g.label}</div>
+                  <div className="flex flex-col gap-1">
+                    {g.links.map((link) => (
+                      <RouterNavLink
+                        key={link.to}
+                        to={link.to}
+                        end={link.to === "/"}
+                        onClick={() => setOpen(false)}
+                        className={linkClass}
+                      >
+                        {link.label}
+                      </RouterNavLink>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </motion.nav>

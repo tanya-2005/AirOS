@@ -1,0 +1,23 @@
+{
+  "city": "hyderabad",
+  "fetched_at": "20260720T191217Z",
+  "stations": [
+    {
+      "uid": 7022,
+      "station_name": "Hyderabad US Consulate, India (\u0939\u0948\u0926\u0930\u093e\u092c\u093e\u0926 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+      "lat": 17.384050369263,
+      "lon": 78.456359863281,
+      "aqi": 93,
+      "pollutants": {
+        "dew": 6,
+        "h": 16,
+        "p": 1012,
+        "pm25": 93,
+        "t": 35,
+        "w": 1.8
+      },
+      "dominant_pollutant": "pm25",
+      "time": "2025-03-04T17:00:00+05:30"
+    }
+  ]
+}

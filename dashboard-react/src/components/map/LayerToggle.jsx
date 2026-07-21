@@ -26,7 +26,7 @@ export default function LayerToggle({ layers, onToggle }) {
             role="checkbox"
             aria-checked={layers[opt.key]}
             onClick={() => onToggle(opt.key)}
-            className="flex items-center gap-2 text-[12.5px] text-ink cursor-pointer select-none"
+            className="flex items-center gap-2 -mx-1.5 px-1.5 py-1 rounded-[6px] text-[12.5px] text-ink cursor-pointer select-none hover:bg-search transition-colors duration-150"
           >
             <span
               className={cn(

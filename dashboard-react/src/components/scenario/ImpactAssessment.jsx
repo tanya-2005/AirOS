@@ -4,6 +4,7 @@ import StatTile from "../ui/StatTile";
 import { staggerContainer, fadeUp } from "../../lib/motion";
 import { motion } from "framer-motion";
 import { estimatePM25, estimatePM10 } from "../../lib/policies";
+import { estimatePopulationBenefit } from "../../lib/healthAdvisory";
 
 const ICON_PROPS = { size: 20, strokeWidth: 1.8 };
 
@@ -25,7 +26,7 @@ export default function ImpactAssessment({ baselineAqi, predictedAqi, aqiReduced
     baselineAqi != null && predictedAqi != null ? Math.max(0, estimatePM25(baselineAqi) - estimatePM25(predictedAqi)) : 0;
   const pm10Reduction =
     baselineAqi != null && predictedAqi != null ? Math.max(0, estimatePM10(baselineAqi) - estimatePM10(predictedAqi)) : 0;
-  const population = Math.round(red * 12400);
+  const population = estimatePopulationBenefit(red);
   const schools = Math.round(red / 2.2);
   const hospitals = Math.round(red / 6);
 

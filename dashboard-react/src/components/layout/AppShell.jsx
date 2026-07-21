@@ -1,12 +1,14 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Nav from "./Nav";
+import PresentationBar from "../workflow/PresentationBar";
 import { pageTransition } from "../../lib/motion";
 
 /**
- * Shared shell for all 6 pages: sticky Nav + animated route transitions.
- * Each page owns its own <main> content and renders its own <Footer> at
- * the end (footer copy differs per page, e.g. "COMMAND CENTER" vs "SIMULATE").
+ * Shared shell for every authenticated route: sticky Nav + animated route
+ * transitions + the floating Presentation Mode bar. Each page owns its
+ * own <main> content and renders its own <Footer> at the end (footer copy
+ * differs per page, e.g. "COMMAND CENTER" vs "SIMULATE").
  */
 export default function AppShell() {
   const location = useLocation();
@@ -25,6 +27,7 @@ export default function AppShell() {
           <Outlet />
         </motion.div>
       </AnimatePresence>
+      <PresentationBar />
     </div>
   );
 }

@@ -1,37 +1,39 @@
 import { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Flame, ShieldAlert, Activity, MapPin, DatabaseZap } from "lucide-react";
+import { Flame, ShieldAlert, Activity, MapPin, Search, DatabaseZap, Database } from "lucide-react";
 
 import SectionHeading from "../components/ui/SectionHeading";
 import Card from "../components/ui/Card";
 import EmptyState from "../components/ui/EmptyState";
-import StatTile from "../components/ui/StatTile";
-import InsightTile from "../components/ui/InsightTile";
-import LiveDot from "../components/ui/LiveDot";
+import PageHero from "../components/ui/PageHero";
 import QueryState from "../components/ui/QueryState";
 import DataSourceBadge from "../components/ui/DataSourceBadge";
+import IncidentContextBanner from "../components/ui/IncidentContextBanner";
 import { SkeletonCard } from "../components/ui/Skeleton";
 import Footer from "../components/layout/Footer";
 
 import HotspotList from "../components/command/HotspotList";
 import StationDetailPanel from "../components/command/StationDetailPanel";
 import CriticalAlerts from "../components/command/CriticalAlerts";
+import IncidentOpsStatsBar from "../components/incidents/IncidentOpsStatsBar";
 import AIDecisionPanel from "../components/command/AIDecisionPanel";
 import ExplainabilityTimeline from "../components/command/ExplainabilityTimeline";
 import ExecutiveSummary from "../components/report/ExecutiveSummary";
+import CitizenHealthPanel from "../components/health/CitizenHealthPanel";
 
-import { useAttribution, useForecast, useEnforcement, useWeatherCurrent, useStationHistory } from "../lib/hooks/useApi";
-import { fadeUp, staggerContainer } from "../lib/motion";
+import { useAttribution, useForecast, useEnforcement, useWeatherCurrent, useStationHistory, useIncidents, useCityHealthAdvisory } from "../lib/hooks/useApi";
+import { useCity } from "../lib/city/useCity";
 import { citySummary } from "../lib/report";
 import { topPollutionDriver, deltaFromHistory } from "../lib/decision";
-
-const ICON_PROPS = { size: 20, strokeWidth: 1.8 };
+import { activeIncidentForStation } from "../lib/incidents";
 
 export default function CommandCenter() {
+  const { cityMeta } = useCity();
   const attributionQuery = useAttribution();
   const forecastQuery = useForecast();
   const enforcementQuery = useEnforcement();
   const weatherQuery = useWeatherCurrent();
+  const incidentsQuery = useIncidents();
+  const cityHealthQuery = useCityHealthAdvisory();
 
   const stations = useMemo(() => {
     const raw = attributionQuery.data?.data ?? [];
@@ -55,6 +57,7 @@ export default function CommandCenter() {
   const selectedForecast = forecasts.find((f) => f.station === selected) ?? null;
   const selectedEnforcement = enforcement.find((e) => e.station === selected) ?? null;
   const selectedWeather = selected ? weatherByStation[selected] : null;
+  const selectedIncident = selected ? activeIncidentForStation(incidentsQuery.data?.data ?? [], selected) : null;
   const stationHistoryQuery = useStationHistory(selected, 24);
   const trendDelta = deltaFromHistory(stationHistoryQuery.data?.data);
 
@@ -71,30 +74,34 @@ export default function CommandCenter() {
 
   const isEmpty = attributionQuery.data?.data_source === "empty";
 
+  const heroKpis = stats
+    ? [
+        { icon: <Activity size={12} strokeWidth={2} />, label: "City average AQI", value: stats.avg },
+        {
+          icon: <MapPin size={12} strokeWidth={2} />,
+          label: "Highest priority station",
+          value: stations[0] ? `${Math.round(stations[0].aqi)}` : "—",
+          sub: stations[0]?.station,
+          tone: "danger",
+        },
+        { icon: <Flame size={12} strokeWidth={2} />, label: "Top pollution driver", value: driver ? driver.label : "None in range" },
+        { icon: <ShieldAlert size={12} strokeWidth={2} />, label: "Active enforcement gaps", value: stats.activeActions, tone: stats.activeActions > 0 ? "warning" : "success" },
+      ]
+    : [];
+
   return (
     <>
       <main className="max-w-content mx-auto px-5 md:px-10 pb-28 flex-1 w-full">
-        <motion.section initial="hidden" animate="show" variants={fadeUp} className="pt-14 pb-2">
-          <LiveDot label="AI decision support · attribution → forecast → enforcement" />
-          <h1 className="font-display font-normal text-[44px] md:text-[64px] leading-[1.02] tracking-[-.02em] mt-4 text-ink">
-            Command Center
-          </h1>
-          <div className="flex gap-3.5 items-start mt-5 max-w-[820px]">
-            <div className="shrink-0 w-[34px] h-[34px] rounded-[9px] bg-ink flex items-center justify-center mt-0.5">
-              <DatabaseZap size={17} className="text-panel-accent" strokeWidth={1.6} />
-            </div>
-            <p className="text-[17px] md:text-[19px] leading-[1.55] text-[#33363A]">
-              What's happening across Delhi NCR right now, why it's happening, and what the AI recommends doing
-              about it first — every number traces back to a live agent, nothing here is generated text
-              standing in for a fact.
-            </p>
-          </div>
-          {attributionQuery.data && (
-            <div className="mt-6">
-              <DataSourceBadge source={attributionQuery.data.data_source} />
-            </div>
-          )}
-        </motion.section>
+        <PageHero
+          icon={<DatabaseZap size={19} strokeWidth={1.8} />}
+          mood="ink"
+          liveLabel={`City Operations · ${cityMeta.label} · station-by-station drill-down`}
+          title="City Operations"
+          tagline={`Every monitored station in ${cityMeta.label}, ranked and explained — the station-level detail behind Command Centre's city-wide summary.`}
+          kpis={heroKpis}
+          primaryAction={stations[0] ? { label: "Investigate Top Station", to: `/attribution?station=${encodeURIComponent(stations[0].station)}`, icon: <Search size={14} /> } : undefined}
+          extra={attributionQuery.data && <DataSourceBadge source={attributionQuery.data.data_source} updatedAt={attributionQuery.dataUpdatedAt} />}
+        />
 
         <QueryState
           isLoading={attributionQuery.isLoading}
@@ -115,93 +122,37 @@ export default function CommandCenter() {
           }
           empty={
             <EmptyState
-              title="No station data yet"
+              icon={<Database size={18} strokeWidth={1.8} />}
+              tone="warning"
+              title={`No station data yet for ${cityMeta.label}`}
               description={
                 <>
-                  Ingestion hasn't been run against a live WAQI token, and no cached pipeline run exists either.
-                  Run <code className="font-mono text-[13px] bg-search px-1.5 py-0.5 rounded">ingestion/fetch_waqi.py</code>{" "}
-                  followed by the agent scripts to populate this dashboard.
+                  Ingestion hasn't been run for {cityMeta.label} against a live WAQI token, and no cached pipeline
+                  run exists either. Run{" "}
+                  <code className="font-mono text-[13px] bg-search px-1.5 py-0.5 rounded">
+                    ingestion/fetch_waqi.py --city {cityMeta.id}
+                  </code>{" "}
+                  followed by the agent scripts to populate this dashboard — or switch to another city with the
+                  selector in the nav.
                 </>
               }
             />
           }
         >
-          {/* 01 — Critical Alerts */}
+          {/* 01 — Critical Alerts, now incident-driven (Phase 7) */}
           <section className="mt-10">
-            <CriticalAlerts stations={stations} enforcement={enforcement} />
+            <CriticalAlerts incidents={incidentsQuery.data?.data ?? []} />
           </section>
 
-          {/* Narrative stat strip — top pollution driver + highest priority station,
-              framed as insights rather than bare KPI numbers */}
-          {stats && (
-            <motion.div
-              initial="hidden"
-              animate="show"
-              variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6"
-            >
-              <motion.div variants={fadeUp}>
-                <InsightTile
-                  icon={<Flame {...ICON_PROPS} className="text-danger" />}
-                  value={driver ? driver.label : "None in range"}
-                  label="Top pollution driver, city-wide"
-                />
-              </motion.div>
-              <motion.div variants={fadeUp}>
-                <InsightTile
-                  icon={<MapPin {...ICON_PROPS} className="text-danger" />}
-                  value={stations[0] ? `${stations[0].station} · ${Math.round(stations[0].aqi)}` : "—"}
-                  label="Highest priority station"
-                />
-              </motion.div>
-              <motion.div variants={fadeUp}>
-                <StatTile icon={<Activity {...ICON_PROPS} className="text-warning" />} value={stats.avg} label="City average AQI" />
-              </motion.div>
-              <motion.div variants={fadeUp}>
-                <StatTile icon={<ShieldAlert {...ICON_PROPS} className="text-danger" />} value={stats.activeActions} label="Active enforcement gaps" />
-              </motion.div>
-            </motion.div>
-          )}
-
-          {/* 02 — AI Executive Summary (reused from the Intelligence Report page — same templated-over-real-numbers narrative, not a duplicate implementation) */}
-          <section className="mt-10">
-            <ExecutiveSummary summary={summary} />
-          </section>
-
-          {/* 03 — Hotspots + station detail, with risk badge and snapshot-to-snapshot trend */}
-          <section className="mt-16">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 items-start">
-              <div>
-                <SectionHeading eyebrow="03 · CITY HOTSPOTS" title="Ranked by severity" className="mb-[18px]" />
-                <HotspotList stations={stations} selected={selected} onSelect={setSelected} />
-              </div>
-              <div className="lg:sticky lg:top-[88px]">
-                <StationDetailPanel
-                  station={selectedStation}
-                  forecast={selectedForecast}
-                  isLoadingForecast={forecastQuery.isLoading}
-                  trendDelta={trendDelta}
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* 04 — Explainability timeline for the selected station */}
-          <section className="mt-16">
-            <ExplainabilityTimeline
-              station={selectedStation}
-              weather={selectedWeather}
-              forecast={selectedForecast}
-              enforcementItem={selectedEnforcement}
-            />
-          </section>
-
-          {/* 05 — AI Decision Panel: recommended actions with why/evidence/confidence/difficulty */}
-          <section className="mt-16">
+          {/* 02 — AI Decision Panel leads the page's own decision content — what
+              to act on first, with why/evidence/confidence/difficulty — ahead
+              of the stats bar and station browser below, so this page opens
+              with a decision rather than a dashboard to read through first. */}
+          <section className="mt-8">
             <SectionHeading
-              eyebrow="05 · AI DECISION PANEL"
+              eyebrow="AI DECISION PANEL"
               title="What the AI recommends acting on first"
-              right={enforcementQuery.data && <DataSourceBadge source={enforcementQuery.data.data_source} />}
+              right={enforcementQuery.data && <DataSourceBadge source={enforcementQuery.data.data_source} updatedAt={enforcementQuery.dataUpdatedAt} />}
               className="mb-6"
             />
             <QueryState
@@ -220,10 +171,55 @@ export default function CommandCenter() {
               <AIDecisionPanel items={enforcement} />
             </QueryState>
           </section>
+
+          {/* 01b — Incident ops summary: Open / Assigned / Unassigned / Critical (Phase 8) */}
+          <section className="mt-14">
+            <IncidentOpsStatsBar incidents={incidentsQuery.data?.data ?? []} />
+          </section>
+
+          <details className="mt-10 group">
+            <summary className="flex items-center gap-2.5 cursor-pointer list-none font-mono text-[11px] tracking-[.08em] text-muted-3 uppercase hover:text-ink transition-colors">
+              <span className="w-5 h-5 rounded-full border border-border flex items-center justify-center text-[10px] group-open:rotate-45 transition-transform">+</span>
+              Executive summary &amp; citizen health advisory
+            </summary>
+            <div className="mt-6 flex flex-col gap-8">
+              <ExecutiveSummary summary={summary} />
+              <CitizenHealthPanel summary={cityHealthQuery.data?.data} />
+            </div>
+          </details>
+
+          {/* 03 — Hotspots + station detail, with risk badge and snapshot-to-snapshot trend */}
+          <section className="mt-16">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 items-start">
+              <div>
+                <SectionHeading eyebrow="CITY HOTSPOTS" title="Ranked by severity" className="mb-[18px]" />
+                <HotspotList stations={stations} selected={selected} onSelect={setSelected} />
+              </div>
+              <div className="lg:sticky lg:top-[88px]">
+                <StationDetailPanel
+                  station={selectedStation}
+                  forecast={selectedForecast}
+                  isLoadingForecast={forecastQuery.isLoading}
+                  trendDelta={trendDelta}
+                />
+                <IncidentContextBanner incident={selectedIncident} />
+              </div>
+            </div>
+          </section>
+
+          {/* 04 — Explainability timeline for the selected station */}
+          <section className="mt-16">
+            <ExplainabilityTimeline
+              station={selectedStation}
+              weather={selectedWeather}
+              forecast={selectedForecast}
+              enforcementItem={selectedEnforcement}
+            />
+          </section>
         </QueryState>
       </main>
       <Footer
-        pageLabel="COMMAND CENTER"
+        pageLabel="CITY OPERATIONS"
         note="Live pipeline · attribution → forecast → simulation, evidence-based recommendations"
       />
     </>

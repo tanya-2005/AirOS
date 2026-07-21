@@ -7,6 +7,10 @@ const TONES = {
   warning: "bg-warning-bg text-warning border-warning/30",
   danger: "bg-danger-bg text-danger border-danger/30",
   hazard: "bg-hazard-bg text-hazard border-hazard/30",
+  // Solid, not outlined — one tier more alarming than "hazard" for the
+  // Health Advisory Engine's top Emergency Level, so it reads as visually
+  // distinct at a glance (see components/health/EmergencyLevelBadge.jsx).
+  emergency: "bg-hazard text-white border-hazard",
 };
 
 export default function Badge({ tone = "muted", children, className, mono = true }) {

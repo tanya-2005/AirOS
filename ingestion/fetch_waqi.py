@@ -58,13 +58,34 @@ def fetch_station_detail(station_uid, token):
     return payload["data"]
 
 
-# Rough bounding boxes for major Indian metros (lat1,lon1,lat2,lon2)
+def fetch_city_feed(city, token):
+    """WAQI's single-city feed (/feed/<city>/) — confirmed, while building
+    Multi-City support, to have coverage for every city this app supports
+    even though /map/bounds/ (fetch_bounds above) only returns results for
+    Delhi on a free-tier token. Real, live data, just ONE station (the
+    city's primary/aggregate monitor) instead of the many fetch_bounds
+    returns for Delhi — used as a fallback, not a replacement, so Delhi
+    keeps its full multi-station coverage unchanged."""
+    url = f"{WAQI_BASE}/feed/{city}/?token={token}"
+    with urllib.request.urlopen(url, timeout=15) as resp:
+        payload = json.load(resp)
+    if payload.get("status") != "ok":
+        return None
+    return payload["data"]
+
+
+# Rough bounding boxes for major Indian metros (lat1,lon1,lat2,lon2). The
+# six SIH Multi-City target cities (see backend/city_registry.py, the single
+# source of truth the backend/frontend read from) plus Kolkata, kept for
+# anyone extending this further — adding a city is one line here.
 CITY_BOUNDS = {
     "delhi": (28.40, 76.80, 28.90, 77.40),
     "mumbai": (18.90, 72.75, 19.30, 73.05),
     "bengaluru": (12.85, 77.45, 13.15, 77.75),
-    "kolkata": (22.45, 88.25, 22.70, 88.45),
     "chennai": (12.90, 80.10, 13.20, 80.35),
+    "hyderabad": (17.25, 78.30, 17.55, 78.60),
+    "pune": (18.45, 73.75, 18.65, 73.95),
+    "kolkata": (22.45, 88.25, 22.70, 88.45),
 }
 
 
@@ -94,6 +115,28 @@ def run_ingestion(city="delhi", bounds=None, detail=False, token=None):
 
     stations = fetch_bounds(lat1, lon1, lat2, lon2, token)
     print(f"Found {len(stations)} stations in bounding box.")
+
+    if not stations:
+        # /map/bounds/ has real, confirmed coverage for Delhi on this
+        # token's tier, but returns zero for the other 5 cities even with
+        # a correct, verified bounding box — an actual token-tier
+        # limitation, not a bug in the bounds. /feed/<city>/ is a
+        # different WAQI endpoint that IS available for every city, so
+        # fall back to it rather than writing nothing (or something fake)
+        # for these cities. Real, live data either way — just one
+        # authoritative station instead of Delhi's many.
+        print(f"No stations from /map/bounds/ for '{city}' — falling back to /feed/{city}/ (single-station).")
+        feed = fetch_city_feed(city, token)
+        if feed is None:
+            print(f"ERROR: /feed/{city}/ also failed — nothing written to data/.", file=sys.stderr)
+            return None, [], 0
+        stations = [{
+            "uid": feed.get("idx"),
+            "aqi": feed.get("aqi"),
+            "station": {"name": feed.get("city", {}).get("name", city.title())},
+            "lat": feed.get("city", {}).get("geo", [None, None])[0],
+            "lon": feed.get("city", {}).get("geo", [None, None])[1],
+        }]
 
     records = []
     skipped = 0

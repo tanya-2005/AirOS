@@ -2,10 +2,14 @@
 AirOS API — thin FastAPI wrapper around the existing agents/ pipeline.
 Run from the repo root: uvicorn backend.main:app --reload --port 8000
 """
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import attribution, forecast, enforcement, simulation, weather, history, geo
+from . import auth
+from .routers import (
+    attribution, forecast, enforcement, simulation, weather, history, geo, incidents,
+    auth as auth_router, users, tasks, notifications, health_advisory, cities, validation,
+)
 
 app = FastAPI(
     title="AirOS API",
@@ -27,13 +31,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(attribution.router)
-app.include_router(forecast.router)
-app.include_router(enforcement.router)
-app.include_router(simulation.router)
-app.include_router(weather.router)
-app.include_router(history.router)
-app.include_router(geo.router)
+# /api/auth/login is the one endpoint that must be reachable without a
+# token (you need it to GET a token); /api/auth/logout and /me protect
+# themselves individually (see routers/auth.py) since /logout needs the
+# token to know *which* session to delete, not just "some" valid session.
+app.include_router(auth_router.router)
+
+# Every other router requires a valid Bearer session — real enforcement at
+# the API layer, not just a frontend-side redirect the API itself ignores.
+_auth_dep = [Depends(auth.get_current_user)]
+app.include_router(attribution.router, dependencies=_auth_dep)
+app.include_router(forecast.router, dependencies=_auth_dep)
+app.include_router(enforcement.router, dependencies=_auth_dep)
+app.include_router(simulation.router, dependencies=_auth_dep)
+app.include_router(weather.router, dependencies=_auth_dep)
+app.include_router(history.router, dependencies=_auth_dep)
+app.include_router(geo.router, dependencies=_auth_dep)
+app.include_router(incidents.router, dependencies=_auth_dep)
+app.include_router(users.router, dependencies=_auth_dep)
+app.include_router(tasks.router, dependencies=_auth_dep)
+app.include_router(notifications.router, dependencies=_auth_dep)
+app.include_router(health_advisory.router, dependencies=_auth_dep)
+app.include_router(cities.router, dependencies=_auth_dep)
+app.include_router(validation.router, dependencies=_auth_dep)
 
 
 @app.get("/api/health")

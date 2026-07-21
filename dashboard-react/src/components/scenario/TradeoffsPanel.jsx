@@ -15,7 +15,7 @@ function Cell({ label, value, note, last = false }) {
 export default function TradeoffsPanel({ costCr, timeToImprove, resources, confidence, difficulty, difficultyNote, hasReduction }) {
   return (
     <section className="mt-16">
-      <SectionHeading eyebrow="07 · TRADE-OFFS" title="Every decision has a cost" />
+      <SectionHeading eyebrow="TRADE-OFFS" title="Every decision has a cost" />
       <Card padding="p-0 md:px-2" className="mt-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
           <Cell label="DAILY COST" value={<>₹<AnimatedNumber value={costCr} />L</>} note="operating estimate" />

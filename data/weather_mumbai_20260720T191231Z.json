@@ -1,0 +1,17 @@
+{
+  "city": "mumbai",
+  "fetched_at": "20260720T191231Z",
+  "stations": [
+    {
+      "station_name": "Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+      "lat": 19.072830200195,
+      "lon": 72.882606506348,
+      "temperature": 24.9,
+      "humidity": 94,
+      "wind_speed": 18.2,
+      "wind_direction": 240,
+      "precipitation": 0.5,
+      "observed_at": "2026-07-21T00:30"
+    }
+  ]
+}

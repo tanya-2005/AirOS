@@ -31,7 +31,7 @@ export default function MapLegend() {
         ))}
       </div>
       <div className="border-t border-border-divider mt-3 pt-2.5 text-[11px] text-muted-3 leading-snug">
-        Heat overlay shows registered emission-source density, not AQI. Arrows show current wind direction (blowing toward the arrow tip).
+        Heat overlay shows registered emission-source density, not AQI. Arrows show current wind direction (blowing toward the arrow tip). Click a station to draw lines to the real sources driving its attribution score.
       </div>
     </div>
   );

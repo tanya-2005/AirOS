@@ -1,0 +1,17 @@
+{
+  "city": "chennai",
+  "fetched_at": "20260720T191233Z",
+  "stations": [
+    {
+      "station_name": "Chennai US Consulate, Chennai, India (\u091a\u0947\u0928\u094d\u0928\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+      "lat": 13.087840080261,
+      "lon": 80.278472900391,
+      "temperature": 28.0,
+      "humidity": 76,
+      "wind_speed": 9.7,
+      "wind_direction": 258,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-21T00:30"
+    }
+  ]
+}

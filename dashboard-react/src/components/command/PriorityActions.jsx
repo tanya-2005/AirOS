@@ -53,7 +53,7 @@ export default function PriorityActions({ items, limit = 5 }) {
           </span>
         </div>
         <LinkButton to="/attribution" variant="ghost" size="sm">
-          View all
+          View All Sources
         </LinkButton>
       </div>
       <motion.div initial="hidden" animate="show" variants={staggerContainer}>

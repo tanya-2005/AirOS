@@ -1,0 +1,1 @@
+{"fetched_at": "2026-07-20T19:12:21Z", "records": [{"uid": 3760, "station_name": "Shivajinagar, Pune, Pune, India", "lat": 18.529603, "lon": 73.849586, "aqi": 232, "pollutants": {"co": 51, "dew": 20.6, "h": 92.9, "no2": 198, "o3": 61, "p": 945.9, "pm10": 138, "pm25": 232, "t": 21.8, "w": 0.5}, "dominant_pollutant": "pm25", "time": "2021-11-15T06:00:00+05:30"}]}

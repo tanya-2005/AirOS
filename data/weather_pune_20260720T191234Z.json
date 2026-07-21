@@ -1,0 +1,17 @@
+{
+  "city": "pune",
+  "fetched_at": "20260720T191234Z",
+  "stations": [
+    {
+      "station_name": "Shivajinagar, Pune, Pune, India",
+      "lat": 18.529603,
+      "lon": 73.849586,
+      "temperature": 23.2,
+      "humidity": 91,
+      "wind_speed": 15.1,
+      "wind_direction": 248,
+      "precipitation": 0.0,
+      "observed_at": "2026-07-21T00:30"
+    }
+  ]
+}

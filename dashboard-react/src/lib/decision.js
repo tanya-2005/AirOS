@@ -72,6 +72,84 @@ export function deltaFromHistory(series) {
   return Math.round((curr - prev) * 10) / 10;
 }
 
+/**
+ * "How the attribution decision was reached" — templated from the exact
+ * fields attribute_station() returns (station.attribution, station.evidence,
+ * station.wind_aware), same "narrative over real numbers, nothing invented"
+ * standard as recommendationRationale above. AI Validation & Performance
+ * milestone's "Attribution Explainability: Reasoning Summary" requirement.
+ */
+export function attributionReasoningSummary(station) {
+  if (!station?.attribution?.length) {
+    return "No registry source fell within the 3km attribution radius for this station, so no dominant source could be attributed.";
+  }
+  const top = station.attribution[0];
+  const meta = sourceMeta(top.source_type);
+  const evidenceCount = station.evidence?.length ?? 0;
+  const confidencePct = Math.round(top.confidence * 100);
+  const windPart =
+    station.wind_aware == null
+      ? ""
+      : station.wind_aware
+        ? " Wind-aware scoring was active, so sources currently downwind of this station were weighted higher."
+        : " No live wind data was available, so this used distance-only scoring rather than wind-aware weighting.";
+  return (
+    `${meta.label} was ranked the dominant source at ${confidencePct}% of the explained AQI signal, based on ` +
+    `${evidenceCount} nearby registry source${evidenceCount === 1 ? "" : "s"} within the 3km radius, weighted by ` +
+    `distance, activity status, and emission-intensity priors.${windPart}`
+  );
+}
+
+/**
+ * Data Inputs Used — a checklist of what was actually available when this
+ * station's attribution was computed, so an officer can see at a glance
+ * whether a call was made on thin data. Every value here reads an existing
+ * field; nothing is inferred beyond presence/absence.
+ */
+export function attributionDataInputs(station, hasWeather, registryLoaded) {
+  return [
+    { label: "Live AQI reading", available: station?.aqi != null },
+    { label: "Source registry loaded", available: !!registryLoaded },
+    { label: "Wind direction & speed", available: !!station?.wind_aware },
+    { label: "Current weather at station", available: !!hasWeather },
+  ];
+}
+
+const LOW_CONFIDENCE_THRESHOLD = 0.5;
+
+/**
+ * Officer Trust Panel — "alternative interpretation if confidence is low."
+ * Only fires below LOW_CONFIDENCE_THRESHOLD; null otherwise so the UI can
+ * skip rendering it entirely for high-confidence recommendations rather
+ * than show an empty disclaimer. Doesn't name a specific alternate source
+ * with an invented percentage — this component only has this one source's
+ * confidence, not the full ranked list at that station — so it honestly
+ * points to where the real ranked breakdown lives instead.
+ */
+export function alternativeInterpretation(item) {
+  const confidence = item.attribution_confidence ?? 0;
+  if (confidence >= LOW_CONFIDENCE_THRESHOLD) return null;
+  const confidencePct = Math.round(confidence * 100);
+  return (
+    `This source was assigned only ${confidencePct}% of the explained AQI signal at ${item.station} — other nearby ` +
+    `sources may contribute meaningfully too. See the Attribution page for this station's full ranked breakdown ` +
+    `before treating this as the sole cause.`
+  );
+}
+
+/**
+ * Officer Trust Panel — "known limitations," shown on every recommendation
+ * regardless of confidence. Static, not item-derived — these are structural
+ * limitations of the priority/simulation formulas themselves (see
+ * enforcement_agent.py / simulation_agent.py docstrings), not something
+ * that varies per recommendation.
+ */
+export const KNOWN_LIMITATIONS = [
+  "Priority score is a simplified formula (severity × attribution confidence × actionability), not validated against real enforcement outcomes.",
+  "Expected AQI improvement is a projected simulation result assuming the typical reduction % for this action type, not a guaranteed outcome.",
+  "Attribution confidence reflects proximity- and evidence-based scoring, not a certified or legally confirmed pollution source determination.",
+];
+
 /** Real city-wide top pollution driver — confidence-weighted sum across all stations' attribution, same computation lib/report.js's citySummary() already does, exposed standalone for the Command Center's dedicated tile. */
 export function topPollutionDriver(stations) {
   const totals = {};

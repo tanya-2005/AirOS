@@ -8,6 +8,7 @@ router = APIRouter(prefix="/api", tags=["history"])
 @router.get("/history/station/{station_name}", response_model=Envelope)
 def read_station_history(
     station_name: str,
+    city: str = Query("delhi", description="City id, e.g. delhi/mumbai/bengaluru"),
     hours: int = Query(24, ge=1, le=24 * 7, description="Window size, 1-168 hours"),
 ):
     """
@@ -19,11 +20,14 @@ def read_station_history(
     hasn't accumulated any history yet — that's an expected early state,
     not a client error.
     """
-    data, source = pipeline.get_station_history(station_name, hours=hours)
+    data, source = pipeline.get_station_history(station_name, city, hours=hours)
     return Envelope(data=data, data_source=source, count=len(data))
 
 
 @router.get("/history/city", response_model=Envelope)
-def read_city_history(hours: int = Query(24, ge=1, le=24 * 7, description="Window size, 1-168 hours")):
-    data, source = pipeline.get_city_history(hours=hours)
+def read_city_history(
+    city: str = Query("delhi", description="City id, e.g. delhi/mumbai/bengaluru"),
+    hours: int = Query(24, ge=1, le=24 * 7, description="Window size, 1-168 hours"),
+):
+    data, source = pipeline.get_city_history(city, hours=hours)
     return Envelope(data=data, data_source=source, count=len(data))

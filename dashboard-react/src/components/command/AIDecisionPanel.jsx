@@ -1,11 +1,17 @@
 import { memo, useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Brain, ChevronDown, MapPin } from "lucide-react";
+import { Brain, ChevronDown, MapPin, AlertTriangle, Info } from "lucide-react";
 import Card from "../ui/Card";
 import Badge from "../ui/Badge";
 import LinkButton from "../ui/LinkButton";
 import { sourceMeta, PERMIT_TONE } from "../../lib/sources";
-import { difficultyFromPermit, DIFFICULTY_TONE, recommendationRationale } from "../../lib/decision";
+import {
+  difficultyFromPermit,
+  DIFFICULTY_TONE,
+  recommendationRationale,
+  alternativeInterpretation,
+  KNOWN_LIMITATIONS,
+} from "../../lib/decision";
 import { staggerContainer, fadeUp } from "../../lib/motion";
 import { cn } from "../../lib/utils/cn";
 
@@ -14,6 +20,7 @@ const DecisionRow = memo(function DecisionRow({ item, id, expanded, onToggle, la
   const Icon = meta.Icon;
   const difficulty = difficultyFromPermit(item.permit_status);
   const confidencePct = Math.round((item.attribution_confidence ?? 0) * 100);
+  const alternative = alternativeInterpretation(item);
 
   return (
     <motion.div variants={fadeUp} className={cn(!last && "border-b border-border-divider")}>
@@ -77,6 +84,24 @@ const DecisionRow = memo(function DecisionRow({ item, id, expanded, onToggle, la
                     </div>
                   </div>
                 </div>
+
+                {alternative && (
+                  <div className="flex items-start gap-2.5 mt-4 pt-3.5 border-t border-border-divider text-[12.5px] text-warning leading-[1.55]">
+                    <AlertTriangle size={14} className="shrink-0 mt-0.5" strokeWidth={1.8} />
+                    <div>
+                      <span className="font-medium">Alternative interpretation: </span>
+                      {alternative}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-2.5 mt-3.5 pt-3.5 border-t border-border-divider text-[11.5px] text-muted-3 leading-[1.55]">
+                  <Info size={13} className="shrink-0 mt-0.5" strokeWidth={1.8} />
+                  <div>
+                    <span className="font-medium text-muted-2">Known limitations: </span>
+                    {KNOWN_LIMITATIONS.join(" ")}
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -107,7 +132,7 @@ export default function AIDecisionPanel({ items, limit = 6 }) {
           </span>
         </div>
         <LinkButton to="/attribution" variant="ghost" size="sm">
-          View all
+          View All Sources
         </LinkButton>
       </div>
       <motion.div initial="hidden" animate="show" variants={staggerContainer}>

@@ -10,3 +10,11 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Runtime auth state — never version-controlled: sessions are live,
+# non-expiring bearer tokens; users.json holds password hashes/salts.
+# Demo accounts/password are documented in dashboard-react/src/lib/auth/demoAccounts.js
+# and shown directly in the Login UI, so losing this file locally just
+# means re-seeding it, not losing anything meant to be public.
+data/sessions.json
+data/users.json

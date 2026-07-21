@@ -60,6 +60,11 @@ USER_AGENT = "AirOS-Ingestion/1.0 (hackathon project, contact via GitHub repo)"
 
 CITY_BOUNDS = {
     "delhi": (28.40, 76.80, 28.90, 77.40),
+    "mumbai": (18.90, 72.75, 19.30, 73.05),
+    "bengaluru": (12.85, 77.45, 13.15, 77.75),
+    "chennai": (12.90, 80.10, 13.20, 80.35),
+    "hyderabad": (17.25, 78.30, 17.55, 78.60),
+    "pune": (18.45, 73.75, 18.65, 73.95),
 }
 
 # (source_type, overpass query body, output element cap). Kept small and
@@ -190,7 +195,12 @@ def _ward_centroids(synthetic_records):
 def build_registry(city="delhi"):
     bbox_str = ",".join(str(v) for v in CITY_BOUNDS[city])
 
-    synthetic_path = os.path.join(os.path.dirname(__file__), "..", "data", "registry_demo_delhi.json")
+    # Per-city synthetic fallback (generate_registry_demo.py writes
+    # registry_demo_<city>.json for each of the 6 cities) — this used to be
+    # hardcoded to Delhi's file regardless of which city was being built,
+    # which would have silently applied Delhi's ward names to every other
+    # city's fallback records.
+    synthetic_path = os.path.join(os.path.dirname(__file__), "..", "data", f"registry_demo_{city}.json")
     with open(synthetic_path) as f:
         synthetic = json.load(f)["records"]
     ward_centroids = _ward_centroids(synthetic)

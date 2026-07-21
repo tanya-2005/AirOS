@@ -1,0 +1,17 @@
+{
+  "city": "hyderabad",
+  "fetched_at": "20260720T191233Z",
+  "stations": [
+    {
+      "station_name": "Hyderabad US Consulate, India (\u0939\u0948\u0926\u0930\u093e\u092c\u093e\u0926 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+      "lat": 17.384050369263,
+      "lon": 78.456359863281,
+      "temperature": 23.0,
+      "humidity": 93,
+      "wind_speed": 16.2,
+      "wind_direction": 269,
+      "precipitation": 0.3,
+      "observed_at": "2026-07-21T00:30"
+    }
+  ]
+}

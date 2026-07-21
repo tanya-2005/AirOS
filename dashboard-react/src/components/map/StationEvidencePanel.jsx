@@ -1,11 +1,15 @@
 import { memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Wind as WindIcon, Sparkles } from "lucide-react";
+import { X, Wind as WindIcon, Sparkles, ClipboardList, HeartPulse, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import Badge from "../ui/Badge";
 import LinkButton from "../ui/LinkButton";
 import CurrentWeatherPanel from "../forecast/CurrentWeatherPanel";
+import SeverityBadge from "../incidents/SeverityBadge";
+import IncidentStatusBadge from "../incidents/IncidentStatusBadge";
+import EmergencyLevelBadge from "../health/EmergencyLevelBadge";
 import { categoryFor } from "../../lib/aqi";
 import { sourceMeta } from "../../lib/sources";
+import { elevatedGroupLabels } from "../../lib/healthAdvisory";
 
 function buildExplanation(station, weather) {
   const top = station.attribution?.[0];
@@ -43,7 +47,10 @@ const EvidenceRow = memo(function EvidenceRow({ e, last }) {
 });
 
 /** Slide-in evidence panel opened by clicking a station marker — nearby sources, distances, contribution, weather, confidence, and a plain-language explanation (Milestone 3 Task 4). */
-export default function StationEvidencePanel({ station, weather, onClose }) {
+export default function StationEvidencePanel({ station, weather, forecast, incident, health, onClose }) {
+  const elevatedGroups = health ? elevatedGroupLabels(health.advisories) : [];
+  const topActions = health ? health.advisories[health.most_affected_group_key]?.recommended_actions.slice(0, 3) : [];
+
   return (
     <AnimatePresence>
       {station && (
@@ -84,6 +91,76 @@ export default function StationEvidencePanel({ station, weather, onClose }) {
               );
             })()}
 
+            {incident && (
+              <div className="bg-danger-bg border border-danger/25 rounded-xl p-4 flex flex-col gap-2.5">
+                <div className="flex items-center gap-2 text-danger">
+                  <ClipboardList size={14} strokeWidth={1.8} />
+                  <span className="font-mono text-[10.5px] tracking-[.08em] uppercase">Active incident</span>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <SeverityBadge level={incident.severity} />
+                  <IncidentStatusBadge status={incident.status} />
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] tracking-[.06em] text-muted-3 uppercase">
+                    {incident.assignment ? "Assigned officer" : "Assignment"}
+                  </div>
+                  <p className="text-[13px] text-ink mt-1 leading-[1.5]">
+                    {incident.assignment ? incident.assignment.officer_name : "Not yet assigned"}
+                  </p>
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] tracking-[.06em] text-muted-3 uppercase">
+                    Recommended inspection
+                  </div>
+                  <p className="text-[13px] text-ink mt-1 leading-[1.5]">{incident.recommended_action}</p>
+                </div>
+                <LinkButton
+                  to={`/incidents/${encodeURIComponent(incident.id)}`}
+                  variant="primary"
+                  size="sm"
+                  className="w-fit"
+                >
+                  Open incident
+                </LinkButton>
+              </div>
+            )}
+
+            {health && (
+              <div className="bg-search rounded-xl p-4 flex flex-col gap-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-ink">
+                    <HeartPulse size={14} className="text-danger" strokeWidth={1.8} />
+                    <span className="font-mono text-[10.5px] tracking-[.08em] uppercase">Health risk</span>
+                  </div>
+                  <EmergencyLevelBadge level={health.emergency_level} />
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] tracking-[.06em] text-muted-3 uppercase">
+                    Affected population groups
+                  </div>
+                  <p className="text-[13px] text-ink mt-1 leading-[1.5]">
+                    {elevatedGroups.length ? elevatedGroups.join(", ") : "No group currently at elevated risk beyond the general population."}
+                  </p>
+                </div>
+                {topActions?.length > 0 && (
+                  <div>
+                    <div className="font-mono text-[10px] tracking-[.06em] text-muted-3 uppercase">
+                      Recommended actions
+                    </div>
+                    <ul className="flex flex-col gap-1 mt-1">
+                      {topActions.map((a, i) => (
+                        <li key={i} className="text-[13px] text-ink flex items-start gap-1.5">
+                          <span className="w-1 h-1 rounded-full bg-accent mt-[7px] shrink-0" />
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div>
               <div className="flex items-center gap-2 mb-2.5">
                 <Sparkles size={14} className="text-accent" strokeWidth={1.8} />
@@ -98,6 +175,38 @@ export default function StationEvidencePanel({ station, weather, onClose }) {
                 </Badge>
               )}
             </div>
+
+            {forecast?.forecast_24h && (
+              <div className="bg-search rounded-xl p-4 flex flex-col gap-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-ink">
+                    {forecast.forecast_24h.predicted_aqi > station.aqi + 2 ? (
+                      <TrendingUp size={14} className="text-danger" strokeWidth={1.8} />
+                    ) : forecast.forecast_24h.predicted_aqi < station.aqi - 2 ? (
+                      <TrendingDown size={14} className="text-success" strokeWidth={1.8} />
+                    ) : (
+                      <Minus size={14} className="text-muted-3" strokeWidth={1.8} />
+                    )}
+                    <span className="font-mono text-[10.5px] tracking-[.08em] uppercase">24h forecast</span>
+                  </div>
+                  <span className="text-[15px] font-display text-ink tabular-nums">
+                    {Math.round(forecast.forecast_24h.predicted_aqi)}
+                  </span>
+                </div>
+                <p className="text-[12.5px] text-muted-2 leading-[1.5]">
+                  {Math.round(forecast.forecast_24h.confidence * 100)}% model confidence
+                  {forecast.forecast_72h ? ` · ${Math.round(forecast.forecast_72h.predicted_aqi)} AQI projected at 72h` : ""}.
+                </p>
+                <LinkButton
+                  to={`/forecast?station=${encodeURIComponent(station.station)}`}
+                  variant="ghost"
+                  size="sm"
+                  className="w-fit -ml-1"
+                >
+                  Open Prediction Engine
+                </LinkButton>
+              </div>
+            )}
 
             <CurrentWeatherPanel weather={weather} isLoading={false} />
 
@@ -122,7 +231,7 @@ export default function StationEvidencePanel({ station, weather, onClose }) {
               size="sm"
               className="w-fit"
             >
-              View full attribution page →
+              Open Attribution
             </LinkButton>
           </div>
         </motion.div>

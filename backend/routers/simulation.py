@@ -14,7 +14,7 @@ def simulate(payload: SimulateRequest):
     endpoint that is always a real computation, never a cached read — every
     Scenario Lab slider drag hits this.
     """
-    current_aqi, shares, source = pipeline.find_station_attribution(payload.station)
+    current_aqi, shares, source = pipeline.find_station_attribution(payload.station, payload.city)
     if current_aqi is None:
         raise HTTPException(
             status_code=404,

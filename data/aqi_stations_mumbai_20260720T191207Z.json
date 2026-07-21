@@ -1,0 +1,23 @@
+{
+  "city": "mumbai",
+  "fetched_at": "20260720T191207Z",
+  "stations": [
+    {
+      "uid": 7020,
+      "station_name": "Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+      "lat": 19.072830200195,
+      "lon": 72.882606506348,
+      "aqi": 158,
+      "pollutants": {
+        "h": 65.5,
+        "p": 1020,
+        "pm25": 158,
+        "t": -19.2,
+        "w": 51.6,
+        "wg": 59.4
+      },
+      "dominant_pollutant": "pm25",
+      "time": "2025-03-04T06:00:00+05:30"
+    }
+  ]
+}

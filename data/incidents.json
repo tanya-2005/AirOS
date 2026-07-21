@@ -1,0 +1,245 @@
+[
+  {
+    "id": "INC-mumbai-us-consulate-indi-0001",
+    "status": "Open",
+    "created_at": "2026-07-20T19:19:46Z",
+    "resolution_notes": null,
+    "assignment": null,
+    "internal_notes": [],
+    "timeline": [
+      {
+        "event": "Incident Created",
+        "at": "2026-07-20T19:19:46Z",
+        "detail": "AQI at Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938) reached 158 (Moderate). Attribution scoring assigns 88% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 163."
+      },
+      {
+        "event": "AI Investigation Generated",
+        "at": "2026-07-20T19:19:46Z",
+        "detail": "Deterministic investigation compiled from live attribution, forecast, and weather data."
+      },
+      {
+        "event": "Inspection Pending",
+        "at": "2026-07-20T19:19:46Z",
+        "detail": "Recommended action: Inspect emission-control compliance"
+      }
+    ],
+    "title": "Moderate air quality at Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+    "city": "mumbai",
+    "station": "Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938)",
+    "lat": 19.072830200195,
+    "lon": 72.882606506348,
+    "aqi": 158,
+    "forecast_aqi": 163.1,
+    "severity": "Medium",
+    "priority": "Medium",
+    "priority_score": 0.424,
+    "dominant_source": "industrial_stack",
+    "ai_summary": "AQI at Mumbai US Consulate, India (\u092e\u0941\u0902\u092c\u0908 \u0905\u092e\u0947\u0930\u093f\u0915\u0940 \u0935\u093e\u0923\u093f\u091c\u094d\u092f \u0926\u0942\u0924\u093e\u0935\u093e\u0938) reached 158 (Moderate). Attribution scoring assigns 88% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 163.",
+    "recommended_action": "Inspect emission-control compliance"
+  },
+  {
+    "id": "INC-shivajinagar-pune-pune-i-0001",
+    "status": "Open",
+    "created_at": "2026-07-20T19:19:47Z",
+    "resolution_notes": null,
+    "assignment": null,
+    "internal_notes": [],
+    "timeline": [
+      {
+        "event": "Incident Created",
+        "at": "2026-07-20T19:19:47Z",
+        "detail": "AQI at Shivajinagar, Pune, Pune, India reached 232 (Poor). No registry source falls within the 3km attribution radius for this station. Absent intervention, the 24h forecast has it worsen toward 240."
+      },
+      {
+        "event": "AI Investigation Generated",
+        "at": "2026-07-20T19:19:47Z",
+        "detail": "Deterministic investigation compiled from live attribution, forecast, and weather data."
+      },
+      {
+        "event": "Inspection Pending",
+        "at": "2026-07-20T19:19:47Z",
+        "detail": "Recommended action: Dispatch a field inspection team to confirm source and assess"
+      }
+    ],
+    "title": "Poor air quality at Shivajinagar, Pune, Pune, India",
+    "city": "pune",
+    "station": "Shivajinagar, Pune, Pune, India",
+    "lat": 18.529603,
+    "lon": 73.849586,
+    "aqi": 232,
+    "forecast_aqi": 240.2,
+    "severity": "High",
+    "priority": "High",
+    "priority_score": 0.7,
+    "dominant_source": null,
+    "ai_summary": "AQI at Shivajinagar, Pune, Pune, India reached 232 (Poor). No registry source falls within the 3km attribution radius for this station. Absent intervention, the 24h forecast has it worsen toward 240.",
+    "recommended_action": "Dispatch a field inspection team to confirm source and assess"
+  },
+  {
+    "id": "INC-delhi-institute-of-tool--0001",
+    "status": "Open",
+    "created_at": "2026-07-20T18:50:45Z",
+    "resolution_notes": null,
+    "assignment": {
+      "officer_id": "usr-002",
+      "officer_name": "Rohit Verma",
+      "assigned_at": "2026-07-21T16:35:45Z",
+      "priority": "Medium",
+      "expected_completion": "2026-07-22T16:35:45Z"
+    },
+    "internal_notes": [],
+    "timeline": [
+      {
+        "event": "Incident Created",
+        "at": "2026-07-20T18:50:45Z",
+        "detail": "AQI at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India reached 157 (Moderate). Attribution scoring assigns 64% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 173."
+      },
+      {
+        "event": "AI Investigation Generated",
+        "at": "2026-07-20T18:50:45Z",
+        "detail": "Deterministic investigation compiled from live attribution, forecast, and weather data."
+      },
+      {
+        "event": "Inspection Pending",
+        "at": "2026-07-20T18:50:45Z",
+        "detail": "Recommended action: Inspect emission-control compliance"
+      },
+      {
+        "event": "Assigned to Officer",
+        "at": "2026-07-20T19:26:07Z",
+        "detail": "Assigned to Rohit Verma \u2014 expected completion by 2026-07-21T19:26:07Z"
+      },
+      {
+        "event": "Assigned to Officer",
+        "at": "2026-07-21T16:35:45Z",
+        "detail": "Assigned to Rohit Verma \u2014 expected completion by 2026-07-22T16:35:45Z"
+      }
+    ],
+    "title": "Moderate air quality at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+    "city": "delhi",
+    "station": "Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India",
+    "lat": 28.700505,
+    "lon": 77.165603,
+    "aqi": 157,
+    "forecast_aqi": 173.1,
+    "severity": "Medium",
+    "priority": "Medium",
+    "priority_score": 0.309,
+    "dominant_source": "industrial_stack",
+    "ai_summary": "AQI at Delhi Institute of Tool Engineering, Wazirpur, Delhi, Delhi, India reached 157 (Moderate). Attribution scoring assigns 64% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 173.",
+    "recommended_action": "Inspect emission-control compliance"
+  },
+  {
+    "id": "INC-iti-jahangirpuri-delhi-d-0002",
+    "status": "Resolved",
+    "created_at": "2026-07-20T18:50:45Z",
+    "resolution_notes": null,
+    "assignment": {
+      "officer_id": "usr-002",
+      "officer_name": "Rohit Verma",
+      "assigned_at": "2026-07-21T12:11:17Z",
+      "priority": "Medium",
+      "expected_completion": "2026-07-22T12:11:17Z"
+    },
+    "internal_notes": [],
+    "timeline": [
+      {
+        "event": "Incident Created",
+        "at": "2026-07-20T18:50:45Z",
+        "detail": "AQI at ITI Jahangirpuri, Delhi, Delhi, India reached 155 (Moderate). Attribution scoring assigns 100% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 171."
+      },
+      {
+        "event": "AI Investigation Generated",
+        "at": "2026-07-20T18:50:45Z",
+        "detail": "Deterministic investigation compiled from live attribution, forecast, and weather data."
+      },
+      {
+        "event": "Inspection Pending",
+        "at": "2026-07-20T18:50:45Z",
+        "detail": "Recommended action: Inspect emission-control compliance"
+      },
+      {
+        "event": "Assigned to Officer",
+        "at": "2026-07-21T12:11:17Z",
+        "detail": "Assigned to Rohit Verma \u2014 expected completion by 2026-07-22T12:11:17Z"
+      },
+      {
+        "event": "In Progress",
+        "at": "2026-07-21T15:48:28Z",
+        "detail": null
+      },
+      {
+        "event": "Resolved",
+        "at": "2026-07-21T15:48:29Z",
+        "detail": null
+      }
+    ],
+    "title": "Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India",
+    "city": "delhi",
+    "station": "ITI Jahangirpuri, Delhi, Delhi, India",
+    "lat": 28.733016,
+    "lon": 77.17197,
+    "aqi": 155,
+    "forecast_aqi": 171.1,
+    "severity": "Medium",
+    "priority": "Medium",
+    "priority_score": 0.48,
+    "dominant_source": "industrial_stack",
+    "ai_summary": "AQI at ITI Jahangirpuri, Delhi, Delhi, India reached 155 (Moderate). Attribution scoring assigns 100% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 171.",
+    "recommended_action": "Inspect emission-control compliance"
+  },
+  {
+    "id": "INC-iti-jahangirpuri-delhi-d-0003",
+    "status": "In Progress",
+    "created_at": "2026-07-21T15:48:29Z",
+    "resolution_notes": null,
+    "assignment": {
+      "officer_id": "usr-004",
+      "officer_name": "Karan Mehta",
+      "assigned_at": "2026-07-21T16:33:21Z",
+      "priority": "Medium",
+      "expected_completion": "2026-07-22T16:33:21Z"
+    },
+    "internal_notes": [],
+    "timeline": [
+      {
+        "event": "Incident Created",
+        "at": "2026-07-21T15:48:29Z",
+        "detail": "AQI at ITI Jahangirpuri, Delhi, Delhi, India reached 155 (Moderate). Attribution scoring assigns 100% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 171."
+      },
+      {
+        "event": "AI Investigation Generated",
+        "at": "2026-07-21T15:48:29Z",
+        "detail": "Deterministic investigation compiled from live attribution, forecast, and weather data."
+      },
+      {
+        "event": "Inspection Pending",
+        "at": "2026-07-21T15:48:29Z",
+        "detail": "Recommended action: Inspect emission-control compliance"
+      },
+      {
+        "event": "Assigned to Officer",
+        "at": "2026-07-21T16:33:21Z",
+        "detail": "Assigned to Karan Mehta \u2014 expected completion by 2026-07-22T16:33:21Z"
+      },
+      {
+        "event": "In Progress",
+        "at": "2026-07-21T16:33:27Z",
+        "detail": null
+      }
+    ],
+    "title": "Moderate air quality at ITI Jahangirpuri, Delhi, Delhi, India",
+    "city": "delhi",
+    "station": "ITI Jahangirpuri, Delhi, Delhi, India",
+    "lat": 28.733016,
+    "lon": 77.17197,
+    "aqi": 155,
+    "forecast_aqi": 171.1,
+    "severity": "Medium",
+    "priority": "Medium",
+    "priority_score": 0.48,
+    "dominant_source": "industrial_stack",
+    "ai_summary": "AQI at ITI Jahangirpuri, Delhi, Delhi, India reached 155 (Moderate). Attribution scoring assigns 100% of the explained signal to industrial stack. Absent intervention, the 24h forecast has it worsen toward 171.",
+    "recommended_action": "Inspect emission-control compliance"
+  }
+]

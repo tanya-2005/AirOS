@@ -1,4 +1,5 @@
 import Badge from "./Badge";
+import { formatRelativeTime } from "../../lib/incidents";
 
 // Every backend envelope is tagged live_pipeline | cached_run | empty | synthetic
 // (see backend/schemas.py). This renders that honestly instead of presenting
@@ -10,11 +11,13 @@ const COPY = {
   empty: { label: "No data yet", tone: "danger" },
 };
 
-export default function DataSourceBadge({ source, className }) {
+/** `updatedAt` (a react-query `dataUpdatedAt` ms timestamp) is optional — when passed, appends real recency ("· 4m ago") so a page communicates when its numbers last changed, not just what kind of source they came from. */
+export default function DataSourceBadge({ source, updatedAt, className }) {
   const copy = COPY[source] || COPY.empty;
   return (
     <Badge tone={copy.tone} className={className}>
       {copy.label}
+      {updatedAt ? ` · ${formatRelativeTime(new Date(updatedAt).toISOString())}` : ""}
     </Badge>
   );
 }

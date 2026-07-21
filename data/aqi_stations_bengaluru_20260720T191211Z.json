@@ -1,0 +1,28 @@
+{
+  "city": "bengaluru",
+  "fetched_at": "20260720T191211Z",
+  "stations": [
+    {
+      "uid": 11270,
+      "station_name": "Hombegowda Nagar, Bengaluru, India",
+      "lat": 12.938539,
+      "lon": 77.5901,
+      "aqi": 53,
+      "pollutants": {
+        "co": 2.9,
+        "dew": 21,
+        "h": 54,
+        "no2": 11.2,
+        "o3": 5,
+        "p": 688,
+        "pm10": 27,
+        "pm25": 53,
+        "so2": 4.1,
+        "t": 32.8,
+        "w": 2.2
+      },
+      "dominant_pollutant": "pm25",
+      "time": "2026-06-23T10:00:00+05:30"
+    }
+  ]
+}
