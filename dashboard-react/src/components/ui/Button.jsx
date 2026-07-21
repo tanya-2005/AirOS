@@ -18,6 +18,7 @@ export default function Button({
   icon,
   className,
   children,
+  disabled,
   ...props
 }) {
   const sizes = {
@@ -27,12 +28,14 @@ export default function Button({
 
   return (
     <Comp
-      whileHover={{ y: -1 }}
-      whileTap={{ y: 0 }}
+      disabled={disabled}
+      whileHover={disabled ? undefined : { y: -1 }}
+      whileTap={disabled ? undefined : { y: 0 }}
       transition={{ duration: 0.15 }}
       className={cn(
-        "inline-flex items-center gap-2 rounded-control font-medium cursor-pointer",
+        "inline-flex items-center gap-2 rounded-control font-medium",
         "transition-colors duration-200",
+        disabled ? "opacity-40 cursor-not-allowed" : "cursor-pointer",
         VARIANTS[variant],
         sizes[size],
         className
