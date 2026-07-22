@@ -57,7 +57,7 @@ export default function HealthAdvisoryPanel({ advisories, stationName }) {
             {isLoading && (
               <span className="flex items-center gap-1.5 text-[11.5px] text-muted-3">
                 <Loader2 size={13} className="animate-spin" strokeWidth={2} />
-                Translating…
+                Translating — can take a minute on the free model…
               </span>
             )}
             <LanguageSelector language={language} onChange={handleLanguageChange} disabled={isLoading} />

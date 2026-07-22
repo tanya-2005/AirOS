@@ -37,7 +37,19 @@ except ImportError:  # pragma: no cover - handled at call time, not import time
     OpenAI = None
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
+# Picked by actually testing OpenRouter's currently-free, tool-calling-capable
+# models against the real 10-group translation payload (not just a "hello"
+# smoke test) — several plausible-looking candidates failed in practice:
+# one model ignored the forced tool_choice and dumped visible chain-of-thought
+# reasoning as plain content instead of calling the tool; another returned
+# empty content for a trivial prompt; a large 120B model took over a minute
+# and still never called the tool. This one reliably completed the full
+# schema (all required fields, all population groups) for 3 of 4 test
+# languages on the first attempt and the 4th on retry (see _MAX_ATTEMPTS
+# below). OpenRouter's free lineup changes over time — override via the
+# OPENROUTER_MODEL env var if this one is ever retired or degrades; no code
+# change needed.
+DEFAULT_MODEL = "cohere/north-mini-code:free"
 MAX_TOKENS = 4096
 
 # Single source of truth for which languages this feature supports.
@@ -237,16 +249,88 @@ def _validate(result, group_keys):
     return validated
 
 
+# Free-tier models occasionally return a genuinely incomplete response —
+# e.g. 1 of 10 groups translated, the rest silently dropped — rather than
+# an outright error. Observed directly while picking DEFAULT_MODEL: a
+# 10-group request silently returned only 1 group translated, no error,
+# no partial-failure signal. Smaller requests are far more reliable
+# (verified: 1- and 3-group requests each completed correctly) — the fix
+# is _BATCH_SIZE below, splitting the group list into small sequential
+# requests instead of one big one. _MAX_ATTEMPTS adds one retry per batch
+# on top of that, for the remaining non-deterministic misses.
+_MAX_ATTEMPTS = 2
+
+# All 10 groups in one request reliably comes back incomplete on free-tier
+# models (see above) — this batches the group list into chunks this size
+# and translates each chunk as its own request. Batches run SEQUENTIALLY,
+# not concurrently — concurrency was tried and measured worse, not better:
+# running the same 4 batches in parallel made one silently fail that
+# succeeded every time run one at a time (OpenRouter's free tier evidently
+# rate-limits or degrades simultaneous requests from one key). Slower
+# wall-clock (each batch's 10-30s adds up) in exchange for actually
+# working every time — the tradeoff that matters given results are cached
+# per (content, language) afterward, so this cost is paid once, not on
+# every view.
+_BATCH_SIZE = 3
+
+
+def _attempt_translation(client, advisories, language, group_keys):
+    """One LLM call + validation, scoped to `group_keys` (may be a subset
+    of `advisories`, i.e. one batch). Returns the validated group dict, or
+    None if the model didn't call the tool or returned something
+    incomplete/malformed for these specific keys. Raises on genuine
+    SDK/network failures — the caller decides whether those are worth
+    retrying."""
+    scoped = {k: advisories[k] for k in group_keys}
+    response = client.chat.completions.create(
+        model=_model(),
+        max_tokens=MAX_TOKENS,
+        messages=[
+            {"role": "system", "content": _system_prompt(SUPPORTED_LANGUAGES[language]["label"])},
+            {"role": "user", "content": _user_prompt(scoped)},
+        ],
+        tools=[_build_tool_schema(group_keys)],
+        tool_choice={"type": "function", "function": {"name": "submit_translated_advisories"}},
+    )
+    tool_calls = response.choices[0].message.tool_calls
+    if not tool_calls:
+        return None
+    # Free/OpenRouter-proxied models occasionally return arguments as
+    # already-parsed JSON instead of a string, depending on which
+    # underlying model served the request — handle both rather than
+    # assuming the stricter OpenAI-only contract.
+    raw_args = tool_calls[0].function.arguments
+    parsed = json.loads(raw_args) if isinstance(raw_args, str) else raw_args
+    return _validate(parsed, group_keys)
+
+
+def _translate_batch(client, advisories, language, batch_keys):
+    """_attempt_translation with one retry on an incomplete/malformed
+    (but not exception-raising) response. Returns the validated dict for
+    this batch, or None if it never succeeded."""
+    for _attempt in range(_MAX_ATTEMPTS):
+        try:
+            validated = _attempt_translation(client, advisories, language, batch_keys)
+        except Exception:
+            return None
+        if validated is not None:
+            return validated
+    return None
+
+
 def translate_advisories(advisories, language):
     """Returns (result_dict, ok). `advisories` is the dict
     health_advisory_agent.py::all_advisories_for_station() already
     produces (one entry per group key). On success, result_dict has the
     same keys, each value merged with the translated fields on top of the
     original (so risk_level, the untranslated enum, is still present for
-    badge-tone lookups). On any failure — no API key, network error,
-    malformed/incomplete model output — returns (advisories, False): the
-    original English content, unchanged, so the caller always has
-    something real to render. Never raises."""
+    badge-tone lookups). Translates in small SEQUENTIAL batches rather
+    than all groups in one request (see _BATCH_SIZE) — if ANY batch never
+    produces a valid response even after its retry, the WHOLE translation
+    is considered failed and (advisories, False) is returned: the original
+    English content, unchanged, so the caller always has something real
+    to render, and the app never shows a translation that's part-English,
+    part-translated within the same set of cards. Never raises."""
     if language == "en" or language not in SUPPORTED_LANGUAGES:
         return advisories, True
 
@@ -254,36 +338,14 @@ def translate_advisories(advisories, language):
     if client is None:
         return advisories, False
 
-    try:
-        group_keys = list(advisories.keys())
-        response = client.chat.completions.create(
-            model=_model(),
-            max_tokens=MAX_TOKENS,
-            messages=[
-                {"role": "system", "content": _system_prompt(SUPPORTED_LANGUAGES[language]["label"])},
-                {"role": "user", "content": _user_prompt(advisories)},
-            ],
-            tools=[_build_tool_schema(group_keys)],
-            tool_choice={"type": "function", "function": {"name": "submit_translated_advisories"}},
-        )
-        tool_calls = response.choices[0].message.tool_calls
-        if not tool_calls:
+    group_keys = list(advisories.keys())
+    batches = [group_keys[i:i + _BATCH_SIZE] for i in range(0, len(group_keys), _BATCH_SIZE)]
+
+    merged_validated = {}
+    for batch_keys in batches:
+        result = _translate_batch(client, advisories, language, batch_keys)
+        if result is None:
             return advisories, False
-        # Free/OpenRouter-proxied models occasionally return arguments as
-        # already-parsed JSON instead of a string, depending on which
-        # underlying model served the request — handle both rather than
-        # assuming the stricter OpenAI-only contract.
-        raw_args = tool_calls[0].function.arguments
-        parsed = json.loads(raw_args) if isinstance(raw_args, str) else raw_args
-        validated = _validate(parsed, group_keys)
-        if validated is None:
-            return advisories, False
-        merged = {key: {**advisories[key], **validated[key]} for key in group_keys}
-        return merged, True
-    except Exception:
-        # Any SDK/network/parsing failure — the whole point of this
-        # try/except is that a translation outage never becomes a UI
-        # outage. See health_advisory_agent.py's own "auditable math over
-        # black-box precision" standard: when the black box fails, fall
-        # back to the deterministic content, don't guess.
-        return advisories, False
+        merged_validated.update(result)
+
+    return {key: {**advisories[key], **merged_validated[key]} for key in group_keys}, True
