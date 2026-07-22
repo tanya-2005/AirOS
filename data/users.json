@@ -1,0 +1,79 @@
+[
+  {
+    "id": "usr-001",
+    "name": "Anjali Sharma",
+    "email": "admin@airos.gov.in",
+    "role": "Administrator",
+    "region": "Delhi NCR",
+    "status": "Available",
+    "avatar_initials": "AS",
+    "password_hash": "08a88ee98e149974ba2f2bb2f73c19dfc094a1bfcf5e8ddd86ccb659bad3c00e",
+    "password_salt": "bc65e24f62db9340bfa7428333f3aa23"
+  },
+  {
+    "id": "usr-002",
+    "name": "Rohit Verma",
+    "email": "rohit.verma@airos.gov.in",
+    "role": "Pollution Control Officer",
+    "region": "North Delhi",
+    "status": "Available",
+    "avatar_initials": "RV",
+    "password_hash": "c83a844b29df31794cb9e7b753b25183d75204d3b97b406f19b561537109c788",
+    "password_salt": "cf68668da4deff619a135326be8bfda8"
+  },
+  {
+    "id": "usr-003",
+    "name": "Priya Nair",
+    "email": "priya.nair@airos.gov.in",
+    "role": "Pollution Control Officer",
+    "region": "South Delhi",
+    "status": "Busy",
+    "avatar_initials": "PN",
+    "password_hash": "577b981cb98c6f64da26785a826a7dfa2599ec41542d194242429b076f5fe62c",
+    "password_salt": "534535f47cc705fdaaa6e3591c25bbfa"
+  },
+  {
+    "id": "usr-004",
+    "name": "Karan Mehta",
+    "email": "karan.mehta@airos.gov.in",
+    "role": "Pollution Control Officer",
+    "region": "West Delhi",
+    "status": "Offline",
+    "avatar_initials": "KM",
+    "password_hash": "57333730689ffbe4f82680c76135441dafd668e16ac34737ce88d8ecca60891f",
+    "password_salt": "6f7021eeb610cc3a5bc491aa2c86e888"
+  },
+  {
+    "id": "usr-005",
+    "name": "Sneha Iyer",
+    "email": "sneha.iyer@airos.gov.in",
+    "role": "Analyst",
+    "region": "Delhi NCR",
+    "status": "Available",
+    "avatar_initials": "SI",
+    "password_hash": "bfeb4c5e255f89a05662ea31d040c0a70a685e10238c12f3d82507b88f8370a1",
+    "password_salt": "a46781443b9c1ba53f2d892df2de99c2"
+  },
+  {
+    "id": "usr-006",
+    "name": "Demo Officer",
+    "email": "officer@airos.gov.in",
+    "role": "Pollution Control Officer",
+    "region": "Delhi NCR",
+    "status": "Available",
+    "avatar_initials": "DO",
+    "password_hash": "830ed0683f6ceb6d97a7a3e48c01966a17f4b150f62a3168358563a26b3a42da",
+    "password_salt": "a53f034757cb723b3f1e6d37229fef36"
+  },
+  {
+    "id": "usr-007",
+    "name": "Demo Analyst",
+    "email": "analyst@airos.gov.in",
+    "role": "Analyst",
+    "region": "Delhi NCR",
+    "status": "Available",
+    "avatar_initials": "DA",
+    "password_hash": "073c3862040ddf7966e0262c492d87c918d1b3c42ae6eb82c445238ef241cf1e",
+    "password_salt": "9bf82d9ec62ae1e875c59b9e25ad85a7"
+  }
+]

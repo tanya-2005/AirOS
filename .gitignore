@@ -11,10 +11,12 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Runtime auth state — never version-controlled: sessions are live,
-# non-expiring bearer tokens; users.json holds password hashes/salts.
-# Demo accounts/password are documented in dashboard-react/src/lib/auth/demoAccounts.js
-# and shown directly in the Login UI, so losing this file locally just
-# means re-seeding it, not losing anything meant to be public.
+# Runtime auth state — sessions are live, non-expiring bearer tokens,
+# never version-controlled. users.json IS committed (see below the divider)
+# — the app has no seeding/bootstrap path, so a deploy with no users.json
+# means load_users() returns [] and every login 401s regardless of
+# credentials (root cause of a production login outage on 2026-07-22).
+# The demo accounts' shared password is already public on the Login page
+# itself (dashboard-react/src/lib/auth/demoAccounts.js), so the hashes in
+# users.json don't protect a real secret — safe to ship.
 data/sessions.json
-data/users.json
