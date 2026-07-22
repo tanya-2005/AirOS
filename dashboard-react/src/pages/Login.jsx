@@ -31,11 +31,18 @@ export default function Login() {
     return <Navigate to={redirectTo} replace />;
   }
 
+  // Demo buttons pass hardcoded JS constants that are always clean; the
+  // manual form's values come straight from real <input> DOM elements,
+  // the one path exposed to a stray trailing space from typing or
+  // copy-pasting the credentials shown below (e.g. selecting "airos2026"
+  // out of the "Seeded demo credentials" block can grab trailing
+  // whitespace depending on the browser). Trim both here so every caller
+  // gets the same treatment instead of only fixing the symptom for one.
   async function completeLogin(loginEmail, loginPassword) {
     setError(null);
     setBusy(true);
     try {
-      const user = await login(loginEmail, loginPassword);
+      const user = await login(loginEmail.trim(), loginPassword.trim());
       // A direct link (e.g. "sign in to view this incident") still wins over
       // the role default, so a judge who followed a deep link lands back on it.
       const target = location.state?.from?.pathname || dashboardForRole(user.role);
