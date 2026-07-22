@@ -76,6 +76,16 @@ export const getCityHealthAdvisory = (city, signal) => apiFetch(withCity("/api/h
 export const getStationHealthAdvisory = (stationName, city, signal) =>
   apiFetch(withCity(`/api/health-advisory/station/${encodeURIComponent(stationName)}`, city), { signal });
 
+// Multilingual Citizen Communication — translates the SAME advisory
+// getStationHealthAdvisory already returns; never a second computation,
+// see backend/routers/health_advisory.py.
+export const postTranslateStationHealth = (stationName, city, language, signal) =>
+  apiFetch(withCity(`/api/health-advisory/station/${encodeURIComponent(stationName)}/translate`, city), {
+    method: "POST",
+    body: { language },
+    signal,
+  });
+
 // Phase 10 — Multi-City
 export const getCities = (signal) => apiFetch("/api/cities", { signal });
 export const getCityComparison = (signal) => apiFetch("/api/cities/compare", { signal });

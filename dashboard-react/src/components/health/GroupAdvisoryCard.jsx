@@ -1,12 +1,26 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wind, Shield, AlertTriangle, Clock, Info, ChevronDown } from "lucide-react";
+import { Wind, Shield, AlertTriangle, Clock, Info, ChevronDown, LanguagesIcon } from "lucide-react";
 import Card from "../ui/Card";
+import Badge from "../ui/Badge";
 import EmergencyLevelBadge from "./EmergencyLevelBadge";
 import { groupMeta } from "../../lib/healthAdvisory";
 
-/** One group's full advisory — all 7 required fields (risk level, recommended actions, outdoor activity guidance, mask recommendation, emergency recommendation, expected duration, reason) are present; actions/emergency/duration/reason sit behind a "details" expand so a 10-card grid stays scannable, mirroring PolicyCard's trade-offs pattern (Scenario Lab). */
-export default function GroupAdvisoryCard({ groupKey, advisory }) {
+/**
+ * One group's full advisory — all 7 required fields (risk level,
+ * recommended actions, outdoor activity guidance, mask recommendation,
+ * emergency recommendation, expected duration, reason) are present;
+ * actions/emergency/duration/reason sit behind a "details" expand so a
+ * 10-card grid stays scannable, mirroring PolicyCard's trade-offs pattern
+ * (Scenario Lab). `advisory.headline`/`risk_level_label` are present only
+ * when a non-English translation is active (see HealthAdvisoryPanel) —
+ * the English baseline doesn't show a headline line since group_label +
+ * the severity badge already say the same thing.
+ * `translationUnavailable` renders a small, honest badge instead of
+ * silently showing English text under a language label that implied
+ * something else.
+ */
+export default function GroupAdvisoryCard({ groupKey, advisory, translationUnavailable }) {
   const [expanded, setExpanded] = useState(false);
   if (!advisory) return null;
   const meta = groupMeta(groupKey);
@@ -19,9 +33,19 @@ export default function GroupAdvisoryCard({ groupKey, advisory }) {
           <div className="w-9 h-9 rounded-chip bg-search flex items-center justify-center shrink-0">
             <Icon size={16} className="text-ink" strokeWidth={1.8} />
           </div>
-          <div className="font-display text-[15.5px] text-ink leading-tight truncate">{advisory.group_label}</div>
+          <div className="min-w-0">
+            <div className="font-display text-[15.5px] text-ink leading-tight truncate">{advisory.group_label}</div>
+            {advisory.headline && <div className="text-[11.5px] text-muted-2 mt-0.5 truncate">{advisory.headline}</div>}
+          </div>
         </div>
-        <EmergencyLevelBadge level={advisory.risk_level} className="shrink-0" />
+        <div className="flex flex-col items-end gap-1.5 shrink-0">
+          <EmergencyLevelBadge level={advisory.risk_level} displayLabel={advisory.risk_level_label} />
+          {translationUnavailable && (
+            <Badge tone="muted" mono={false} className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5">
+              <LanguagesIcon size={9} /> Translation unavailable
+            </Badge>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2.5 text-[12.5px]">

@@ -20,3 +20,10 @@ Thumbs.db
 # itself (dashboard-react/src/lib/auth/demoAccounts.js), so the hashes in
 # users.json don't protect a real secret — safe to ship.
 data/sessions.json
+
+# Pure performance cache (agents/translation_agent.py's LLM translations,
+# keyed by content hash) — unlike incidents/notifications/tasks this holds
+# no meaningful seed data, only regenerable derived output. Missing on a
+# fresh deploy is a harmless no-op (translation_cache_store.load() returns
+# {}), not an outage like the users.json lesson above.
+data/translation_cache.json

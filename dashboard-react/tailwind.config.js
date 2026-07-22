@@ -62,13 +62,20 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Newsreader", "serif"],
+        // Noto Sans Devanagari/Tamil/Bengali fall in before the generic
+        // "serif" keyword — Newsreader has no glyphs for those scripts, so
+        // translated headings/labels (Multilingual Citizen Communication)
+        // get the matched Noto family instead of an arbitrary OS default.
+        display: ["Newsreader", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Bengali", "serif"],
         body: [
           "Helvetica Neue",
           "Helvetica",
           "Arial",
           "-apple-system",
           "BlinkMacSystemFont",
+          "Noto Sans Devanagari",
+          "Noto Sans Tamil",
+          "Noto Sans Bengali",
           "sans-serif",
         ],
         mono: ["IBM Plex Mono", "monospace"],

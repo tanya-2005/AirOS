@@ -53,9 +53,10 @@ import task_agent  # noqa: E402
 import notification_agent  # noqa: E402
 import health_advisory_agent  # noqa: E402
 import validation_agent  # noqa: E402
+import translation_agent  # noqa: E402
 import history_store  # noqa: E402 — same JSONL history module ingestion/*.py append to
 
-from . import auth, incident_store, task_store, notification_store
+from . import auth, incident_store, task_store, notification_store, translation_cache_store
 
 
 def _load_json(path):
@@ -521,6 +522,36 @@ def get_station_health(station_name, city=None):
     forecast, _ = get_forecast(city)
     forecast_entry = next((f for f in forecast if f["station"] == station_name), None)
     return health_advisory_agent.station_health_summary(station_result, forecast_entry), "live_pipeline"
+
+
+def translate_station_health(station_name, city, language):
+    """Returns (advisories_dict, translated_bool, data_source) for one
+    station's citizen advisory in `language`. English never touches the
+    LLM — the deterministic advisories from get_station_health() are
+    returned as-is. For other languages: content-addressed cache first
+    (translation_cache_store, keyed by a hash of the actual English
+    content plus language — see translation_agent.advisory_content_fingerprint),
+    then a live LLM call on a cache miss, cached on success. On any
+    failure `translated_bool` is False and `advisories_dict` is the
+    original English content — the caller always has something real to
+    show, per translation_agent's own contract."""
+    summary, source = get_station_health(station_name, city)
+    if summary is None:
+        return None, False, source
+
+    advisories = summary["advisories"]
+    if language == "en":
+        return advisories, True, source
+
+    fingerprint = translation_agent.advisory_content_fingerprint(advisories)
+    cached = translation_cache_store.get(fingerprint, language)
+    if cached is not None:
+        return cached, True, source
+
+    translated, ok = translation_agent.translate_advisories(advisories, language)
+    if ok:
+        translation_cache_store.put(fingerprint, language, translated)
+    return translated, ok, source
 
 
 def get_city_health(city=None):

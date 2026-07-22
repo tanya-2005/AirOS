@@ -1,4 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+/* Multilingual Citizen Communication — Google's script-specific Noto Sans
+   families for the four supported translation languages. Explicit rather
+   than relying on silent OS font substitution: the Latin stack below
+   (Helvetica Neue etc.) has no Devanagari/Tamil/Bengali glyphs at all, so
+   without this, translated text would render in whatever font the visitor's
+   OS happens to default to — usually fine, but not a deliberate choice.
+   Listing multiple script-specific families in one font-family stack is
+   standard CSS: the browser picks whichever listed font actually has the
+   glyph for each character, automatically, per character — Latin text is
+   unaffected by fonts listed after Helvetica Neue since it's never reached
+   for glyphs Helvetica Neue already has. */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -17,6 +29,9 @@ body {
     Arial,
     -apple-system,
     BlinkMacSystemFont,
+    'Noto Sans Devanagari',
+    'Noto Sans Tamil',
+    'Noto Sans Bengali',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

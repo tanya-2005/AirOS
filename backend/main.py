@@ -2,11 +2,22 @@
 AirOS API — thin FastAPI wrapper around the existing agents/ pipeline.
 Run from the repo root: uvicorn backend.main:app --reload --port 8000
 """
-from fastapi import Depends, FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+import os
 
-from . import auth
-from .routers import (
+from dotenv import load_dotenv
+
+# Same explicit-path pattern ingestion/fetch_waqi.py already uses — loaded
+# before any router (health_advisory -> pipeline -> translation_agent)
+# reads ANTHROPIC_API_KEY, so a local `.env` "just works" without a manual
+# `export`. Deployed hosts (Render, etc.) set real env vars directly, so a
+# missing .env file here is a normal no-op, not an error.
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
+
+from fastapi import Depends, FastAPI  # noqa: E402
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+
+from . import auth  # noqa: E402
+from .routers import (  # noqa: E402
     attribution, forecast, enforcement, simulation, weather, history, geo, incidents,
     auth as auth_router, users, tasks, notifications, health_advisory, cities, validation,
 )

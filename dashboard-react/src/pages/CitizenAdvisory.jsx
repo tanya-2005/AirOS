@@ -111,7 +111,7 @@ export default function CitizenAdvisory() {
           </div>
 
           <section className="mt-8">
-            <HealthAdvisoryPanel advisories={stationHealthQuery.data?.data?.advisories} />
+            <HealthAdvisoryPanel advisories={stationHealthQuery.data?.data?.advisories} stationName={stationName} />
           </section>
         </QueryState>
 
@@ -122,7 +122,7 @@ export default function CitizenAdvisory() {
       </main>
       <Footer
         pageLabel="PUBLIC PROTECTION"
-        note="Deterministic health guidance · agents/health_advisory_agent.py · no LLM"
+        note="Deterministic health guidance · agents/health_advisory_agent.py · translations only use an AI model, English does not"
       />
     </>
   );

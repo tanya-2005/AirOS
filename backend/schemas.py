@@ -68,3 +68,7 @@ class NoteCreate(BaseModel):
 class TaskUpdate(BaseModel):
     status: Literal["Pending", "In Progress", "Completed"] | None = None
     assigned_officer_id: str | None = None
+
+
+class TranslateRequest(BaseModel):
+    language: str

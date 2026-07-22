@@ -23,6 +23,7 @@ import {
   postIncidentNote,
   getCityHealthAdvisory,
   getStationHealthAdvisory,
+  postTranslateStationHealth,
   getCities,
   getCityComparison,
   getForecastValidation,
@@ -295,6 +296,24 @@ export function useStationHealthAdvisory(stationName) {
     queryKey: ["health-advisory", "station", city, stationName],
     queryFn: ({ signal }) => getStationHealthAdvisory(stationName, city, signal),
     enabled: !!stationName,
+    staleTime: INCIDENT_STALE_TIME,
+  });
+}
+
+// Multilingual Citizen Communication — react-query's own cache already
+// gives "don't repeatedly call the LLM for the same advisory + language
+// pair" for free within a session (switching back to a previously-viewed
+// language is instant, no request at all); the backend's content-hash
+// cache (translation_cache_store) covers the same guarantee across
+// sessions/users. `enabled: language !== "en"` means English never
+// issues this request at all — it's server-authored and rendered
+// directly, exactly as before this feature existed.
+export function useTranslatedStationHealth(stationName, language) {
+  const { city } = useCity();
+  return useQuery({
+    queryKey: ["health-advisory", "translate", city, stationName, language],
+    queryFn: ({ signal }) => postTranslateStationHealth(stationName, city, language, signal),
+    enabled: !!stationName && language !== "en",
     staleTime: INCIDENT_STALE_TIME,
   });
 }

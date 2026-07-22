@@ -200,7 +200,7 @@ export default function IncidentDetail() {
                     Full guidance by population group
                   </summary>
                   <div className="mt-6">
-                    <HealthAdvisoryPanel advisories={stationHealthQuery.data?.data?.advisories} />
+                    <HealthAdvisoryPanel advisories={stationHealthQuery.data?.data?.advisories} stationName={incident.station} />
                   </div>
                 </details>
               </section>
