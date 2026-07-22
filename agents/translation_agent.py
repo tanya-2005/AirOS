@@ -17,17 +17,27 @@ not a decision task. If the LLM is unavailable, misconfigured, or
 returns something we can't validate, translate_advisories() returns the
 original English content unchanged and says so — callers always get
 something safe to show, never a fabricated or partial result.
+
+Provider: OpenRouter (https://openrouter.ai) — a single OpenAI-compatible
+API in front of many hosted models, including several with a genuinely
+free tier, so this feature works without a paid API key. Talked to via
+the `openai` SDK pointed at OpenRouter's base_url; OPENROUTER_MODEL picks
+which model (default below is a solid free option as of this writing —
+OpenRouter's free lineup changes over time, so this is a one-line env var
+override, not a code change, if a specific model is retired or rate-limited).
+See .env.example for setup.
 """
 import hashlib
 import json
 import os
 
 try:
-    from anthropic import Anthropic
+    from openai import OpenAI
 except ImportError:  # pragma: no cover - handled at call time, not import time
-    Anthropic = None
+    OpenAI = None
 
-MODEL = "claude-sonnet-5"
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+DEFAULT_MODEL = "meta-llama/llama-3.3-70b-instruct:free"
 MAX_TOKENS = 4096
 
 # Single source of truth for which languages this feature supports.
@@ -80,10 +90,25 @@ def _get_client():
     if _client_checked:
         return _client
     _client_checked = True
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if Anthropic is not None and api_key:
-        _client = Anthropic(api_key=api_key)
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    if OpenAI is not None and api_key:
+        _client = OpenAI(
+            base_url=OPENROUTER_BASE_URL,
+            api_key=api_key,
+            # OpenRouter-recommended attribution headers (optional, but
+            # they're what OpenRouter uses to show this app on its own
+            # rankings/usage dashboards) — not credentials, safe to leave
+            # as a fixed value rather than making them configurable too.
+            default_headers={
+                "HTTP-Referer": "https://air-os-two.vercel.app",
+                "X-Title": "AirOS",
+            },
+        )
     return _client
+
+
+def _model():
+    return os.environ.get("OPENROUTER_MODEL") or DEFAULT_MODEL
 
 
 def advisory_content_fingerprint(advisories):
@@ -113,19 +138,27 @@ def _build_tool_schema(group_keys):
         },
         "required": _REQUIRED_GROUP_FIELDS,
     }
+    # OpenAI-compatible function-calling shape (OpenRouter proxies this
+    # spec regardless of which underlying model serves the request) —
+    # {"type": "function", "function": {name, description, parameters}},
+    # parameters being plain JSON schema, same shape Anthropic's
+    # input_schema used before this module switched providers.
     return {
-        "name": "submit_translated_advisories",
-        "description": "Submit the fully translated citizen health advisory, one entry per population group key.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "groups": {
-                    "type": "object",
-                    "properties": {key: group_schema for key in group_keys},
-                    "required": list(group_keys),
-                }
+        "type": "function",
+        "function": {
+            "name": "submit_translated_advisories",
+            "description": "Submit the fully translated citizen health advisory, one entry per population group key.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "groups": {
+                        "type": "object",
+                        "properties": {key: group_schema for key in group_keys},
+                        "required": list(group_keys),
+                    }
+                },
+                "required": ["groups"],
             },
-            "required": ["groups"],
         },
     }
 
@@ -223,18 +256,26 @@ def translate_advisories(advisories, language):
 
     try:
         group_keys = list(advisories.keys())
-        message = client.messages.create(
-            model=MODEL,
+        response = client.chat.completions.create(
+            model=_model(),
             max_tokens=MAX_TOKENS,
-            system=_system_prompt(SUPPORTED_LANGUAGES[language]["label"]),
+            messages=[
+                {"role": "system", "content": _system_prompt(SUPPORTED_LANGUAGES[language]["label"])},
+                {"role": "user", "content": _user_prompt(advisories)},
+            ],
             tools=[_build_tool_schema(group_keys)],
-            tool_choice={"type": "tool", "name": "submit_translated_advisories"},
-            messages=[{"role": "user", "content": _user_prompt(advisories)}],
+            tool_choice={"type": "function", "function": {"name": "submit_translated_advisories"}},
         )
-        tool_use = next((b for b in message.content if b.type == "tool_use"), None)
-        if tool_use is None:
+        tool_calls = response.choices[0].message.tool_calls
+        if not tool_calls:
             return advisories, False
-        validated = _validate(tool_use.input, group_keys)
+        # Free/OpenRouter-proxied models occasionally return arguments as
+        # already-parsed JSON instead of a string, depending on which
+        # underlying model served the request — handle both rather than
+        # assuming the stricter OpenAI-only contract.
+        raw_args = tool_calls[0].function.arguments
+        parsed = json.loads(raw_args) if isinstance(raw_args, str) else raw_args
+        validated = _validate(parsed, group_keys)
         if validated is None:
             return advisories, False
         merged = {key: {**advisories[key], **validated[key]} for key in group_keys}
